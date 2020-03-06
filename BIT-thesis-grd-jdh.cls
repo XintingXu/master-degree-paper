@@ -11,7 +11,7 @@
 \RequirePackage{upgreek}
 
 \NeedsTeXFormat{LaTeX2e}[2005/12/01]
-\ProvidesClass{BIT-thesis-grd}
+\ProvidesClass{BIT-thesis-grd-jdh}
   [2018/03/25 v1.2 BIT-thesis-grd document class]
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}

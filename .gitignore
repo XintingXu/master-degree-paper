@@ -1,0 +1,12 @@
+*.log
+*.out
+*.xdv
+*.aux
+*.bbl
+*.blg
+*.toc
+*.lof
+*.lot
+demo.pdf
+*.aux
+*.gz

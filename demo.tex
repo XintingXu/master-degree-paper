@@ -8,7 +8,7 @@
 
 % 默认单面打印 oneside 、硕士论文模板 master
 
-\documentclass[oneside, master,normal]{BIT-thesis-grd-jdh}
+\documentclass[oneside, master, normal]{BIT-thesis-grd-jdh}
 
 % 模板选项： 硕士论文 master； 博士论文 doctor
 % 正常模式：normal  自查重模式：selfSimilarCheck  盲审模式：blindCheck
@@ -27,29 +27,29 @@
 \classification{TQ028.1} %可参考http://www.clcindex.com/category/TN91/
 \UDC{540}
 
-\title{这是一个有英文单词RapidIO的论文标题}
-\vtitle{这是一个有英文单词\makeVerticalenWords{RapidIO}的竖排标题}
-\author{张三}
-\institute{信息与电子学院}
-\advisor{**教授}
+\title{基于主动丢包的VoLTE时间隐通道构建方法研究}
+\vtitle{基于主动丢包的\makeVerticalenWords{VoLTE}时间隐通道构建方法研究}
+\author{徐欣廷}
+\institute{计算机学院}
+\advisor{谭毓安教授}
 \chairman{**教授}
-\degree{工学硕士（博士）}
-\major{电子科学与技术}
+\degree{工学硕士}
+\major{计算机科学与技术}
 \school{北京理工大学}
-\defenddate{2019年6月}
+\defenddate{2020年6月}
 %\studentnumber{**********}
 
 
 % 英文封面内容(关注内容而不是表现形式)
-\englishtitle{A Thesis Title with English word RapidIO}
-\englishauthor{Zhangsan}
-\englishadvisor{Prof. **}
+\englishtitle{Building Covert Timing Channels over VoLTE via Packet Dropout}
+\englishauthor{Xinting Xu}
+\englishadvisor{Prof. Yu-an Tan}
 \englishchairman{Prof. **}
 \englishschool{Beijing Insititute of Technology}
-\englishinstitute{School of Information and Electronics}
+\englishinstitute{School of Computer Science and Technology}
 \englishdegree{Master}
-\englishmajor{Electronics Science and Technology}
-\englishdate{6，2019}
+\englishmajor{Computer Science and Technology}
+\englishdate{6，2020}
 
 % 封面绘制
 \maketitle
@@ -99,9 +99,13 @@
 
 %%%%%%%%%%%%%论文正文部分%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \include{chapters/chapter1/chapter1}
+\include{chapters/chapter2/chapter2}
+\include{chapters/chapter3/chapter3}
+\include{chapters/chapter4/chapter4}
+\include{chapters/chapter5/chapter5}
 %%%%%%%%%%%%以下部分仅用于举例样式%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{部分新增命令使用示例}
-\fbox{自查重模式下使用$\backslash$insert*系列命令指定的内容将不被显示。}\\
+\fbox{自查重模式下使用$\backslash$insert*系列命令指定的内容将不被显示。}
 \begin{lstlisting}[language={tex}, caption={$\backslash$insert*系列指令使用示例}]
 \insertContents{
 	anything contents....
