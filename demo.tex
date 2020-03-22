@@ -105,32 +105,32 @@
 \include{chapters/chapter4/chapter4}
 \include{chapters/chapter5/chapter5}
 %%%%%%%%%%%%以下部分仅用于举例样式%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{部分新增命令使用示例}
-\fbox{自查重模式下使用$\backslash$insert*系列命令指定的内容将不被显示。}
-\begin{lstlisting}[language={tex}, caption={$\backslash$insert*系列指令使用示例}]
-\insertContents{
-	anything contents....
-}
-\insertFigure{
-	\begin{figure}
-		.......
-	\end{figure}
-}
-\insertTable{
-	\begin{table}
-		.......
-	\end{table}
-}
-\insertEquation{
-	\begin{equation}
-		......
-	\end{equation}
-}
-\end{lstlisting}
+%\chapter{部分新增命令使用示例}
+%\fbox{自查重模式下使用$\backslash$insert*系列命令指定的内容将不被显示。}
+%\begin{lstlisting}[language={tex}, caption={$\backslash$insert*系列指令使用示例}]
+%\insertContents{
+%	anything contents....
+%}
+%\insertFigure{
+%	\begin{figure}
+%		.......
+%	\end{figure}
+%}
+%\insertTable{
+%	\begin{table}
+%		.......
+%	\end{table}
+%}
+%\insertEquation{
+%	\begin{equation}
+%		......
+%	\end{equation}
+%}
+%\end{lstlisting}
+
+%自查重模式下使用$\backslash$ncite、$\backslash$nupcite、$\backslash$nref命令进行的引用，引用标注将不显示。使用方式同$\backslash$cite、$\backslash$upcite、$\backslash$ref。
+
 %结论
-
-自查重模式下使用$\backslash$ncite、$\backslash$nupcite、$\backslash$nref命令进行的引用，引用标注将不显示。使用方式同$\backslash$cite、$\backslash$upcite、$\backslash$ref。
-
 \include{chapters/conclusion}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -150,8 +150,8 @@
 \renewcommand\thefigure{\Alph{chapter}--\arabic{figure}}
 \renewcommand\thetable{\Alph{chapter}--\arabic{table}}
 
-\include{chapters/app1} 
-\include{chapters/app2} 
+%\include{chapters/app1} 
+%\include{chapters/app2} 
 
 %(其后部分无编号)
 \backmatter
@@ -161,7 +161,7 @@
 % 致谢
 \include{chapters/thanks}
 % 作者简介（博士论文需要）
-\include{chapters/resume}
+%\include{chapters/resume}
 
 
 \end{document}
