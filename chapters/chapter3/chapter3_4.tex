@@ -1,80 +1,236 @@
 \section{基于统计分析的时间隐通道检测方法设计}
 \label{chap:analyze:statistical}
 
-本节主要讲述，如何利用统计方法，对基于主动丢包的时间隐通道进行检测
+本节主要介绍，在该时间隐通道中采用的检测工具，及各种检测工具及检测对象的组合设计。在进行检测前，利用抓包得到的结果，构建标准参照，涵盖的对象包括IPD、突发丢包长度及区间丢包数量的CDF及PMF。对于测试样本，同样计算其CDF及PMF结果，通过各种检测算法，比较分布之间的差异，得出隐通道检测结论。
 
 \subsection{基于累积分布函数的检测方法设计}
 \label{chap:analyze:statistical:cdf}
 
-CDF函数的定义
+%CDF函数的定义
+CDF的全程是Cumulative Distribution Function，也就是累积分布函数。其统计意义，为$F_{X}(x)=P (X\leq x)$，即$X\leq x$的概率。在实际应用中，CDF的作用是分析分布的变化趋势，从而判断是否存在异常点。对于离散变量，$F_{X}(x)$的计算方式如公式（\nref{equ:3:cdf}）。本方法的判别基础，是检测对象的统计特征，属于离散分布。
 
-CDF函数代表了什么
+\insertEquation{
+    \begin{equation}
+    \label{equ:3:cdf}
+		F_{X}(x)=\sum_{-\infty}^{x}f(x)
+	\end{equation}
+}
 
-如何通过CDF进行检测
+%CDF函数代表了什么
+如图\nref{fig:3:capture:ipd}，图\nref{fig:3:capture:ipd:pmf}的频率分布存在波动，而转换为CDF后的图\nref{fig:3:capture:win-cdf}能够更好地体现变化趋势。CDF曲线上升平缓的部分，意味着出现频率较小，所占比重较低；而CDF上升迅速的部分，对应的是PMF中占比较大的部分，也就是统计结果中频率较高的部分。
 
-\subsection{基于条件熵的检测方法设计}
-\label{chap:analyze:statistical:entropy}
-
-熵的数学意义是什么
-
-熵检测算法
-
-如何通过熵判定一致性
+%如何通过CDF进行检测
+CDF曲线是最基本的检测方法，本检测方法中，首先计算IPD、突发丢包长度及区间丢包的CDF分布。接下来，绘制分布曲线，比较曲线的趋势及起始特征，尤其是曲线之间的差值。CDF检测方法，无法直接得出量化评估结果，因此，在时间隐通道检测方法中，作为初步筛选及分析方式。进一步，在CDF统计结果的基础上，进行分布一致性检验，得到确定的检测结果。
 
 \subsection{基于分布一致性的检测方法设计}
 \label{chap:analyze:statistical:test}
 
-一致性检验的通用解释
+%一致性检验的通用解释
+对于两个独立的样本，判断其是否来自同一个分布，需要借助的统计中分布一致性检验。在理想情况下，观测值出现的频率，与分布函数中的概率是对应的，观测值的分布函数在一定程度上可以代替真实的分布函数。一致性检验首先假设两个样本属于同分布，然后统计计算观测值与合理值的取值，比较判断假设是否成立。
 
-一致性检验使用的对象
+%一致性检验使用的对象
+用于一致性检验的样本数据越多，采样结果与真实分布更接近，检验结果具有更高的可信度。在\nref{chap:analyze:results}中，介绍了几种观测对象，其中IPD的分布存在明显的规律性，且不同网络环境下的分布基本一致。因此，本检测方法主要用于检测IPD分布的一致性。
 
 \subsubsection{基于Kolmogorov-Smirnov test的检测方法设计}
 \label{chap:analyze:statistical:test:ks}
 
-K-S检测的数学理论
+%K-S检验的数学理论
+Kolmogorov-Smirnov检验是常用的无参数、双样本检验方法，检验原理基于累积分布函数。\nupcite{doi:10.1080/01621459.1951.10500769,doi:10.1080/01621459.1967.10482916}如公式\nref{equ:2:ks}，K-S检验基于CDF分布中的最大差异$D_{KS}$。当置信区间设定为$95\%$时，使用公式（\nref{equ:2:ks-p}）计算$D_{KS,0.05}$，当$D_{KS}<D_{KS,0.05}$时，可以认为两个样本的分布式一致的。
 
-K-S测试的一致性判定
-
-\subsubsection{基于Ansari-Bradley test的检测方法设计}
-\label{chap:analyze:statistical:test:an}
-
-A-B测试的数学理论
-
-A-B测试的一致性判定
+%K-S检验的一致性判定
+在实际应用中，通常根据$D_{KS,0.05}$的分布计算$p$值，当$p\leq 0.05$时，假设成立，样本来自相同的分布。
+K-S检验在大样本环境中具有较高的准确度，样本数量较少时，统计的分布存在误差，最终检验结果不具有可靠性。同样需要注意的是，当样本数据增加时，$D_{KS,0.05}$会相应减小，$D_{KS}$上限降低，当采样不均匀时，出现误判结果。
+因此，本检测方法中，K-S检验用于时间隐通道构建前后，相同样本的检测。
 
 \subsubsection{基于Welch’s t-test的检测方法设计}
 \label{chap:analyze:statistical:test:t}
 
-T-test的数学理论
+%T-test的数学理论
+Welch’s t检验，应用于两个独立的样本，主要评估样本的平均值是否存在差异。通常应用于验证两个独立的采样结果，在方差相同的情况下，是否具有相同的平均值。当样本基本符合正态分布时，该检验方法可以判断样本分布的一致性。Welch's t检验的优势，是可以应用与样本规模不一致的场景，具有较好的鲁棒性。
 
-T-test的一致性判定
+\insertEquation{
+    \begin{equation}
+    \label{equ:3:t-value}
+		t=\frac{\overline{X}_{1}-\overline{X}_{2}}{\sqrt{\frac{s_{1}^{2}}{N_{1}}+\frac{s_{2}^{2}}{N_{2}}}}
+	\end{equation}
+}
+
+\insertEquation{
+    \begin{equation}
+    \label{equ:3:v-value}
+		\nu \approx \frac{({\frac{s_{1}^{2}}{N_{1}}+\frac{s_{2}^{2}}{N_{2}})^{2}}}{\frac{s_{1}^{4}}{N_{1}^{2}\nu_{1}}+\frac{s_{2}^{4}}{N_{2}^{2}\nu_{2}}}
+	\end{equation}
+}
+
+%T-test的一致性判定
+如公式（\nref{equ:3:t-value}），t检验首先需要计算统计值$t$，其中$\overline{X}$表示样本的均值，$s$表示样本的标准差，$N$表示样本的规模。接下来使用Welch–Satterthwaite公式计算自由度$\nu$，如公式（\nref{equ:3:v-value}）。最后，根据Student's t-分布，计算在自由度$\nu$下，统计值$t$对应的概率，即可判断样本的相似性。
+
+类似K-S检验，Welch's t检验得到的$p$值，反映了样本的一致性水平，一般取0.05作为分界值，对应两个样本分布一致的概率为95\%。因为Welch’s t检验适用范围的限制，只有在正态分布的情况下具有较好的效果，而在\nref{chap:analyze:results}中分析可知，IPD等统计特征的分布，多为偏态分布，因此，Welch's t检验作为IPD的检验方式之一。
 
 \subsubsection{基于Mann-Whitney rank test的检测方法设计}
 \label{chap:analyze:statistical:test:mw}
 
-M-W测试的数学理论
+%M-W检验的数学理论
+Mann–Whitney rank检验，又称为Mann–Whitney U检验或Mann–Whitney–Wilcoxon检验，应用双样本无参数检验，对应的目标分布为均匀分布。不同于Welch's t检验，Mann–Whitney rank检验的目标分布为非正态分布，适用于大数据集的检验场景。
 
-M-W测试的一致性判定
+\insertEquation{
+    \begin{equation}
+    \label{equ:3:u-value}
+		U_{i}=R_{i}-\frac{n_{i}(n_{i}+1)}{2}
+	\end{equation}
+}
+
+%M-W检验的一致性判定
+Mann–Whitney rank检验过程中，首先要将样本混合，然后按照顺序，为每个样本值分配排名。接下来，分别计算两个样本中的排名之和$R_{1}$及$R_{2}$。根据公式（\nref{equ:3:u-value}），分别计算两个样本的$U_{1}$及$U_{2}$，并取$U=min(U_{1},U_{2})$与$U_{0.05}$进行比较，当$U>U_{0.05}$时，即可认定样本属于同分布。
+
+Mann–Whitney rank检验作为Welch's t检验的补充，应用于不满足正态分布的检验场景，关注的重点，是样本均值的偏离程度。因此，Mann–Whitney rank与Welch's t检验组合，作为IPD的一致性检验方法。
+
+\insertTable{
+	\begin{table}[]
+        \centering
+        \caption{分布一致性检测方法的适用范围}
+        \label{tab:3:test-range}
+        \begin{threeparttable}
+            \begin{tabular*}{0.99\textwidth}{@{\extracolsep{\fill}}ccc}
+              \toprule
+              检验方法 & 测试对象 & 通过条件\\ 
+              \midrule
+              K-S检验 & IPD分布 & 隐通道构造前后，p值满足$p>0.05$ \\ 
+              Welch's t检验 & IPD分布 & 同一场景下的样本，p值满足$p>0.05$ \\ 
+              Mann–Whitney rank检验 & IPD分布 & 同一场景下的样本，p值满足$p>0.05$ \\ 
+              \bottomrule
+            \end{tabular*}
+            \begin{tablenotes}
+              \footnotesize
+              \item[] Welch's t检验与Mann–Whitney rank检验通过一种即可
+          \end{tablenotes}
+        \end{threeparttable}
+    \end{table}
+}
+
+如表\nref{tab:3:test-range}，根据一致性检验方法的特征，及VoLTE中基于主动丢包的时间隐通道检测需求，不同的检验方法的测试通过条件存在差异。K-S检验作为独立的检验方式，验证的是IPD分布在时间隐通道构建前后的一致性。Welch's t检验及Mann–Whitney rank检验，作为互相补充的组合，共同检验同一场景下，样本与一致分布的差异，并且两种检验方法通过一种即可认定一致。
+
+\subsection{基于熵的检测方法设计}
+\label{chap:analyze:statistical:entropy}
+
+%熵的数学意义是什么
+基于熵的检测方法，主要依赖条件熵中的Kullback-Leibler散度。\nupcite{5590253,Gianvecchio:2007:DCT:1315245.1315284}K-L散度的计算方法，如公式（\nref{equ:2:kld}），$G(x)$作为参照分布，$F(x)$作为样本分布，二者在关系上具有约束。同时，K-L散度计算中，要求所有的输入概率值非0。
+
+%如何通过熵判定一致性
+基于熵的检测方法，优势在于对检测样本的实际分布不敏感，可以应用于任意类型的测试场景中。根据系统的熵增原理，不同的分布之间一定存在熵值差异，通常约定K-L散度值0.1作为分界线，当K-L散度超过0.1时，可以认为分布之间存在明显差异，不属于同分布。
+
+\insertTable{
+	\begin{table}[]
+      \centering
+      \caption{基于熵的检测方法适用范围}
+      \label{tab:3:entropy-range}
+          \begin{tabular*}{0.7\textwidth}{@{\extracolsep{\fill}}ccc}
+            \toprule
+            检验方法 & 测试对象 & 通过条件 \\ 
+            \midrule
+            \multirow{3}{*}{K-L散度} & IPD分布 & \multirow{3}{*}{K-L散度$<0.1$} \\ 
+            & 突发丢包长度分布 \\
+            & 区间丢包分布 \\
+            \bottomrule
+          \end{tabular*}
+    \end{table}
+}
+
+如表\nref{tab:3:entropy-range}，K-L散度检测可以应用于所有的观测特征，并且判别标准都是相同的。在实际的测试中，K-L散度结果的数量级与样本分布密切相关，因此具有非常好的灵敏度。
 
 \subsection{基于相对距离的检测方法设计}
 \label{chap:analyze:statistical:distance}
 
-相对距离的通用解释
-
-相对距离的测试对象
+%相对距离的通用解释
+相对距离体现了分布变化所需要的代价，传统意义上的距离表示的是空间上的度量，统计学中借鉴这一思想，用相对距离来度量样本分布改变为参照分布所需要的成本。
+%相对距离的检验对象
+相对距离的检测对象，适用于具有参照样本的双样本检测，重点关注样本与参照之间的差异程度。
 
 \subsubsection{Wasserstein距离}
 \label{chap:analyze:statistical:distance:wasserstein}
 
-wasserstein距离的数学理论
+%wasserstein距离的数学理论
+Wasserstein距离又称为空间传输距离，作为无参数检测方法，其评估对象是一个分布转换为另一个分布所需要的的代价。\nupcite{ramdas2015wasserstein}参照运输过程中的最小能量消耗，计算过程中需要同时考虑移动的分量及距离，最终计算总代价，反映了两个分布之间的相对距离。
 
-相对距离的一致性判定
+\insertEquation{
+    \begin{equation}
+    \label{equ:3:wasserstein-distance}
+		D_{w}(F(x),G(x)) = \sum{\frac{|F(x)-G(x)|}{n}}
+	\end{equation}
+}
+
+%相对距离的一致性判定
+在通常的计算方法中，Wasserstein距离中的每个样本点都有其权重，本检测方法中测试的是分布曲线之间的相对距离，因此设定曲线中的每个样本点都具有相同的权重。计算方式如公式（\nref{equ:3:wasserstein-distance}），其中，$F(x)$及$G(x)$对应CDF统计结果。考虑到不同场景中，$n$的取值存在差异，为统一评估标准，Wasserstein距离评估的结果为$D_{w}(F(x),G(x))\times n$。
 
 \subsubsection{能量距离}
 \label{chap:analyze:statistical:distance:energy}
 
-Energy distance is a metric that measures the distance between the distributions of random vectors. Energy distance is zero if and only if the distributions are identical, thus it characterizes equality of distributions and provides a theoretical foundation for statistical inference and analysis. Energy statistics are functions of distances between observations in metric spaces. As a statistic, energy distance can be applied to measure the difference between a sample and a hypothesized distribution or the difference between two or more samples in arbitrary, not necessarily equal dimensions. The name energy is inspired by the close analogy with Newton's gravitational potential energy. Applications include testing independence by distance covariance, goodness‐of‐fit, nonparametric tests for equality of distributions and extension of analysis of variance, generalizations of clustering algorithms, change point analysis, feature selection, and more. doi: 10.1002/wics.1375
+能量距离是一种评估随机向量之间距离的指标，只有当两个分布完全一致时，能量距离的取值才取0。作为一种统计工具，能量距离可以用于评估样本及假设分布的距离，也可以用于评估两个独立样本之间的距离。在独立性测试、匹配度测试、无参数测试及分类划分领域，具有普遍应用能力。\nupcite{10.1002/wics.1375}
 
-能量距离的数学理论
+%能量距离的数学理论
+\insertEquation{
+    \begin{equation}
+    \label{equ:3:energy-distance}
+		D_{e}(F(x),G(x))=\sqrt{2\sum{(F(x)-G(x))}^{2}}
+	\end{equation}
+}
 
-相对距离的一致性判定
+能量距离的计算方式如公式（\nref{equ:3:energy-distance}），在该检测方法中，评估的是分布的相似性，因此各点权值相等，$D_{e}(F(x),G(x))$代表了CDF曲线之间距离的量化评估结果。
+
+%相对距离的一致性判定
+\insertTable{
+	\begin{table}[]
+      \centering
+      \caption{基于相对距离的检测方法适用范围}
+      \label{tab:3:distance-range}
+          \begin{tabular*}{0.8\textwidth}{@{\extracolsep{\fill}}ccc}
+            \toprule
+            检验方法 & 测试对象 & 通过条件 \\ 
+            \midrule
+            \multirow{3}{*}{Wasserstein距离} & IPD分布 & \multirow{3}{*}{$D_{w}(F(x),G(x))\times n<1$} \\ 
+            & 突发丢包长度分布 \\
+            & 区间丢包分布 \\
+            \\
+            \multirow{3}{*}{能量距离} & IPD分布 & \multirow{3}{*}{$D_{e}(F(x),G(x))<1$} \\ 
+            & 突发丢包长度分布 \\
+            & 区间丢包分布 \\
+            \bottomrule
+          \end{tabular*}
+    \end{table}
+}
+
+基于相对距离的检测方法，适用的测试对象及通过条件，如表\nref{tab:3:distance-range}。通常$D_{w}(F(x),G(x))\times n$及$D_{e}(F(x),G(x))$与一致性概率无关，在本检测方法中，设定上限为1，如果距离计算结果超过1，则认定分布不一致。
+
+\subsection{检测方法总结}
+\label{chap:analyze:statistical:sum}
+该时间隐通道检测方法，综合了集中不同检测原理的判别方式，并对观测到的多种特征分布进行检验。相较单一的检测方式，对基于主动丢包的时间隐通道具有更好的检测能力。检验方法与测试对象的对应关系，如表\nref{tab:3:detect-sum}所示，共14条测试子项，当通过其中的11条量化测试方法时，可以认定不存在时间隐通道；CDF检验结果存在主观差异，作为最终结论的参照。
+
+\insertTable{
+	\begin{table}[]
+      \centering
+      \caption{VoLTE时间隐通道检测方法汇总}
+      \label{tab:3:detect-sum}
+          \begin{tabular*}{0.98\textwidth}{@{\extracolsep{\fill}}cccc}
+            \toprule
+            编号 & 测试对象 & 检验方法 & 通过条件 \\ 
+            \midrule
+            1 & \multirow{6}{*}{IPD分布} & CDF检验 & 趋势基本一致 \\ 
+            2 & & K-S检验 & $p>0.05$ \\
+            3 & & Welch's t检验，Mann–Whitney rank检验 & 存在$p>0.05$\\
+            4 & & K-L散度 & $KL-d<0.1$ \\
+            5 & & Wasserstein距离 & $d<1$ \\
+            6 & & 能量距离 & $d<1$ \\
+            \\
+            7 & \multirow{3}{*}{突发丢包长度分布} & CDF检验 & 趋势基本一致\\ 
+            8 & & K-L散度 & $KL-d<0.1$ \\
+            9 & & Wasserstein距离 & $d<1$ \\
+            10 & & 能量距离 & $d<1$ \\
+            \\
+            11 & \multirow{3}{*}{区间丢包数分布} & CDF检验 & 趋势基本一致\\ 
+            12 & & K-L散度 & $KL-d<0.1$ \\
+            13 & & Wasserstein距离 & $d<1$ \\
+            14 & & 能量距离 & $d<1$ \\
+            \bottomrule
+          \end{tabular*}
+    \end{table}
+}
