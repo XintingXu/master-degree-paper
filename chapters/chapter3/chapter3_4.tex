@@ -187,11 +187,11 @@ Wasserstein距离又称为空间传输距离，作为无参数检测方法，其
             \toprule
             检验方法 & 测试对象 & 通过条件 \\ 
             \midrule
-            \multirow{3}{*}{Wasserstein距离} & IPD分布 & \multirow{3}{*}{$D_{w}(F(x),G(x))\times n<1$} \\ 
+            \multirow{3}{*}{Wasserstein距离} & IPD分布 & \multirow{3}{*}{$D_{w}(F(x),G(x))\times n<1.5$} \\ 
             & 突发丢包长度分布 \\
             & 区间丢包分布 \\
             \\
-            \multirow{3}{*}{能量距离} & IPD分布 & \multirow{3}{*}{$D_{e}(F(x),G(x))<1$} \\ 
+            \multirow{3}{*}{能量距离} & IPD分布 & \multirow{3}{*}{$D_{e}(F(x),G(x))<1.5$} \\ 
             & 突发丢包长度分布 \\
             & 区间丢包分布 \\
             \bottomrule
@@ -199,7 +199,7 @@ Wasserstein距离又称为空间传输距离，作为无参数检测方法，其
     \end{table}
 }
 
-基于相对距离的检测方法，适用的测试对象及通过条件，如表\nref{tab:3:distance-range}。通常$D_{w}(F(x),G(x))\times n$及$D_{e}(F(x),G(x))$与一致性概率无关，在本检测方法中，设定上限为1，如果距离计算结果超过1，则认定分布不一致。
+基于相对距离的检测方法，适用的测试对象及通过条件，如表\nref{tab:3:distance-range}。通常$D_{w}(F(x),G(x))\times n$及$D_{e}(F(x),G(x))$与一致性概率无关，在本检测方法中，设定上限为$1.5$，如果距离计算结果超过1.5，则认定分布不一致。
 
 \subsection{检测方法总结}
 \label{chap:analyze:statistical:sum}
@@ -218,18 +218,18 @@ Wasserstein距离又称为空间传输距离，作为无参数检测方法，其
             2 & & K-S检验 & $p>0.05$ \\
             3 & & Welch's t检验，Mann–Whitney rank检验 & 存在$p>0.05$\\
             4 & & K-L散度 & $KL-d<0.1$ \\
-            5 & & Wasserstein距离 & $d<1$ \\
-            6 & & 能量距离 & $d<1$ \\
+            5 & & Wasserstein距离 & $d<1.5$ \\
+            6 & & 能量距离 & $d<1.5$ \\
             \\
             7 & \multirow{3}{*}{突发丢包长度分布} & CDF检验 & 趋势基本一致\\ 
             8 & & K-L散度 & $KL-d<0.1$ \\
-            9 & & Wasserstein距离 & $d<1$ \\
-            10 & & 能量距离 & $d<1$ \\
+            9 & & Wasserstein距离 & $d<1.5$ \\
+            10 & & 能量距离 & $d<1.5$ \\
             \\
             11 & \multirow{3}{*}{区间丢包数分布} & CDF检验 & 趋势基本一致\\ 
             12 & & K-L散度 & $KL-d<0.1$ \\
-            13 & & Wasserstein距离 & $d<1$ \\
-            14 & & 能量距离 & $d<1$ \\
+            13 & & Wasserstein距离 & $d<1.5$ \\
+            14 & & 能量距离 & $d<1.5$ \\
             \bottomrule
           \end{tabular*}
     \end{table}

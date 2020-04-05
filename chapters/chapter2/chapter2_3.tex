@@ -24,7 +24,7 @@ RTP是以UDP作为传输层协议，不需要进行类似TCP的握手及挥手�
 VoLTE中常见的RTP数据包头结构如图\nref{fig:2:rtp-header}，在包头中存在固定的字段，如V（Version）表明RTP协议版本，M（Marker）指示负载分片的终止，PT（Payload Type）指明数据负载的类型。
 
 \subsection{随机字段}
-\label{chap:backinfo:random}
+\label{chap:backinfo:rtp:random}
 
 %RTP参数中，包含哪些随机生成的字段
 RTP数据包头中，存在一些特殊的字段，其数据取值在标准中有隐含要求。
@@ -40,7 +40,7 @@ RTP数据包头中，存在一些特殊的字段，其数据取值在标准中�
 时间隐通道作为隐蔽传输方法，传输的数据不应该被破解或截获。借助RTP中的这些随机字段和伪随机数生成算法，形成每次隐蔽传输的随机扰动，防范对隐通道的破坏。
 
 \subsection{RTP丢包处理}
-\label{chap:backinfo:dropout}
+\label{chap:backinfo:rtp:dropout}
 
 %RTP及应用中，对于丢包事件的处理
 根据RTP数据包的层次，发生丢包后的处理结果，需要考虑各层次的相应行为。对于IP层来说，不会感知丢包事件，也不会出现重传行为；UDP本身没有重传及确认机制，无法保证数据包送达，也不存在重传行为；RTP重点在于实时性，而重传会破坏实时性效果，导致数据阻塞，因此只在RTCP数据包中进行反馈。\nupcite{6423613,5478577,6894614}
