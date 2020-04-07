@@ -1,8 +1,8 @@
-\section{实验结果及评估}
+\section{基于Zigzag映射矩阵的时间隐通道评估}
 \label{chap:zigzag:results}
 本节对基于Zigzag的时间隐通道进行评估，参照时间隐通道的构造指标要求，评估由抗检测能力、鲁棒性、传输性能及构建代价几个方面组成。其中，抗检测能力测试按照\nref{chap:analyze:statistical}提出的检测方法进行。
 
-\subsection{实验环境及参数}
+\subsection{评估环境及参数}
 \label{chap:zigzag:results:environment}
 该时间隐通道构建方法中，主要的参数为$L_{Codeword}$，其取值决定了传输性能水平，并对抗检测能力有显著影响。实验的测试场景，为\nref{chap:analyze:results}中表\nref{tab:3:capture-results}两种场景下的测试数据，在其基础上进行调制及解调测试，并对比调制前后的结果进行抗检测能力测试。
 
@@ -15,7 +15,7 @@
       \label{tab:4:parameters}
           \begin{tabular*}{0.5\textwidth}{@{\extracolsep{\fill}}ccc}
             \toprule
-            $L_{Codeword}$\ (bit) & $2^{L_{Codeword}}$ & PLR \\
+            $L_{Codeword}$\ (bit) & $2^{L_{Codeword}}$ & 丢包率 \\
             \midrule
             7 & 128 & 0.781\% \\ 
             8 & 256 & 0.391\% \\ 
@@ -89,8 +89,6 @@
 \subsubsection{IPD分布测试}
 \label{chap:zigzag:results:undetectability:ipd}
 
-IPD分布的CDF曲线如图\nref{fig:4:results:ipd:cdf}所示，在两种不同的场景中，IPD的分布已经无法区分该时间隐通道，CDF曲线已经高度趋于一致。该结果与\nref{chap:analyze:result:ipd:cdf}中的测试结果类似，当$L_{Codeword}\ge 7$时，在IPD分布上已经没有显著的差异，传统基于IPD的检测方法无法检测出该时间隐通道。
-
 \insertTable{
 	\begin{table}[]
       \centering
@@ -111,12 +109,12 @@ IPD分布的CDF曲线如图\nref{fig:4:results:ipd:cdf}所示，在两种不同�
     \end{table}
 }
 
+IPD分布的CDF曲线如图\nref{fig:4:results:ipd:cdf}所示，在两种不同的场景中，IPD的分布已经无法区分该时间隐通道，CDF曲线已经高度趋于一致。该结果与\nref{chap:analyze:result:ipd:cdf}中的测试结果类似，当$L_{Codeword}\ge 7$时，在IPD分布上已经没有显著的差异，传统基于IPD的检测方法无法检测出该时间隐通道。
+
 对IPD的量化检测结果如表\nref{tab:4:results:ipd}，所有的参数在所有的场景中，均与原始分布保持高度一致，分布一致性检验无法检测出改时间隐通道。检测结果证明，该时间隐通道在IPD分布的检测中，具备抗检测能力，满足时间隐通道的隐蔽性要求。
 
 \subsubsection{突发丢包长度测试}
 \label{chap:zigzag:results:undetectability:burst}
-
-不同参数下，突发丢包长度的累积分布函数曲线，如图\nref{fig:4:results:burst:cdf}。两种场景中，时间隐通道的曲线均出现了一定偏离，并且在Excellent场景中的差异更加明显。总体来说，随着$L_{Codeword}$的增大，时间隐通道的分布特征与原始分布更加接近，与理论预期一致。参照表\nref{tab:4:parameters}，参数$L_{Codeword}$与调制产生的丢包率成反比，减少丢包则减弱对分布的影响。
 
 \insertTable{
 	\begin{table}[]
@@ -142,12 +140,12 @@ IPD分布的CDF曲线如图\nref{fig:4:results:ipd:cdf}所示，在两种不同�
     \end{table}
 }
 
+不同参数下，突发丢包长度的累积分布函数曲线，如图\nref{fig:4:results:burst:cdf}。两种场景中，时间隐通道的曲线均出现了一定偏离，并且在Excellent场景中的差异更加明显。总体来说，随着$L_{Codeword}$的增大，时间隐通道的分布特征与原始分布更加接近，与理论预期一致。参照表\nref{tab:4:parameters}，参数$L_{Codeword}$与调制产生的丢包率成反比，减少丢包则减弱对分布的影响。
+
 不同场景中，对不同参数下的时间隐通道进行突发丢包长度检验，得到的结果如表\nref{tab:4:results:burst}。Excellent场景中，当$L_{Codeword}\ge 9$时，根据突发丢包长度的分布，已经无法区分时间隐通道与正常通道。Good场景中，基于主动丢包的时间隐通道与噪声分布相近，检测方法无法进行区分。因此，时间隐通道要通过突发丢包长度的检验，Excellent场景下$L_{Codeword}$至少为9，Good场景下$L_{Codeword}\ge 7$即可满足要求。
 
 \subsubsection{区间丢包数测试}
 \label{chap:zigzag:results:undetectability:win}
-
-在区间丢包数的测试中，采用的窗口长度与\nref{chap:analyze:result:window}保持一致，分别为100及200。区间丢包数的CDF曲线如图\nref{fig:4:results:win:cdf}，与\nref{fig:3:result:win:cdf}不同的是，对基于Zigzag映射矩阵的时间隐通道的检测结果，CDF曲线起始位置没有发生明显的偏移，与\nref{chap:analyze:result:window}的检测结果基本一致。
 
 \insertTable{
 	\begin{table}[]
@@ -178,9 +176,11 @@ IPD分布的CDF曲线如图\nref{fig:4:results:ipd:cdf}所示，在两种不同�
     \end{table}
 }
 
+在区间丢包数的测试中，采用的窗口长度与\nref{chap:analyze:result:window}保持一致，分别为100及200。区间丢包数的CDF曲线如图\nref{fig:4:results:win:cdf}，与\nref{fig:3:result:win:cdf}不同的是，对基于Zigzag映射矩阵的时间隐通道的检测结果，CDF曲线起始位置没有发生明显的偏移，与\nref{chap:analyze:result:window}的检测结果基本一致。
+
 对区间丢包数分布的量化评估结果，如表\nref{tab:4:results:win}，K-L散度无法有效区分时间隐通道，而Wasserstein距离及能量距离具备一定的检测能力。Excellent场景下，当$L_{Codeword}\ge 8$时即可通过所有的测试；而在Good场景下，当$L_{Codeword}\ge 9$时才可以通过所有测试。
 
-\subsubsection{测试汇总}
+\subsubsection{抗检测能力测试汇总}
 \label{chap:zigzag:results:undetectability:all}
 
 \insertTable{
@@ -257,7 +257,7 @@ IPD分布的CDF曲线如图\nref{fig:4:results:ipd:cdf}所示，在两种不同�
 
 从传输性能的角度考虑，降低$L_{Codeword}$可以有效提升传输速率，但带来的代价是抗检测能力的衰退，违背了时间隐通道的研究前提。尤其是对基于主动丢包的时间隐通道来说，主动丢弃的数据包越多，对宿主信道意味着噪声越强，用户的通话质量将受到影响，同样影响隐通道的隐蔽性。
 
-\subsection{构建代价}
+\subsection{构建代价测试}
 \label{chap:zigzag:results:cost}
 
 \insertFigure{
@@ -282,6 +282,25 @@ IPD分布的CDF曲线如图\nref{fig:4:results:ipd:cdf}所示，在两种不同�
 
 在两种场景中，对比NIQE图像质量的范围和均值，构建时间隐通道后没有发生明显的偏移。在Excellent场景中，NIQE值基本在1以下，得益于自身较好的传输质量，时间隐通道产生的影响在统计结果中无明显差异。Good场景中，原始的视频质量已经处于较差水平，时间隐通道导致NIQE值的范围和集中程度发生改变，但总体也没有出现明显的差异，统计结果基本一致。通过对比，本时间隐通道不会导致视频质量发生明显改变，满足时间隐通道低代价的要求。
 
+\insertTable{
+	\begin{table}[]
+      \centering
+      \caption{基于Zigzag映射矩阵的时间隐通道横向比较}
+      \label{tab:4:results:compare}
+          \begin{tabular*}{0.8\textwidth}{@{\extracolsep{\fill}}cccc}
+            \toprule
+            时间隐通道方法 & 性能 & 容量 & 误码率 \\
+            \midrule
+            SCC\nupcite{10.1007/978-3-642-16435-4_15} & & 0.2$\sim$ 0.8 bpp & 2\% \\
+            AFTC\nupcite{7347395} & & 0.5 bpp & 4\% \\
+            CoCo\nupcite{10.1007/978-3-642-24178-9_22} & & 0.1$\sim$ 0.5 bpp & 4\% \\
+            SPCC\nupcite{8288828} & 0.7$\sim$ 3 bps & & 0.9\% \\
+            Zigzag-CTC & 0.27$\sim$ 0.88 bps & 0.009 bps & 1.5\% \\
+            \bottomrule
+          \end{tabular*}
+    \end{table}
+}
+
 \subsection{结论}
 \label{chap:zigzag:results:conclusion}
 
@@ -299,25 +318,6 @@ IPD分布的CDF曲线如图\nref{fig:4:results:ipd:cdf}所示，在两种不同�
         \caption{基于Zigzag映射矩阵的时间隐通道综合评估}
         \label{fig:4:results:sum}
     \end{figure}
-}
-
-\insertTable{
-	\begin{table}[]
-      \centering
-      \caption{基于Zigzag映射矩阵的时间隐通道横向比较}
-      \label{tab:4:results:compare}
-          \begin{tabular*}{0.8\textwidth}{@{\extracolsep{\fill}}cccc}
-            \toprule
-            时间隐通道方法 & Throughput & Capacity & Bit Error Rate \\
-            \midrule
-            SCC\nupcite{10.1007/978-3-642-16435-4_15} & & 0.2$\sim$ 0.8 bpp & 2\% \\
-            AFTC\nupcite{7347395} & & 0.5 bpp & 4\% \\
-            CoCo\nupcite{10.1007/978-3-642-24178-9_22} & & 0.1$\sim$ 0.5 bpp & 4\% \\
-            SPCC\nupcite{8288828} & 0.7$\sim$ 3 bps & & 0.9\% \\
-            Zigzag-CTC & 0.27$\sim$ 0.88 bps & 0.009 bps & 1.5\% \\
-            \bottomrule
-          \end{tabular*}
-    \end{table}
 }
 
 如图\nref{fig:4:results:sum}，该时间隐通道的鲁棒性和传输性能，均具有$L_{Codeword}$越小结果越小的特点。结合\nref{chap:zigzag:results:undetectability}抗检测性评估结果，该时间隐通道的最优$L_{Codeword}$为9，在该参数下能够通过所有的检测方法，并且具有0.88bps的传输性能。

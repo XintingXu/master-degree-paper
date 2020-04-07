@@ -1,7 +1,7 @@
-\section{基于统计分析的时间隐通道检测方法设计}
+\section{面向基于主动丢包的VoLTE时间隐通道检测方法设计}
 \label{chap:analyze:statistical}
 
-本节主要介绍，在该时间隐通道中采用的检测工具，及各种检测工具及检测对象的组合设计。在进行检测前，利用抓包得到的结果，构建标准参照，涵盖的对象包括IPD、突发丢包长度及区间丢包数量的CDF及PMF。对于测试样本，同样计算其CDF及PMF结果，通过各种检测算法，比较分布之间的差异，得出隐通道检测结论。
+本节主要介绍，在该时间隐通道中采用的检测工具，及各种检测工具及检测对象的组合设计。在进行检测前，利用抓包得到的结果，构建标准参照，涵盖的对象包括IPD、突发丢包长度及区间丢包数量的累积分布函数及概率质量函数。对于测试样本，同样计算其累积分布函数及概率质量函数结果，通过各种检测算法，比较分布之间的差异，得出隐通道检测结论。
 
 \subsection{基于累积分布函数的检测方法设计}
 \label{chap:analyze:statistical:cdf}
@@ -42,7 +42,7 @@ Kolmogorov-Smirnov检验是常用的无参数、双样本检验方法，检验�
 K-S检验在大样本环境中具有较高的准确度，样本数量较少时，统计的分布存在误差，最终检验结果不具有可靠性。同样需要注意的是，当样本数据增加时，$D_{KS,0.05}$会相应减小，$D_{KS}$上限降低，当采样不均匀时，出现误判结果。
 因此，本检测方法中，K-S检验用于时间隐通道构建前后，相同样本的检测。
 
-\subsubsection{基于Welch’s t-test的检测方法设计}
+\subsubsection{基于Welch’s t检验的检测方法设计}
 \label{chap:analyze:statistical:test:t}
 
 %T-test的数学理论
@@ -52,14 +52,12 @@ Welch’s t检验，应用于两个独立的样本，主要评估样本的平均
     \begin{equation}
     \label{equ:3:t-value}
 		t=\frac{\overline{X}_{1}-\overline{X}_{2}}{\sqrt{\frac{s_{1}^{2}}{N_{1}}+\frac{s_{2}^{2}}{N_{2}}}}
-	\end{equation}
-}
+	  \end{equation}
 
-\insertEquation{
     \begin{equation}
     \label{equ:3:v-value}
 		\nu \approx \frac{({\frac{s_{1}^{2}}{N_{1}}+\frac{s_{2}^{2}}{N_{2}})^{2}}}{\frac{s_{1}^{4}}{N_{1}^{2}\nu_{1}}+\frac{s_{2}^{4}}{N_{2}^{2}\nu_{2}}}
-	\end{equation}
+	  \end{equation}
 }
 
 %T-test的一致性判定
@@ -67,7 +65,7 @@ Welch’s t检验，应用于两个独立的样本，主要评估样本的平均
 
 类似K-S检验，Welch's t检验得到的$p$值，反映了样本的一致性水平，一般取0.05作为分界值，对应两个样本分布一致的概率为95\%。因为Welch’s t检验适用范围的限制，只有在正态分布的情况下具有较好的效果，而在\nref{chap:analyze:results}中分析可知，IPD等统计特征的分布，多为偏态分布，因此，Welch's t检验作为IPD的检验方式之一。
 
-\subsubsection{基于Mann-Whitney rank test的检测方法设计}
+\subsubsection{基于Mann-Whitney rank检验的检测方法设计}
 \label{chap:analyze:statistical:test:mw}
 
 %M-W检验的数学理论

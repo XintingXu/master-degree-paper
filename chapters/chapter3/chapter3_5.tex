@@ -1,4 +1,4 @@
-\section{时间隐通道检测方法评估}
+\section{面向基于主动丢包的VoLTE时间隐通道检测方法评估}
 \label{chap:analyze:result}
 
 %本节讲述的内容，对提出的测试方法，进行检验
@@ -101,6 +101,25 @@
 	\end{figure}
 }
 
+\subsubsection{CDF测试结果}
+\label{chap:analyze:result:ipd:cdf}
+
+如图\nref{fig:3:result:ipd:cdf}，在CDF趋势方面，时间隐通道的分布虽然出现偏离，但总体趋势仍保持一致。即使随机丢包率上升到10\%，与原始分布的差异也并不明显。因此，时间隐通道的IPD分布可以通过CDF检验，需要其他检测方法进一步检测。
+
+\subsubsection{条件熵测试结果}
+\label{chap:analyze:result:ipd:kld}
+
+如图\nref{fig:3:result:ipd:kld}，不同测试样本的测试结果被绘制为箱线图。在两种不同的场景中，时间隐通道IPD分布于宿主信道IPD分布，进行K-L散度测试后，结果均小于阈值0.1。并且，随着主动丢包率的降低，K-L散度逐渐下降，意味着隐通道的IPD分布于宿主信道的IPD分布更加接近。
+
+从检测效果来看，在IPD分布中，时间隐通道与宿主信道十分接近，CDF检测及K-L散度均无法识别，需要进一步采用一致性检验进行判断。
+
+\subsubsection{一致性检验测试结果}
+\label{chap:analyze:result:ipd:statistical}
+
+如图\nref{fig:3:result:ipd:ks}，在K-S检验中，已经能够检测出IPD分布的不一致现象。当丢包率$\le 1\%$时，Excellent场景下已经基本通过了K-S检验，随着PLR的进一步降低，K-S检验的p值逐渐增大。如图\nref{fig:3:result:ipd:t}，在Welch's t检验中，两种场景下的检测结果出现差异。在Excellent场景中，当丢包率$\le 0.4\%$后，才可以通过Welch's t检验；而在Good场景中，当丢包率$\le 2\%$时，即可通过Welch's t检验。Welch's t检验结果证明，在不同的场景中，丢包导致的IPD平均值变化程度不同。
+
+如图\nref{fig:3:result:ipd:mw}，在Mann–Whitney rank检验中，两种场景下只有丢包率$\le 0.4\%$才可通过测试。由于Mann–Whitney rank检验适用分布为正态分布，而IPD分布与标准的正态分布偏差较大，所以检验结果较Welch's t检验要更加严格。
+
 \insertFigure{
 	\begin{figure}
         \centering
@@ -116,6 +135,9 @@
         \label{fig:3:result:ipd:wd}
 	\end{figure}
 }
+
+\subsubsection{相对距离测试结果}
+\label{chap:analyze:result:ipd:distance}
 
 \insertFigure{
 	\begin{figure}
@@ -133,29 +155,7 @@
 	\end{figure}
 }
 
-\subsubsection{CDF测试结果}
-\label{chap:analyze:result:ipd:cdf}
-
-如图\nref{fig:3:result:ipd:cdf}，在CDF趋势方面，时间隐通道的分布虽然出现偏离，但总体趋势仍保持一致。即使随机丢包率上升到10\%，与原始分布的差异也并不明显。因此，时间隐通道的IPD分布可以通过CDF检验，需要其他检测方法进一步检测。
-
-\subsubsection{条件熵测试结果}
-\label{chap:analyze:result:ipd:kld}
-
-如图\nref{fig:3:result:ipd:kld}，不同测试样本的测试结果被绘制为箱线图。在两种不同的场景中，时间隐通道IPD分布于宿主信道IPD分布，进行K-L散度测试后，结果均小于阈值0.1。并且，随着主动丢包率的降低，K-L散度逐渐下降，意味着隐通道的IPD分布于宿主信道的IPD分布更加接近。
-
-从检测效果来看，在IPD分布中，时间隐通道与宿主信道十分接近，CDF检测及K-L散度均无法识别，需要进一步采用一致性检验进行判断。
-
-\subsubsection{一致性检验测试结果}
-\label{chap:analyze:result:ipd:statistical}
-
-如图\nref{fig:3:result:ipd:ks}，在K-S检验中，已经能够检测出IPD分布的不一致现象。当随机丢包率$PLR\le 1\%$时，Excellent场景下已经基本通过了K-S检验，随着PLR的进一步降低，K-S检验的p值逐渐增大。如图\nref{fig:3:result:ipd:t}，在Welch's t检验中，两种场景下的检测结果出现差异。在Excellent场景中，当$PLR\le 0.4\%$后，才可以通过Welch's t检验；而在Good场景中，当$PLR\le 2\%$时，即可通过Welch's t检验。Welch's t检验结果证明，在不同的场景中，丢包导致的IPD平均值变化程度不同。
-
-如图\nref{fig:3:result:ipd:mw}，在Mann–Whitney rank检验中，两种场景下只有$PLR\le 0.4\%$才可通过测试。由于Mann–Whitney rank检验适用分布为正态分布，而IPD分布与标准的正态分布偏差较大，所以检验结果较Welch's t检验要更加严格。
-
-\subsubsection{相对距离测试结果}
-\label{chap:analyze:result:ipd:distance}
-
-如图\nref{fig:3:result:ipd:wd}，PLR与Wasserstein距离存在一定的关联关系，随着PLR的增大，相对距离也随之增大。在两种场景中，检测结果是相同的，虽然在$PLR=10\%$已经接近判断阈值，但仍未超过，因此无法检测出时间隐通道。如图\nref{fig:3:result:ipd:ed}，能量距离的计算结果与PLR也呈现正相关，在两种场景中，当$PLR\le 5\%$时，才可以通过能量距离检测。由结果来看，能量距离较Wasserstein距离具有更高的要求，但二者的总体趋势是基本一致的。
+如图\nref{fig:3:result:ipd:wd}，PLR与Wasserstein距离存在一定的关联关系，随着PLR的增大，相对距离也随之增大。在两种场景中，检测结果是相同的，虽然在丢包率$=10\%$已经接近判断阈值，但仍未超过，因此无法检测出时间隐通道。如图\nref{fig:3:result:ipd:ed}，能量距离的计算结果与PLR也呈现正相关，在两种场景中，当丢包率$\le 5\%$时，才可以通过能量距离检测。由结果来看，能量距离较Wasserstein距离具有更高的要求，但二者的总体趋势是基本一致的。
 
 通过以上测试可以发现，通过IPD检测基于主动丢包的时间隐通道，在灵敏度方面无法达到隐通道的检测要求。主要的因素，在于丢包事件与IPD相比数量较少，少量的丢包很难影响IPD分布出现大的变动，因此现有基于IPD的时间隐通道检测方法，无法满足本论文的检测要求，需要结合丢包特征方面的检测方法。
 
@@ -236,12 +236,12 @@
 \subsubsection{条件熵测试结果}
 \label{chap:analyze:result:burst:kld}
 
-如图\nref{fig:3:result:burst:kld}，通过K-L散度已经能够明显将时间隐通道检测出来。图\nref{fig:3:result:burst:kld:excellent}中，只有$PLR\le 0.2\%$时，才可以通过K-L散度检测，说明在良好的网络条件下，通过主动丢包构建时间隐通道要求较高。图\nref{fig:3:result:burst:kld:good}中，可以发现当$PLR\le 1\%$时，即可通过K-L散度检测，说明在Good场景中，基于主动丢包的时间隐通道，更容易隐蔽于网络噪声中。
+如图\nref{fig:3:result:burst:kld}，通过K-L散度已经能够明显将时间隐通道检测出来。图\nref{fig:3:result:burst:kld:excellent}中，只有丢包率$\le 0.2\%$时，才可以通过K-L散度检测，说明在良好的网络条件下，通过主动丢包构建时间隐通道要求较高。图\nref{fig:3:result:burst:kld:good}中，可以发现当丢包率$\le 1\%$时，即可通过K-L散度检测，说明在Good场景中，基于主动丢包的时间隐通道，更容易隐蔽于网络噪声中。
 
 \subsubsection{相对距离测试结果}
 \label{chap:analyze:result:burst:distance}
 
-如图\nref{fig:3:result:burst:wd}，突发丢包长度进行Wasserstein距离测试的结果，两种场景中的总体趋势是一致的。在Excellent场景中，$PLR\le 10\%$都可以通过Wasserstein距离测试；而在Good场景中，当$PLR\le 2\%$才可以通过测试。由于时间隐通道产生的突发丢包长度为1，Excellent场景中丢包长度为1的占主要部分，而Good场景中所占比例要小，因此Good场景中的累积结果更加显著。图\nref{fig:3:result:burst:ed}，为能量距离的检测结果。Excellent场景下，$PLR\le 2\%$即可通过检验；Good场景下，$PLR\le 1\%$才可以通过检验。能量距离检测要求较Wasserstein更加严格，Good场景较Excellent场景更加严格。在相对距离测试中，可以发现最终结果的变化范围非常明显，各种参数下的距离值存在明显的界限，并且检测结果与CDF曲线的相对趋势是一致的。
+如图\nref{fig:3:result:burst:wd}，突发丢包长度进行Wasserstein距离测试的结果，两种场景中的总体趋势是一致的。在Excellent场景中，丢包率$\le 10\%$都可以通过Wasserstein距离测试；而在Good场景中，当丢包率$\le 2\%$才可以通过测试。由于时间隐通道产生的突发丢包长度为1，Excellent场景中丢包长度为1的占主要部分，而Good场景中所占比例要小，因此Good场景中的累积结果更加显著。图\nref{fig:3:result:burst:ed}，为能量距离的检测结果。Excellent场景下，丢包率$\le 2\%$即可通过检验；Good场景下，丢包率$\le 1\%$才可以通过检验。能量距离检测要求较Wasserstein更加严格，Good场景较Excellent场景更加严格。在相对距离测试中，可以发现最终结果的变化范围非常明显，各种参数下的距离值存在明显的界限，并且检测结果与CDF曲线的相对趋势是一致的。
 
 对比\nref{chap:analyze:result:ipd}中基于IPD的检测结果，基于突发丢包长度分布的测试，已能有效检测基于主动丢包的时间隐通道。在Excellent场景下，由于对丢包比较敏感，K-L散度具有更好的检测效果；在Good场景下，相对距离检测对分布的累积差异更加敏感，检测结果优于Excellent场景。
 
@@ -351,7 +351,7 @@
 
 如图\nref{fig:3:result:win:cdf}，时间隐通道对CDF曲线产生了显著影响。对比图\nref{fig:3:result:win100:cdf:excellent}及图\nref{fig:3:result:win100:cdf:good}，在相同的窗口设置下，由于不同场景中的丢包情况不同，Excellent场景下的CDF曲线上升趋势更加明显，也就意味着丢包数较多的区间占据的比例较低。对比图\nref{fig:3:result:win100:cdf:excellent}及图\nref{fig:3:result:win200:cdf:excellent}，在相同场景中，增大窗口长度后，曲线的上升趋势减缓，更有利于判断分布的差异。
 
-通过对比CDF曲线，可以明显发现时间隐通道的丢包越密集，对曲线的影响越大。当丢包的间隔小于区间长度时，意味着区间内一定存在丢包的情况，导致CDF曲线的起始位置大于0，出现明显的异常现象。因此，通过CDF曲线可以发现$PLR\ge5\%$的时间隐通道。
+通过对比CDF曲线，可以明显发现时间隐通道的丢包越密集，对曲线的影响越大。当丢包的间隔小于区间长度时，意味着区间内一定存在丢包的情况，导致CDF曲线的起始位置大于0，出现明显的异常现象。因此，通过CDF曲线可以发现丢包率$\ge5\%$的时间隐通道。
 
 \subsubsection{条件熵测试结果}
 \label{chap:analyze:result:window:kld}
@@ -361,9 +361,9 @@ K-L散度的测试结果如图\nref{fig:3:result:win:kld}，两种场景下，�
 \subsubsection{相对距离测试结果}
 \label{chap:analyze:result:window:distance}
 
-Wasserstein距离的检测结果如图\nref{fig:3:result:win:wd}。可以发现，计算得到的Wasserstein距离，能够有效区分不同$PLR$下时间隐通道产生的影响。当窗口长度为100时，只有$PLR\le 1\%$才可以通过Wasserstein距离检验；而窗口长度扩展到200时，只有$PLR\le 0.4\%$才可以通过检测。
+Wasserstein距离的检测结果如图\nref{fig:3:result:win:wd}。可以发现，计算得到的Wasserstein距离，能够有效区分不同丢包率下时间隐通道产生的影响。当窗口长度为100时，只有丢包率$\le 1\%$才可以通过Wasserstein距离检验；而窗口长度扩展到200时，只有丢包率$\le 0.4\%$才可以通过检测。
 
-能量距离的检测结果如图\nref{fig:3:result:win:ed}。检测结果类似于Wasserstein距离检测，在窗口长度为100时，只有$PLR\le 1\%$才可以通过测试；而在窗口长度为200时，需要$PLR\le 0.4\%$才有较高的通过几率。
+能量距离的检测结果如图\nref{fig:3:result:win:ed}。检测结果类似于Wasserstein距离检测，在窗口长度为100时，只有丢包率$\le 1\%$才可以通过测试；而在窗口长度为200时，需要丢包率$\le 0.4\%$才有较高的通过几率。
 
 通过检测结果可以发现，能量距离可以很好地反映CDF曲线的差异，与K-L散度相结合，可以从不同的方面对分布之间的差异进行评估。实验结果证明，通过结合区间丢包数分布和突发丢包长度，可以对基于IPD的检测方法进行补充。
 

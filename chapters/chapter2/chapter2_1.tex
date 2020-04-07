@@ -72,14 +72,10 @@
 \insertFigure{
 	\begin{figure}
 		\centering
-        \includegraphics[width=0.8\textwidth]{chapters/chapter2/figures/ipds-audio-video.pdf}
+        \includegraphics[width=0.8\textwidth]{chapters/chapter2/figures/length-audio-video.pdf}
         \caption{VoLTE音视频数据包发送间隔示意}\label{fig:2:audio-video}
 	\end{figure}
 }
-
-\subsubsection{视频数据包发送与接收IPD分布特征}
-\label{chap:backinfo:volte:packets:ipd}
-如\nref{chap:backinfo:volte:packets:send}所述，VoLTE语音数据包的IPD规律性明显，对与语音数据包传输特征的控制，处产生可观测的异常分布。研究VoLTE视频数据包的传输特征，对VoLTE下时间隐通道构造方法的研究具有重要意义，VoLTE视频数据流对噪声敏感度低，便于时间隐通道隐匿在网络噪声中。
 
 \insertFigure{
 	\begin{figure}
@@ -89,6 +85,10 @@
 	\end{figure}
 }
 
+\subsubsection{视频数据包发送与接收IPD分布特征}
+\label{chap:backinfo:volte:packets:ipd}
+如\nref{chap:backinfo:volte:packets:send}所述，VoLTE语音数据包的IPD规律性明显，对与语音数据包传输特征的控制，处产生可观测的异常分布。研究VoLTE视频数据包的传输特征，对VoLTE下时间隐通道构造方法的研究具有重要意义，VoLTE视频数据流对噪声敏感度低，便于时间隐通道隐匿在网络噪声中。
+
 如图\nref{fig:2:cdf-ipd}，在发送阶段，IPD主要集中在30 ms及0 ms两部分，由于视频刷新率为30 fps，每隔33 ms产生一个新的视频帧，而视频帧又有多个数据包组成，造成发送阶段CDF曲线不平滑。在接收阶段，受网络噪声及传输延迟的影响，IPD在$[0, 30]$区间之间集中分布，CDF曲线趋于平滑。因此，视频数据包在IPD方面，对时间隐通道的容忍性要优于语音数据包。
 
 \subsubsection{VoLTE视频数据包丢包特征}
@@ -97,11 +97,11 @@
 	\begin{figure}
 		\centering
         \includegraphics[width=0.8\textwidth]{chapters/chapter2/figures/pmf-dropout.pdf}
-        \caption{连续丢包数量的概率密度函数}\label{fig:2:pmf-dropout}
+        \caption{连续丢包数量的概率质量函数}\label{fig:2:pmf-dropout}
 	\end{figure}
 }
 
-对于VoLTE视频数据包，连续丢包数量的概率密度函数如图\nref{fig:2:pmf-dropout}。该统计结果，来自抓包得到的58万条VoLTE视频数据包，包含低噪声及高噪声在内的多种测试场景。PMF（Probability Mass Function）统计结果显示，VoLTE视频数据信道中的丢包事件，主要是单个数据包的离散丢包事件，大量的连续丢包事件占据的比例非常小。
+对于VoLTE视频数据包，连续丢包数量的概率质量函数如图\nref{fig:2:pmf-dropout}。该统计结果，来自抓包得到的58万条VoLTE视频数据包，包含低噪声及高噪声在内的多种测试场景。PMF（Probability Mass Function）统计结果显示，VoLTE视频数据信道中的丢包事件，主要是单个数据包的离散丢包事件，大量的连续丢包事件占据的比例非常小。
 
 \subsection{基于主动丢包的时间隐通道构造基础}
 \label{chap:backinfo:volte:scheme}
