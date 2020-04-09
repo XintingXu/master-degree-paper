@@ -52,31 +52,28 @@ VoLTE数据包经LTE网络传输后，时间隐通道与网络噪声叠加。接
 计算CRC校验前，需要结合用户自定义的私有$Salt$，以及由RTP传输流中导出的随机字段。在这里，选择RTP包头中的$SSRC$，与$Salt$进行异或后与消息块$D_{i}$进行拼接，共同作为CRC函数的参数计算摘要结果。计算过程的算法描述如算法\nref{alg:4:codeword-generation}，输入参数包括消息及参数信息，最终返回生成的码字序列$C$。
 
 \insertContents{
-    \begin{minipage}{0.65\linewidth}
-        \begin{algorithm}[H]
-            \renewcommand{\algorithmicrequire}{\textbf{Input:}}
-            \renewcommand{\algorithmicensure}{\textbf{Output:}}
-            \caption{Codeword Generation}
-            \label{alg:4:codeword-generation}
-            \begin{algorithmic}[1]
-                \REQUIRE $Covert\ Message$,\ $SSRC$,\ $Salt$,\ $L_{Codeword}$
-                \ENSURE $C \leftarrow \{\}$
-                \STATE $D \leftarrow \{\},\ offset \leftarrow 0$
-                \FOR{$offset < length(Covert\ Message)$}
-                    \STATE $D_{i} \leftarrow Covert\ Message[offset:L_{Codeword}]$
-                    \STATE append $\ D_{i}\ $ to $\ D$
-                \ENDFOR
-                \STATE $salt \leftarrow Salt\ \bigoplus\ SSRC$
-                \FOR{$D_i\ $ in $\ D$}
-                    \STATE $C_{j} \leftarrow $CRC16($salt\ //\ D_{i}\ //\ salt$)
-                    \STATE append $\ D_{i}\ $ to $\ C$
-                    \STATE append $\ C_{j}\ $ to $\ C$
-                \ENDFOR
-                \RETURN $C$
-            \end{algorithmic}
-        \end{algorithm}
-    \end{minipage}
-    \par
+    \begin{algorithm}[t]
+        \renewcommand{\algorithmicrequire}{\textbf{Input:}}
+        \renewcommand{\algorithmicensure}{\textbf{Output:}}
+        \caption{码字生成}
+        \label{alg:4:codeword-generation}
+        \begin{algorithmic}[1]
+            \REQUIRE $Covert\ Message$,\ $SSRC$,\ $Salt$,\ $L_{Codeword}$
+            \ENSURE $C \leftarrow \{\}$
+            \STATE $D \leftarrow \{\},\ offset \leftarrow 0$
+            \FOR{$offset < length(Covert\ Message)$}
+                \STATE $D_{i} \leftarrow Covert\ Message[offset:L_{Codeword}]$
+                \STATE append $\ D_{i}\ $ to $\ D$
+            \ENDFOR
+            \STATE $salt \leftarrow Salt\ \bigoplus\ SSRC$
+            \FOR{$D_i\ $ in $\ D$}
+                \STATE $C_{j} \leftarrow $CRC16($salt\ //\ D_{i}\ //\ salt$)
+                \STATE append $\ D_{i}\ $ to $\ C$
+                \STATE append $\ C_{j}\ $ to $\ C$
+            \ENDFOR
+            \RETURN $C$
+        \end{algorithmic}
+    \end{algorithm}
 }
 
 \subsubsection{映射矩阵}
@@ -134,30 +131,27 @@ VoLTE数据包经LTE网络传输后，时间隐通道与网络噪声叠加。接
 映射矩阵将码字映射为符号，逆映射过程需要按照相同的规则还原码字。对于接收方来说，通过映射矩阵进行逆映射效率较低，需要首先生成映射矩阵的逆映射关系。按照调制过程中\nref{chap:zigzag:model:modulation:mapping}相同的方式，在构建映射矩阵的过程中，创建映射关系$S_{j}\ \rightarrow\ C_{j}$，在添加索引后能够快速完成逆映射。
 
 \insertContents{
-    \begin{minipage}{0.65\linewidth}
-        \begin{algorithm}[H]
-            \renewcommand{\algorithmicrequire}{\textbf{Input:}}
-            \renewcommand{\algorithmicensure}{\textbf{Output:}}
-            \caption{Codeword Identification}
-            \label{alg:4:codeword-identification}
-            \begin{algorithmic}[1]
-                \REQUIRE $\{\{C_{1}',\cdots\},\ \{C_{2}',\cdots\},\cdots\},\ Salt,\ SSRC$
-                \ENSURE $D \leftarrow \{\}$
-                \STATE $salt \leftarrow Salt\ \bigoplus\ SSRC$
-                \FOR{$\{C_{j}',\cdots\},\{C_{j+1}',\cdots\}\ $ in $\ C$}
-                    \FOR{$C_{j}'\ $ in $\ \{C_{j}',\cdots\}$}
-                        \STATE $checksum\ =\ $CRC16($salt\ //\ C_{j}'\ //\ salt$)
-                        \IF{$checksum\ $ in $\ \{C_{j+1}',\cdots\}$}
-                            \STATE append $\ C_{j}'\ $ to $\ D$
-                            \STATE \textbf{break}
-                        \ENDIF
-                    \ENDFOR
+    \begin{algorithm}[t]
+        \renewcommand{\algorithmicrequire}{\textbf{Input:}}
+        \renewcommand{\algorithmicensure}{\textbf{Output:}}
+        \caption{有效码字鉴别}
+        \label{alg:4:codeword-identification}
+        \begin{algorithmic}[1]
+            \REQUIRE $\{\{C_{1}',\cdots\},\ \{C_{2}',\cdots\},\cdots\},\ Salt,\ SSRC$
+            \ENSURE $D \leftarrow \{\}$
+            \STATE $salt \leftarrow Salt\ \bigoplus\ SSRC$
+            \FOR{$\{C_{j}',\cdots\},\{C_{j+1}',\cdots\}\ $ in $\ C$}
+                \FOR{$C_{j}'\ $ in $\ \{C_{j}',\cdots\}$}
+                    \STATE $checksum\ =\ $CRC16($salt\ //\ C_{j}'\ //\ salt$)
+                    \IF{$checksum\ $ in $\ \{C_{j+1}',\cdots\}$}
+                        \STATE append $\ C_{j}'\ $ to $\ D$
+                        \STATE \textbf{break}
+                    \ENDIF
                 \ENDFOR
-                \RETURN $D$
-            \end{algorithmic}
-        \end{algorithm}
-    \end{minipage}
-    \par
+            \ENDFOR
+            \RETURN $D$
+        \end{algorithmic}
+    \end{algorithm}
 }
 
 \subsubsection{码字鉴别}
