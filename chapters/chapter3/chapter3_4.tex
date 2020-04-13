@@ -126,15 +126,14 @@ Mann–Whitney rank检验作为Welch's t检验的补充，应用于不满足正�
             \toprule
             检验方法 & 测试对象 & 通过条件 \\ 
             \midrule
-            \multirow{3}{*}{K-L散度} & IPD分布 & \multirow{3}{*}{K-L散度$<0.1$} \\ 
+            \multirow{2}{*}{K-L散度} & IPD分布 & \multirow{2}{*}{K-L散度$<0.1$} \\ 
             & 突发丢包长度分布 \\
-            & 区间丢包分布 \\
             \bottomrule
           \end{tabular*}
     \end{table}
 }
 
-如表\nref{tab:3:entropy-range}，K-L散度检测可以应用于所有的观测特征，并且判别标准都是相同的。在实际的测试中，K-L散度结果的数量级与样本分布密切相关，因此具有非常好的灵敏度。
+如表\nref{tab:3:entropy-range}，K-L散度主要用于检测IPD分布及突发丢包长度分布。在\nref{chap:analyze:results:ipd}及\nref{chap:analyze:results:burst}分析中，IPD分布及突发丢包长度的统计频率与概率分布相近，K-L散度能够进行一致性判别；而区间丢包数的概率质量函数不稳定，通过K-L散度对概率质量函数进行判断准确率较低。
 
 \subsection{基于相对距离的检测方法设计}
 \label{chap:analyze:statistical:distance}
@@ -201,7 +200,7 @@ Wasserstein距离又称为空间传输距离，作为无参数检测方法，其
 
 \subsection{检测方法总结}
 \label{chap:analyze:statistical:sum}
-该时间隐通道检测方法，综合了集中不同检测原理的判别方式，并对观测到的多种特征分布进行检验。相较单一的检测方式，对基于主动丢包的时间隐通道具有更好的检测能力。检验方法与测试对象的对应关系，如表\nref{tab:3:detect-sum}所示，共14条测试子项，当通过其中的11条量化测试方法时，可以认定不存在时间隐通道；CDF检验结果存在主观差异，作为最终结论的参照。
+该时间隐通道检测方法，综合了集中不同检测原理的判别方式，并对观测到的多种特征分布进行检验。相较单一的检测方式，对基于主动丢包的时间隐通道具有更好的检测能力。检验方法与测试对象的对应关系，如表\nref{tab:3:detect-sum}所示，共13条测试子项，当通过其中的10条量化测试方法时，可以认定不存在时间隐通道；CDF检验结果存在主观差异，作为最终结论的参照。
 
 \insertTable{
 	\begin{table}[]
@@ -224,10 +223,9 @@ Wasserstein距离又称为空间传输距离，作为无参数检测方法，其
             9 & & Wasserstein距离 & $d<1.5$ \\
             10 & & 能量距离 & $d<1.5$ \\
             \\
-            11 & \multirow{3}{*}{区间丢包数分布} & CDF检验 & 趋势基本一致\\ 
-            12 & & K-L散度 & $K-L散度<0.1$ \\
-            13 & & Wasserstein距离 & $d<1.5$ \\
-            14 & & 能量距离 & $d<1.5$ \\
+            11 & \multirow{2}{*}{区间丢包数分布} & CDF检验 & 趋势基本一致\\ 
+            12 & & Wasserstein距离 & $d<1.5$ \\
+            13 & & 能量距离 & $d<1.5$ \\
             \bottomrule
           \end{tabular*}
     \end{table}

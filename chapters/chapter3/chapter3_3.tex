@@ -31,16 +31,6 @@
 \subsection{丢包率}
 \label{chap:analyze:results:plr}
 
-%本节主要从丢包率进行分析，包括两个方面
-丢包率是网络质量分析中，常用的评估指标，平均丢包率反映了网络信道的可靠性及稳定性。
-%什么是全局丢包率
-如表\nref{tab:3:capture-results}，网络噪声导致的丢包，在不同场景下差异很大，无法支撑时间隐通道的检测需求。
-%什么是区间丢包率
-本文中结合区间丢包率进行分析，也就是将传输过程划分为定长的传输阶段，统计个区间丢包数量的分布。
-
-\subsubsection{全局丢包率}
-\label{chap:analyze:results:plr:global}
-
 %统计的各个通话的全局丢包率，分布情况
 \insertFigure{
 	\begin{figure}
@@ -50,10 +40,10 @@
 	\end{figure}
 }
 
-如图\nref{fig:3:cdf-plr}，两种场景平均丢包率的累积分布，出现明显的分离。Excellent场景下丢包率普遍较低，对时间隐通道的存在更敏感；Good场景中噪声干扰严重，丢包率显著上升，时间隐通道的检测难度增大。
+如图\nref{fig:3:cdf-plr}，两种场景平均丢包率的累积分布，出现明显的偏离。Excellent场景下丢包率普遍较低，对时间隐通道的存在更敏感；Good场景中噪声干扰严重，丢包率显著上升，时间隐通道的检测难度增大。
 
-\subsubsection{区间丢包数量}
-\label{chap:analyze:results:plr:window}
+\subsection{区间丢包数量}
+\label{chap:analyze:results:window}
 
 %测试区间设定，以及不同场景下，各个区间的分布函数
 区间丢包数量的测试方法，将数据包流按照设定的窗口大小划为区间，每个区间单独统计丢包数量。最终对各区间的丢包数量进行汇总，计算统计结果的累积分布。如图\nref{fig:3:win-size-count}，在相同丢包状态下，通过控制窗口的大小，每个分片内的丢包数量，随着窗口增大而增加。
@@ -69,11 +59,11 @@
 \insertFigure{
     \begin{figure}
     \centering
-        \subfigure[Excellent场景下CDF结果]{
+        \subfigure[Excellent场景下的累积分布函数]{
             \label{fig:3:capture:win-cdf:excellent}
             \includegraphics[width=0.48\textwidth]{chapters/chapter3/figures/capture-cdf-win-excellent.pdf}
         }
-        \subfigure[Good场景下CDF结果]{
+        \subfigure[Good场景下的累积分布函数]{
             \label{fig:3:capture:win-cdf:good}
             \includegraphics[width=0.48\textwidth]{chapters/chapter3/figures/capture-cdf-win-good.pdf}
         }
@@ -82,7 +72,25 @@
     \end{figure}
 }
 
-如图\nref{fig:3:capture:win-cdf}，两种场景下的分布既存在总体相似性，局部特征中存在差异。图\nref{fig:3:capture:win-cdf:excellent}中，对于所有的窗口大小来说，丢包数量为0的区间均占据一半以上，并且CDF收敛到$1.0$的速度快，上升趋势明显且平滑，侧面反应网络质量极佳。图\nref{fig:3:capture:win-cdf:good}中，曲线上升趋势与图\nref{fig:3:capture:win-cdf:excellent}类似，但在丢包位置为0的部分比例较小，且在CDF曲线末尾仍有分布，证明存在数据包全丢的区间。
+\insertFigure{
+    \begin{figure}
+    \centering
+        \subfigure[窗口长度200时的概率质量函数]{
+            \label{fig:3:capture:win-pmf:200}
+            \includegraphics[width=0.48\textwidth]{chapters/chapter3/figures/capture-pmf-win200.pdf}
+        }
+        \subfigure[窗口长度400时的概率质量函数]{
+            \label{fig:3:capture:win-pmf:400}
+            \includegraphics[width=0.48\textwidth]{chapters/chapter3/figures/capture-pmf-win400.pdf}
+        }
+    \caption{两种场景中区间丢包数的概率质量函数}
+    \label{fig:3:capture:win-pmf}
+    \end{figure}
+}
+
+如图\nref{fig:3:capture:win-cdf}，两种场景下的分布既存在总体相似性，局部特征中存在差异。图\nref{fig:3:capture:win-cdf:excellent}中，对于所有的窗口大小来说，丢包数量为0的区间均占据一半以上，并且CDF收敛到$1.0$的速度快，上升趋势明显，侧面反应网络质量极佳。图\nref{fig:3:capture:win-cdf:good}中，曲线上升趋势与图\nref{fig:3:capture:win-cdf:excellent}类似，但在丢包位置为0的部分比例较小，且在CDF曲线末尾仍有分布，证明存在数据包全丢的区间。
+
+如图\nref{fig:3:capture:burst}，两种场景中不同窗口大小的概率质量函数。区间丢包数的概率质量函数变化趋势存在波动，尤其是在网络质量存在波动的情况下，统计频率与目标概率存在偏离，因此对区间丢包数的判断需要从整体的角度进行。
 
 \subsection{数据包传输间隔}
 \label{chap:analyze:results:ipd}
@@ -117,12 +125,19 @@ IPD分布是时间隐通道中的经典测试对象，如图\nref{fig:2:cdf-ipd}
 
 %两种场景下，测试得到的突发丢包长度信息
 \insertFigure{
-	\begin{figure}
-		\centering
-        \includegraphics[width=0.75\textwidth]{chapters/chapter3/figures/capture-cdf-burst.pdf}
-        \caption{两种场景中突发丢包长度的累积分布函数图}
-        \label{fig:3:capture-cdf-burst}
-	\end{figure}
+    \begin{figure}
+        \centering
+            \subfigure[突发丢包长度的累积分布函数图]{
+                \label{fig:3:capture:burst:cdf}
+                \includegraphics[width=0.48\textwidth]{chapters/chapter3/figures/capture-cdf-burst.pdf}
+            }
+            \subfigure[突发丢包长度的概率质量函数图]{
+                \label{fig:3:capture:burst:pmf}
+                \includegraphics[width=0.48\textwidth]{chapters/chapter3/figures/capture-pmf-burst.pdf}
+            }
+        \caption{两种场景中突发丢包长度的分布图}
+        \label{fig:3:capture:burst}
+    \end{figure}
 }
 
-如图\nref{fig:3:capture-cdf-burst}，在两种网络场景中，突发长度的分布趋势趋于一致。具体到部分特征，Excellent场景与Good场景在突发丢包长度>1的部分，在总体中的占比存在差异。在网络质量良好的场景中，突发丢包的长度非常短，累积分布函数曲线在其实阶段上升迅速。对于网络不稳定的场景，出现连续丢包现象，导致CDF曲线趋近1的速度减缓。当基于主动丢包的时间隐通道构造后，产生突发长度为1的丢包，对突发长度的分布曲线存在影响。
+如图\nref{fig:3:capture:burst}，在两种网络场景中，突发长度的分布趋势趋于一致。具体到部分特征，Excellent场景与Good场景在突发丢包长度大于1的部分，在总体中的占比存在差异。如图\nref{fig:3:capture:burst:cdf}，在网络质量良好的场景中，突发丢包的长度非常短，累积分布函数曲线在其实阶段上升迅速。如图\nref{fig:3:capture:burst:pmf}，对于Good场景，出现连续丢包现象，导致CDF曲线趋近1的速度减缓。当基于主动丢包的时间隐通道构造后，产生突发长度为1的丢包，对突发长度的分布曲线产生影响。

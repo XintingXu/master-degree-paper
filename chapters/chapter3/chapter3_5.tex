@@ -35,9 +35,7 @@
         \caption{IPD分布的CDF曲线}
         \label{fig:3:result:ipd:cdf}
 	\end{figure}
-}
 
-\insertFigure{
 	\begin{figure}
         \centering
         \subfigure[Excellent场景的箱线图]{
@@ -51,9 +49,7 @@
         \caption{IPD分布K-L散度测试结果的箱线图}
         \label{fig:3:result:ipd:kld}
 	\end{figure}
-}
 
-\insertFigure{
 	\begin{figure}
         \centering
         \subfigure[Excellent场景p值的箱线图]{
@@ -67,9 +63,7 @@
         \caption{IPD分布K-S检验结果的箱线图}
         \label{fig:3:result:ipd:ks}
 	\end{figure}
-}
 
-\insertFigure{
 	\begin{figure}
         \centering
         \subfigure[Excellent场景p值的箱线图]{
@@ -83,9 +77,7 @@
         \caption{IPD分布Welch's t检验结果的箱线图}
         \label{fig:3:result:ipd:t}
 	\end{figure}
-}
 
-\insertFigure{
 	\begin{figure}
         \centering
         \subfigure[Excellent场景p值的箱线图]{
@@ -98,6 +90,34 @@
         }
         \caption{IPD分布Mann–Whitney rank检验结果的箱线图}
         \label{fig:3:result:ipd:mw}
+	\end{figure}
+
+	\begin{figure}
+        \centering
+        \subfigure[Excellent场景相对距离的箱线图]{
+            \label{fig:3:result:ipd:wd:excellent}
+            \includegraphics[width=0.48\textwidth]{chapters/chapter3/figures/ipd-wd-excellent.pdf}
+        }
+        \subfigure[Good场景相对距离的箱线图]{
+            \label{fig:3:result:ipd:wd:good}
+            \includegraphics[width=0.48\textwidth]{chapters/chapter3/figures/ipd-wd-good.pdf}
+        }
+        \caption{IPD分布Wasserstein距离的箱线图}
+        \label{fig:3:result:ipd:wd}
+	\end{figure}
+
+	\begin{figure}
+        \centering
+        \subfigure[Excellent场景相对距离的箱线图]{
+            \label{fig:3:result:ipd:ed:excellent}
+            \includegraphics[width=0.48\textwidth]{chapters/chapter3/figures/ipd-ed-excellent.pdf}
+        }
+        \subfigure[Good场景相对距离的箱线图]{
+            \label{fig:3:result:ipd:ed:good}
+            \includegraphics[width=0.48\textwidth]{chapters/chapter3/figures/ipd-ed-good.pdf}
+        }
+        \caption{IPD分布能量距离的箱线图}
+        \label{fig:3:result:ipd:ed}
 	\end{figure}
 }
 
@@ -116,46 +136,14 @@
 \subsubsection{一致性检验测试结果}
 \label{chap:analyze:result:ipd:statistical}
 
-如图\nref{fig:3:result:ipd:ks}，在K-S检验中，已经能够检测出IPD分布的不一致现象。当丢包率$\le 1\%$时，Excellent场景下已经基本通过了K-S检验，随着PLR的进一步降低，K-S检验的p值逐渐增大。如图\nref{fig:3:result:ipd:t}，在Welch's t检验中，两种场景下的检测结果出现差异。在Excellent场景中，当丢包率$\le 0.4\%$后，才可以通过Welch's t检验；而在Good场景中，当丢包率$\le 2\%$时，即可通过Welch's t检验。Welch's t检验结果证明，在不同的场景中，丢包导致的IPD平均值变化程度不同。
+如图\nref{fig:3:result:ipd:ks}，在K-S检验中，已经能够检测出IPD分布的不一致现象。当丢包率$\le 1\%$时，Excellent场景下已经基本通过了K-S检验，随着丢包率的进一步降低，K-S检验的p值逐渐增大。如图\nref{fig:3:result:ipd:t}，在Welch's t检验中，两种场景下的检测结果出现差异。在Excellent场景中，当丢包率$\le 0.4\%$后，才可以通过Welch's t检验；而在Good场景中，当丢包率$\le 2\%$时，即可通过Welch's t检验。Welch's t检验结果证明，在不同的场景中，丢包导致的IPD平均值变化程度不同。
 
 如图\nref{fig:3:result:ipd:mw}，在Mann–Whitney rank检验中，两种场景下只有丢包率$\le 0.4\%$才可通过测试。由于Mann–Whitney rank检验适用分布为正态分布，而IPD分布与标准的正态分布偏差较大，所以检验结果较Welch's t检验要更加严格。
-
-\insertFigure{
-	\begin{figure}
-        \centering
-        \subfigure[Excellent场景相对距离的箱线图]{
-            \label{fig:3:result:ipd:wd:excellent}
-            \includegraphics[width=0.48\textwidth]{chapters/chapter3/figures/ipd-wd-excellent.pdf}
-        }
-        \subfigure[Good场景相对距离的箱线图]{
-            \label{fig:3:result:ipd:wd:good}
-            \includegraphics[width=0.48\textwidth]{chapters/chapter3/figures/ipd-wd-good.pdf}
-        }
-        \caption{IPD分布Wasserstein距离的箱线图}
-        \label{fig:3:result:ipd:wd}
-	\end{figure}
-}
 
 \subsubsection{相对距离测试结果}
 \label{chap:analyze:result:ipd:distance}
 
-\insertFigure{
-	\begin{figure}
-        \centering
-        \subfigure[Excellent场景相对距离的箱线图]{
-            \label{fig:3:result:ipd:ed:excellent}
-            \includegraphics[width=0.48\textwidth]{chapters/chapter3/figures/ipd-ed-excellent.pdf}
-        }
-        \subfigure[Good场景相对距离的箱线图]{
-            \label{fig:3:result:ipd:ed:good}
-            \includegraphics[width=0.48\textwidth]{chapters/chapter3/figures/ipd-ed-good.pdf}
-        }
-        \caption{IPD分布能量距离的箱线图}
-        \label{fig:3:result:ipd:ed}
-	\end{figure}
-}
-
-如图\nref{fig:3:result:ipd:wd}，PLR与Wasserstein距离存在一定的关联关系，随着PLR的增大，相对距离也随之增大。在两种场景中，检测结果是相同的，虽然在丢包率$=10\%$已经接近判断阈值，但仍未超过，因此无法检测出时间隐通道。如图\nref{fig:3:result:ipd:ed}，能量距离的计算结果与PLR也呈现正相关，在两种场景中，当丢包率$\le 5\%$时，才可以通过能量距离检测。由结果来看，能量距离较Wasserstein距离具有更高的要求，但二者的总体趋势是基本一致的。
+如图\nref{fig:3:result:ipd:wd}，丢包率与Wasserstein距离存在一定的关联关系，随着丢包率的增大，相对距离也随之增大。在两种场景中，检测结果是相同的，虽然在丢包率$=10\%$已经接近判断阈值，但仍未超过，因此无法检测出时间隐通道。如图\nref{fig:3:result:ipd:ed}，能量距离的计算结果与丢包率也呈现正相关，在两种场景中，当丢包率$\le 5\%$时，才可以通过能量距离检测。由结果来看，能量距离较Wasserstein距离具有更高的要求，但二者的总体趋势是基本一致的。
 
 通过以上测试可以发现，通过IPD检测基于主动丢包的时间隐通道，在灵敏度方面无法达到隐通道的检测要求。主要的因素，在于丢包事件与IPD相比数量较少，少量的丢包很难影响IPD分布出现大的变动，因此现有基于IPD的时间隐通道检测方法，无法满足本论文的检测要求，需要结合丢包特征方面的检测方法。
 
@@ -178,9 +166,7 @@
         \caption{突发丢包长度的CDF曲线}
         \label{fig:3:result:burst:cdf}
 	\end{figure}
-}
 
-\insertFigure{
 	\begin{figure}
         \centering
         \subfigure[Excellent场景K-L散度的箱线图]{
@@ -194,9 +180,7 @@
         \caption{突发丢包长度K-L散度测试的箱线图}
         \label{fig:3:result:burst:kld}
 	\end{figure}
-}
 
-\insertFigure{
 	\begin{figure}
         \centering
         \subfigure[Excellent场景Wasserstein距离的箱线图]{
@@ -210,9 +194,7 @@
         \caption{突发丢包长度Wasserstein距离的箱线图}
         \label{fig:3:result:burst:wd}
 	\end{figure}
-}
 
-\insertFigure{
 	\begin{figure}
         \centering
         \subfigure[Excellent场景能量距离的箱线图]{
@@ -231,7 +213,7 @@
 \subsubsection{CDF测试结果}
 \label{chap:analyze:result:burst:cdf}
 
-如图\nref{fig:3:result:burst:cdf}，基于主动丢包的时间隐通道，对突发丢包长度的分布有显著影响。图\nref{fig:3:result:burst:cdf:excellent}Excellent场景中，随着PLR的增加，曲线的上升趋势明显加快，明显偏离原始分布。图\nref{fig:3:result:burst:cdf:good}Good场景中，由于原分布中已经存在较多的丢包，所以构建时间隐通道导致的分布改变较小，但对比原始分布，曲线的上升趋势也明显改变。因此，通过CDF判断，测试样本中存在时间隐通道的可能性，需要进一步量化评估。
+如图\nref{fig:3:result:burst:cdf}，基于主动丢包的时间隐通道，对突发丢包长度的分布有显著影响。图\nref{fig:3:result:burst:cdf:excellent}Excellent场景中，随着丢包率的增加，曲线的上升趋势明显加快，明显偏离原始分布。图\nref{fig:3:result:burst:cdf:good}Good场景中，由于原分布中已经存在较多的丢包，所以构建时间隐通道导致的分布改变较小，但对比原始分布，曲线的上升趋势也明显改变。因此，通过CDF判断，测试样本中存在时间隐通道的可能性，需要进一步量化评估。
 
 \subsubsection{条件熵测试结果}
 \label{chap:analyze:result:burst:kld}
@@ -272,33 +254,7 @@
         \caption{区间丢包数的CDF曲线}
         \label{fig:3:result:win:cdf}
 	\end{figure}
-}
 
-\insertFigure{
-	\begin{figure}
-        \centering
-        \subfigure[窗口100时Excellent场景的K-L散度]{
-            \label{fig:3:result:win100:kld:excellent}
-            \includegraphics[width=0.48\textwidth]{chapters/chapter3/figures/win100-kld-excellent.pdf}
-        }
-        \subfigure[窗口100时Good场景的K-L散度]{
-            \label{fig:3:result:win100-kld:good}
-            \includegraphics[width=0.48\textwidth]{chapters/chapter3/figures/win100-kld-good.pdf}
-        }
-        \subfigure[窗口200时Excellent场景的K-L散度]{
-            \label{fig:3:result:win200:kld:excellent}
-            \includegraphics[width=0.48\textwidth]{chapters/chapter3/figures/win200-kld-excellent.pdf}
-        }
-        \subfigure[窗口200时Good场景的K-L散度]{
-            \label{fig:3:result:win200:kld:good}
-            \includegraphics[width=0.48\textwidth]{chapters/chapter3/figures/win200-kld-good.pdf}
-        }
-        \caption{区间丢包数K-L散度测试的箱线图}
-        \label{fig:3:result:win:kld}
-	\end{figure}
-}
-
-\insertFigure{
 	\begin{figure}
         \centering
         \subfigure[窗口100时Excellent场景Wasserstein距离的箱线图]{
@@ -320,9 +276,7 @@
         \caption{区间丢包数Wasserstein距离的箱线图}
         \label{fig:3:result:win:wd}
 	\end{figure}
-}
 
-\insertFigure{
 	\begin{figure}
         \centering
         \subfigure[窗口100时Excellent场景能量距离的箱线图]{
@@ -353,11 +307,6 @@
 
 通过对比CDF曲线，可以明显发现时间隐通道的丢包越密集，对曲线的影响越大。当丢包的间隔小于区间长度时，意味着区间内一定存在丢包的情况，导致CDF曲线的起始位置大于0，出现明显的异常现象。因此，通过CDF曲线可以发现丢包率$\ge5\%$的时间隐通道。
 
-\subsubsection{条件熵测试结果}
-\label{chap:analyze:result:window:kld}
-
-K-L散度的测试结果如图\nref{fig:3:result:win:kld}，两种场景下，两种窗口长度的分布均通过了K-L散度检验。考虑到K-L散度的计算方式如公式（\nref{equ:2:kld}），对$f(x)$及$g(x)$有$f(x)>0$及$g(x)>0$的约束，相当于CDF曲线起点统一对齐到$(0,0)$点。而图\nref{fig:3:result:win:cdf}中各曲线的趋势是相同的，也就意味着概率分布函数在非零处基本一致，导致K-L散度检测无法有效区分。
-
 \subsubsection{相对距离测试结果}
 \label{chap:analyze:result:window:distance}
 
@@ -365,18 +314,8 @@ Wasserstein距离的检测结果如图\nref{fig:3:result:win:wd}。可以发现�
 
 能量距离的检测结果如图\nref{fig:3:result:win:ed}。检测结果类似于Wasserstein距离检测，在窗口长度为100时，只有丢包率$\le 1\%$才可以通过测试；而在窗口长度为200时，需要丢包率$\le 0.4\%$才有较高的通过几率。
 
-通过检测结果可以发现，能量距离可以很好地反映CDF曲线的差异，与K-L散度相结合，可以从不同的方面对分布之间的差异进行评估。实验结果证明，通过结合区间丢包数分布和突发丢包长度，可以对基于IPD的检测方法进行补充。
-
-
-%\subsection{无参考视频质量评价}
-%\label{chap:analyze:result:burst:vqm}
-
-%计算PSNR等无参考视频质量结果，说明两种场景下，应当满足的视频质量
-
-%NIQE（Natural Image Quality Evaluator）\nupcite{6353522}
-
 \subsection{检测结果汇总}
-根据表\nref{tab:3:detect-sum}中设定的14种测试项，根据其中的11条量化评估条目，生成了该检测方法结果的汇总表。
+通过检测结果可以发现，能量距离可以很好地反映CDF曲线的差异，结合K-L散度能够进行更全面的评估。实验结果证明，通过结合区间丢包数分布和突发丢包长度，可以对基于IPD的检测方法进行补充。根据表\nref{tab:3:detect-sum}中设定的13种测试项，按照其中的10条量化评估条目，生成了该检测方法结果的汇总表。
 
 \insertTable{
 	\begin{table}[]
@@ -397,8 +336,7 @@ Wasserstein距离的检测结果如图\nref{fig:3:result:win:wd}。可以发现�
             & Wasserstein距离 & 0\% & 0\% & 0\% & 0\% & 0\% & 0\% & 0\% \\
             & 能量距离 & 100\% & 100\% & 0\% & 0\% & 0\% & 0\% & 0\% \\
             \\
-            \multirow{3}{*}{区间丢包数} & K-L散度 & 0\% & 0\% & 0\% & 0\% & 0\% & 0\% & 0\% \\
-            & Wasserstein距离 & 100\% & 100\% & 100\% & 100\% & 0\% & 0\% & 0\% \\
+            \multirow{2}{*}{区间丢包数} & Wasserstein距离 & 100\% & 100\% & 100\% & 100\% & 0\% & 0\% & 0\% \\
             & 能量距离 & 100\% & 100\% & 100\% & 100\% & 0\% & 0\% & 0\% \\
             \bottomrule
           \end{tabular*}
@@ -424,8 +362,7 @@ Wasserstein距离的检测结果如图\nref{fig:3:result:win:wd}。可以发现�
             & Wasserstein距离 & 100\% & 100\% & 0\% & 0\% & 0\% & 0\% & 0\% \\
             & 能量距离 & 100\% & 100\% & 100\% & 0\% & 0\% & 0\% & 0\% \\
             \\
-            \multirow{3}{*}{区间丢包数} & K-L散度 & 0\% & 0\% & 0\% & 0\% & 0\% & 0\% & 0\% \\
-            & Wasserstein距离 & 100\% & 100\% & 100\% & 100\% & 11\% & 0\% & 0\% \\
+            \multirow{2}{*}{区间丢包数} & Wasserstein距离 & 100\% & 100\% & 100\% & 100\% & 11\% & 0\% & 0\% \\
             & 能量距离 & 100\% & 100\% & 100\% & 100\% & 11\% & 0\% & 0\% \\
             \bottomrule
           \end{tabular*}
