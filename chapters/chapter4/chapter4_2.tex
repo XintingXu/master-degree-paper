@@ -17,14 +17,14 @@
     \item 如果防守反对数据包序号字段进行了覆写，则时间戳增长的线性关系被破坏，接收方可以监测到异常，并终止会话。
 \end{itemize}
 
-\subsection{ZigZag矩阵及其特征}
+\subsection{Zigzag矩阵及其特征}
 \label{chap:zigzag:motivation:zigzag}
 
 \insertFigure{
 	\begin{figure}
 		\centering
         \includegraphics[width=0.6\textwidth]{chapters/chapter4/figures/zigzag-matrix.pdf}
-        \caption{$8\times 8$的Zigzag矩阵示意图}
+        \caption{8$\times$8的Zigzag矩阵示意图}
         \label{fig:4:zigzag-matrix}
 	\end{figure}
 }
@@ -50,7 +50,7 @@ CRC是Cyclic Redundancy Check的缩写，全称为循环冗余校验码，在计
 如图\nref{fig:4:insert-crc}，在每个数据码字之后，追加一个校验码字，通过校验码字区分噪声及信号。在CRC的参数方面，除了当前待验证的码字，额外引入$salt$变量，增加计算结果的随机性及保密性。$salt$由两部分组成，一部分是用户自定义的私有值$Salt$，一部分是RTP数据包头中导出的随机字段。受网络噪声影响的场景中，借助散列函数的单向性，提高防守方破解隐蔽消息的难度及计算量。
 
 \insertTable{
-	\begin{table}[]
+	\begin{table}
       \centering
       \caption{添加CRC校验后的码字密度表}
       \label{tab:4:codeword-density}

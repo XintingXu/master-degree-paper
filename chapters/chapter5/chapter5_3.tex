@@ -1,10 +1,10 @@
 \section{基于多重校验的时间隐通道构建方法设计}
-\label{chap:hash:results}
+\label{chap:hash:designation}
 
 本节对该时间隐通道构建方法进行总体描述，首先介绍时间隐通道的设计架构，然后展开介绍调制流程及数据转换过程，最后介绍解调过程及数据转换过程。
 
 \subsection{设计架构}
-\label{chap:hash:results:model}
+\label{chap:hash:designation:model}
 
 \insertFigure{
 	\begin{figure}
@@ -22,7 +22,7 @@
 隐通道到达接收方后，开始解调过程，通过监听数据包传输情况，得到丢失数据包序号$P_{k}$。参照映射矩阵及校验规则，符号提取过程将丢包序号转换为为候选符号集合$\{S_{k}'\}$，并验证异或校验关系。符号提取过程同时消除每组符号的随机偏移量，与调制过程添加随机偏移相同，解调过程也需要双方共享的私有$Salt$及RTP导出的$Seed$。码字鉴别过程将符号转换为候选码字，同时验证码字中基于CRC的码字自校验信息，最终输出每组的候选码字集合$\{C_{j}'\}$。码字间校验鉴别阶段，按照相同的加盐方式，对码字间的校验关系进行验证，最终筛选出概率最大的组合，并导出为消息块$D_{i}'$。最终，将消息块进行重新组合，接收方得到隐蔽消息，时间隐通道传输过程结束。
 
 \subsection{调制流程}
-\label{chap:hash:results:modulation}
+\label{chap:hash:designation:modulation}
 
 \insertFigure{
     \begin{figure}
@@ -45,7 +45,7 @@
 \insertEquation{
     \begin{equation}
     \label{equ:5:codeword-length}
-		L_{Codeword} = BL + L_{HASH} + L_{CRC}
+		L_{Codeword}\ =\ BL\ +\ L_{HASH}\ +\ L_{CRC}
     \end{equation}
 }
 
@@ -54,7 +54,7 @@
 调制过程中，影响时间隐通道抗检测能力的为参数$L_{Codeword}$，其取值决定了时间隐通道的丢包密度，通过增大$L_{Codeword}$从而获得更好的抗检测能力。影响鲁棒性的环节，包括码字生成中的参数$L_{HASH}$的$L_{CRC}$，设定更多的校验位数，即可降低码字的分布密度，噪声产生传输错误的概率降低。在保密性方面，主要由码字中的校验信息及符号中的随机偏移量两部分组成，生成$h_{j}$及$v_{j}$的源数据中均进行加盐操作，因此即使传输相同的隐蔽消息，每次生成的码字也完全不同；在随机偏移量部分，每个符号有其对应的偏移量，即使隐蔽消息不具备随机性，添加随机偏移量后具备随机特征。即使监听者获取了该时间隐通道的构建方案，并按照相同的方式进行破解，调制过程中产生的随机因素具有足够的安全保证。
 
 \subsection{解调流程}
-\label{chap:hash:results:demodulation}
+\label{chap:hash:designation:demodulation}
 
 如图\nref{fig:5:demodulation-flow}，解调过程中的数据流程主要包括5个部分，与图\nref{fig:5:system-model}中解调过程对应。丢包序号监听分析当前接收到的数据包序号，根据序号之间的空缺情况，得到丢失数据包序号$P_{k}'$。符号提取过程将序号转变为每组的符号，在该时间隐通道中，网络噪声产生的干扰不可避免，每组中的候选符号存在不止一个的情况，因此每组的候选符号为集合$\{S_{k}',S_{k}'',\cdots \}$。
 

@@ -6,42 +6,26 @@
 %%==================================================
 
 \begin{abstract}
-%本文的主要研究工作，是在VoLTE场景下，通过主动丢包的方式，构造安全、鲁棒的时间隐通道。伴随着第4代通信技术的应用，基于数据包交换的VoLTE（Voice over LTE）技术，取代了基于电路交换的传统通话技术。得益于LTE网络的高带宽、流量细分能力，VoLTE不仅为用户提供了低延迟、高清晰度的语音通话，也将低延迟的视频通话变为可能。
-%借助实时传输协议RTP（Real-time Transport Protocol），VoLTE音视频数据被切分为独立的流，利用数据包优先级的差异，在保证传输效果的同时，提高抗干扰能力。对于语音数据流来说，基带内集成的信号采集单元，直接将编码后的数据打包为RTP数据包，经LTE组件发送到基站进行传输。另一方面，视频数据的来源是智能终端的摄像头模块，需要由应用处理器完成图像信息采集、压缩、编码，并按照RTP格式进行打包，最终交付基带处理器进行发送。
 
-%由于处理途径及优先级方面的差异，数量较少的语音数据包，能够保持稳定且低丢包率的传输效果；而数量众多的视频数据包，受空口噪声的干扰，产生丢包现象不可避免。另一方面，VoLTE的通话双方均为无线终端，两侧的噪声强度和干扰阶段是不同的，丢包事件可能发生于任意一方、任意阶段，对用户来说，无法区分产生丢包的实际位置。因此，通过丢弃具有特定数据包序号的数据包，构造时间隐通道的设计方案，符合实际应用场景的约束，具有可行性。
-
-%通过分析VoLTE视频流及语音流特征，结合实际通话测试结果，选择VoLTE视频流作为隐蔽消息的传输载体。经过统计分析，VoLTE丢包的主要类型为离散的丢包事件，并夹杂随机长度的连续丢包事件。类比时间隐通道的分析方法，对VoLTE丢包特征的分析，由分布统计和分布一致性检验两个维度组成。通过统计视频数据包在IPD（inter-packet delay）、突发丢包长度、窗口内丢包数量的分布情况，得到对应的分布特征。对独立的分布特征进行对比，即可得到不同视频流之间的差异，通过多维度的分析检测，对时间隐通道的抗检测性能力的提升，有重要的参考价值。
-
-%基于Zig-Zag矩阵的时间隐通道方案，将原始的隐蔽消息，嵌入到各个数据包区间的丢包位置中，并引入HASH校验算法，提高传输过程的鲁棒性。对于待发送的隐蔽消息，按照设定的参数，首先切分为固定长度的消息块。接下来，为每一个数据块生成同等长度的校验块。然后按照设定的Zig-Zag矩阵，将消息块及校验块映射到消息符号，也就是数据包序号的相对偏移量。最后，将消息符号转换为数据包序号，并在发送队列中进行剔除。通过添加额外的校验块，解调过程中降低网络噪声的干扰；经过Zig-Zag矩阵的逆映射，噪声中的连续丢包被映射到离散的消息值，结合校验块完成去噪过程；调整传输参数后，该方案能够通过常用的抗检测性方案。
-
-%基于多重HASH校验的时间隐通道方案，通过添加多重校验块、采用自校验的映射矩阵，在保证抗检测性的基础上，进一步提高了鲁棒性。隐蔽消息按照设定的参数，切分为定长消息块，接下来基于HASH的组间校验块被拼接到消息块末尾。接下来，在每个消息块及校验块组合的基础上，拼接基于CRC的自校验块，构成码字。根据码字的字长，码字被转换为代表组内序号的符号，并为每一组符号添加随机偏移量。最后，参照映射矩阵的定义，将符号映射为相对偏移量，最终转换为数据包序号。在发送队列中，将具有目标序号的数据包丢弃，调制过程完成。通过进行抗检测性测试、鲁棒性测试及性能测试，该时间隐通道方案具有充分的网络适应能力，在各方面的表现达到隐通道的基本要求。
-
-%修改为以下表述方式
-
-（摘要最后总结，第六章，基于Linphone的时间隐通道验证研究，如何组织待定）
-
-时间隐通道是一个经典的研究问题，对。。。事关重要。
-
-VoLTE是一种新型的网络环境，采用了新的设计，原有的隐通道存在不适应的问题。
-
-本文提出了解决方案，解决了该问题。本文针对VoLTE时间隐通道检测方法、基于Zigzag矩阵的时间隐通道构造方法、基于多重校验的时间隐通道构造方法四个方面展开研究。
-
+时间隐通道是一个经典的研究课题，在传统以太网及移动互联网环境中均有广泛的生存空间。时间隐通道能够突破系统中安全限制，对监听者透明的情况下实现隐蔽消息对等传输。VoLTE（Voice over LTE）是基于LTE（Long Time Evolution）的高清音视频通话方案，相较以太网及移动数据网络有特定传输特征。在VoLTE场景中，现有的时间隐通道构建方法存在局限性，无法实现有效的隐蔽传输。为提升VoLTE中隐通道传输能力，本文研究基于主动丢包的方式，在VoLTE视频信道中构建隐蔽、鲁棒的时间隐通道。研究内容主要包括四个部分，涵盖VoLTE中时间隐通道检测方法、时间隐通道构建方法，以及主动丢包隐通道传输测试，主要工作如下：
 \begin{itemize}
-\item 提出了一种VoLTE环境下，对基于主动丢包的时间隐通道的检测方法。利用……方法，实现了对……的检测。实验结果分析表明，……是有效可行的。
-
-\item 提出了一种基于Zigzag矩阵的时间隐通道构造方法。通过……处理方法，结合……，实现了鲁棒性好，抗检测能力强的时间隐通道构造方法。实验结果分析表明，该方法可以实现误码率低于……，传输性能不低于……。
-
-\item 提出了一种基于多重校验的时间隐通道构造方法。通过添加组间校验、码字自校验及映射矩阵的校验，有效保证了传输过程的鲁棒性。实验结果分析表明，该方法可以实现误码率低于……，传输性能不低于……。
+   \item 提出了一种VoLTE环境下，对主动丢包时间隐通道的检测方法。该方法通过判断分布一致性，对样本的IPD分布、突发丢包长度分布及区间丢包数分布进行检测，通过整合多种检验方式，判断是否存在隐通道。经过实验测试，该方法能够有效检测出主动丢包率高于0.4\ \%的时间隐通道。
+   \item 提出了一种基于Zigzag映射矩阵的时间隐通道构建方法。通过Zigzag映射矩阵建立码字与符号间的非线性映射，结合基于CRC的校验方法，实现了隐蔽、鲁棒、低代价的时间隐通道。实验结果表明，该方法在传输性能达到0.88\ bps的同时，误码率水平低于1.5\ \%，并且具有较强的保密性。
+   \item 提出了一种基于多重校验的时间隐通道构建方法，重点提高隐通道鲁棒性。通过结合基于HASH的码字间校验、基于CRC的码字自校验以及基于异或的映射矩阵校验，有效降低了传输误码率。实验结果表明，在传输性能达到0.73\ bps时，误码率水平不高于0.08\ \%，并且构造代价远小于网络噪声。通过引入信道中的随机字段，该隐通道具有极强的保密性。
+   \item 在Linphone平台中，验证了基于主动丢包的时间隐通道。通过添加隐通道控制接口、隐通道传输接口及隐通道执行组件，实现了隐蔽消息发送与接收功能。经实际传输测试，基于主动丢包的时间隐通道具有有效的数据传输能力，本文提出的构建方法切实可行。
 \end{itemize}
-
 \keywords{时间隐通道； VoLTE； 主动丢包； 鲁棒性； 抗检测性}
 \end{abstract}
 
 \begin{englishabstract}
 
-   In order to exploit …….
+   Covert timing channel is a classic research topic, it exists in IP ethernet and advanced mobile network. The advancement of the covert timing channel is that it escapes from current security utilities like firewalls and ACL (Access-Control List). As a result, a covert message is transmitted to the receiver secretly. Based on LTE (Long Time Evolution), VoLTE (Voice over LTE) provides audio and video service with high-definition. However, the statistical feature of VoLTE packets is distinct from former environment, thus existing covert timing channel schemes are not suitable for VoLTE. To address this issue, covert timing channels based on active packet dropout are proposed, which provides stealthy covert communication. The research of this thesis focuses on detection of dropout-based covert timing channels in VoLTE, covert timing channel schemes, and reality transmission tests. The contributions are summarized as four aspects: 
+\begin{itemize}
+   \item A comprehensive CTC (covert timing channel) detection method is proposed, which is suitable for VoLTE and aims at dropout-based CTC. The method utilizes multi statistical methods, compares the distribution difference of inter-packet delay, burst length, and packet dropouts in a fixed period. The experiment shows that if a CTC actively dropouts more than 0.4\% of total packets, the method detects it out efficiently.
+   \item A CTC scheme based on the Zigzag mapping matrix is proposed and evaluated. Based on the defined Zigzag mapping matrix, codewords and symbols are bonded with a nonlinear rule. With the help of CRC (Cyclic Redundancy Check) based verification, the scheme achieves low cost, stealthy, and robustness transmission. The experiment shows that the throughput of this CTC could reach 0.88bps, while the average bit error rate is lower than 1.5\%. Combined with mapping matrix randomize and a random salt, the covert message is non-disclosure to others.
+   \item A CTC scheme based on multi-stage verification is proposed, which aims at improving robustness. To reduce the noise level, the scheme combines HASH-based inter-codewords verification, CRC-based codeword self-verification, and mapping matrix verification. The evaluation shows that the average bit error rate is less than 0.08\%, even if transmission throughput remains 0.73bps. With the random sections in RTP (Real-time Transport Protocol) header, the covert message is protected with multi-stage nonlinear distortion.
+   \item The CTC based on active packet dropout is verified with Linphone, which is an open-source VoIP application. Implemented with covert channel interface in the user interface, message delivery module for the covert channel, and covert channel module in the transmission layer, the covert channel is established. With the actual transmission tests, covert messages are delivered efficiently, which proves that the CTCs based on packet dropouts are operable.
+\end{itemize}
    
 \englishkeywords{Covert Timing Channel; VoLTE; Packet Dropout; Robustness; Undetectability}
-
 \end{englishabstract}

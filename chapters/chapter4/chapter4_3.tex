@@ -23,7 +23,7 @@ VoLTE数据包经LTE网络传输后，时间隐通道与网络噪声叠加。接
 \label{chap:zigzag:model:modulation}
 
 \insertFigure{
-	\begin{figure}[t]
+	\begin{figure}
 		\centering
         \includegraphics[width=0.85\textwidth]{chapters/chapter4/figures/modulation-flow.pdf}
         \caption{基于Zigzag映射矩阵的时间隐通道调制流程}
@@ -40,7 +40,7 @@ VoLTE数据包经LTE网络传输后，时间隐通道与网络噪声叠加。接
 \insertEquation{
     \begin{equation}
     \label{equ:4:throughput}
-		Throughput = \frac{L_{Codeword}}{2^{L_{Codeword}}}\times 100(packets/s)= \frac{BL}{2^{BL}}\times 100(packets/s)
+		Throughput\ =\ \frac{L_{Codeword}}{2^{L_{Codeword}}}\ \times\ 100\ (bps)\ =\ \frac{BL}{2^{BL}}\ \times\ 100\ (bps)
     \end{equation}
 }
 
@@ -53,26 +53,24 @@ VoLTE数据包经LTE网络传输后，时间隐通道与网络噪声叠加。接
 
 \insertContents{
     \begin{algorithm}[t]
-        \renewcommand{\algorithmicrequire}{\textbf{Input:}}
-        \renewcommand{\algorithmicensure}{\textbf{Output:}}
+        \renewcommand{\algorithmcfname}{算法}
         \caption{码字生成}
         \label{alg:4:codeword-generation}
-        \begin{algorithmic}[1]
-            \REQUIRE $Covert\ Message$,\ $SSRC$,\ $Salt$,\ $L_{Codeword}$
-            \ENSURE $C \leftarrow \{\}$
-            \STATE $D \leftarrow \{\},\ offset \leftarrow 0$
-            \FOR{$offset < length(Covert\ Message)$}
-                \STATE $D_{i} \leftarrow Covert\ Message[offset:L_{Codeword}]$
-                \STATE append $\ D_{i}\ $ to $\ D$
-            \ENDFOR
-            \STATE $salt \leftarrow Salt\ \bigoplus\ SSRC$
-            \FOR{$D_i\ $ in $\ D$}
-                \STATE $C_{j} \leftarrow $CRC16($salt\ //\ D_{i}\ //\ salt$)
-                \STATE append $\ D_{i}\ $ to $\ C$
-                \STATE append $\ C_{j}\ $ to $\ C$
-            \ENDFOR
-            \RETURN $C$
-        \end{algorithmic}
+        \LinesNumbered
+        \KwIn{$Covert\ Message,\ SSRC,\ Salt,\ L_{Codeword}$}
+        \KwOut{$C\ \leftarrow\ \{\}$}
+        $D\ \leftarrow\ \{\},\ offset\ \leftarrow\ 0$ \\
+        \For {$offset\ <\ length(Covert\ Message)$} {
+            $D_{i}\ \leftarrow\ Covert\ Message[offset\ :\ L_{Codeword}]$ \\
+            append $\ D_{i}\ $ to $\ D$
+        }
+        $salt\ \leftarrow\ Salt\ \oplus\ SSRC$ \\
+        \For {$D_i\ $ in $\ D$} {
+            $C_{j}\ \leftarrow\ $CRC16\ ($salt\ //\ D_{i}\ //\ salt$) \\
+            append $\ D_{i}\ $ to $\ C_{j}$ \\
+            append $\ C_{j}\ $ to $\ C$
+        }
+        \Return $C$
     \end{algorithm}
 }
 
@@ -92,7 +90,7 @@ VoLTE数据包经LTE网络传输后，时间隐通道与网络噪声叠加。接
     \end{equation}
     \begin{equation}
     \label{equ:4:matrix-begin}
-        M_{1,\ 1}\ =\ (Key\ \bigoplus\ SSRC)\ \%\ 2^{L_{Codeword}}\ +\ 1
+    \textit{\textbf{M}}_{1,\ 1}\ =\ (Key\ \oplus\ SSRC)\ \%\ 2^{L_{Codeword}}\ +\ 1
     \end{equation}
 }
 
@@ -102,7 +100,7 @@ VoLTE数据包经LTE网络传输后，时间隐通道与网络噪声叠加。接
 \label{chap:zigzag:model:demodulation}
 
 \insertFigure{
-	\begin{figure}[t]
+	\begin{figure}
 		\centering
         \includegraphics[width=0.85\textwidth]{chapters/chapter4/figures/demodulation-flow.pdf}
         \caption{基于Zigzag映射矩阵的时间隐通道解调流程}
@@ -132,25 +130,23 @@ VoLTE数据包经LTE网络传输后，时间隐通道与网络噪声叠加。接
 
 \insertContents{
     \begin{algorithm}[t]
-        \renewcommand{\algorithmicrequire}{\textbf{Input:}}
-        \renewcommand{\algorithmicensure}{\textbf{Output:}}
+        \renewcommand{\algorithmcfname}{算法}
         \caption{有效码字鉴别}
         \label{alg:4:codeword-identification}
-        \begin{algorithmic}[1]
-            \REQUIRE $\{\{C_{1}',\cdots\},\ \{C_{2}',\cdots\},\cdots\},\ Salt,\ SSRC$
-            \ENSURE $D \leftarrow \{\}$
-            \STATE $salt \leftarrow Salt\ \bigoplus\ SSRC$
-            \FOR{$\{C_{j}',\cdots\},\{C_{j+1}',\cdots\}\ $ in $\ C$}
-                \FOR{$C_{j}'\ $ in $\ \{C_{j}',\cdots\}$}
-                    \STATE $checksum\ =\ $CRC16($salt\ //\ C_{j}'\ //\ salt$)
-                    \IF{$checksum\ $ in $\ \{C_{j+1}',\cdots\}$}
-                        \STATE append $\ C_{j}'\ $ to $\ D$
-                        \STATE \textbf{break}
-                    \ENDIF
-                \ENDFOR
-            \ENDFOR
-            \RETURN $D$
-        \end{algorithmic}
+        \LinesNumbered
+        \KwIn{$\{\{C_{1}',\ \cdots\},\ \{C_{2}',\ \cdots\},\ \cdots\},\ Salt,\ SSRC$}
+        \KwOut{$D\ \leftarrow\ \{\}$}
+        $salt\ \leftarrow\ Salt\ \oplus\ SSRC$ \\
+        \For {$\{C_{j}',\ \cdots\},\ \{C_{j+1}',\ \cdots\}\ $ in $\ C$} {
+            \For {$C_{j}'\ $ in $\ \{C_{j}',\ \cdots\}$} {
+                $checksum\ =\ $CRC16\ ($salt\ //\ C_{j}'\ //\ salt$) \\
+                \If {$checksum\ $ in $\ \{C_{j+1}',\ \cdots\}$} {
+                    append $\ C_{j}'\ $ to $\ D$ \\
+                    \textbf{break}
+                }
+            }
+        }
+        \Return $D$
     \end{algorithm}
 }
 

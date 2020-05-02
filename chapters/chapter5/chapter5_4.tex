@@ -17,19 +17,19 @@
 \insertEquation{
     \begin{equation}
         \label{equ:5:omega-j}
-        \omega = {\left \lfloor{\frac{j-1}{R}}\right \rfloor} \times {R + 1}
+        \omega\ =\ {\left \lfloor{\frac{j\ -\ 1}{R}}\right \rfloor}\ \times\ {R\ +\ 1}
     \end{equation}
     \begin{equation}
         \label{euq:5:varepsilon-omega}
-        \varepsilon = \omega - {\left \lfloor{\frac{\omega}{R}}\right \rfloor}
+        \varepsilon\ =\ \omega\ -\ {\left \lfloor{\frac{\omega}{R}}\right \rfloor}
     \end{equation}
     \begin{equation}
         \label{euq:5:i-j}
-        i = j - {\left \lfloor{\frac{j}{R}}\right \rfloor}
+        i\ =\ j\ -\ {\left \lfloor{\frac{j}{R}}\right \rfloor}
     \end{equation}
     \begin{equation}
         \label{euq:5:j-i}
-        j = \left \lfloor{\frac{i}{R - 1}} \right \rfloor \times R + (i - 1) \% R + 1
+        j\ =\ \left \lfloor{\frac{i}{R\ -\ 1}} \right \rfloor\ \times\ R\ +\ (i\ -\ 1)\ \%\ R\ +\ 1
     \end{equation}
 }
 
@@ -63,34 +63,32 @@
 
 \insertContents{
     \begin{algorithm}[t]
-    \renewcommand{\algorithmicrequire}{\textbf{Input:}}
-    \renewcommand{\algorithmicensure}{\textbf{Output:}}
-    \caption{码字生成}
-    \label{alg:5:codeword-generation}
-        \begin{algorithmic}[1]
-            \REQUIRE $message$, $BL$, $L_{HASH}$, $L_{CRC}$, $R$, $Salt$, $Seed$
-            \ENSURE $C \leftarrow \{\}$
-            \STATE $D \leftarrow$ group into blocks$(message,\ BL)$;
-            \STATE $modulated\_sections \leftarrow NULL$;
-            \STATE $salt \leftarrow Salt\ \oplus\ Seed$
-            \FOR{$D_i$\ in\ $D$}
-                \STATE $j \leftarrow \left \lfloor{\frac{i}{R - 1}} \right \rfloor \times R + (i - 1) \% R + 1$;
-                \STATE append\ $D_i$\ to\ $modulated\_sections$;
-                \STATE $h_j \leftarrow L_{HASH}$\ bits\ of\ HASH($salt//modulated\_sections//salt$);
-                \STATE $C_j \leftarrow$ append\ $h_j$\ to\ $D_i$;
-                \STATE append\ $h_j$\ to\ $modulated\_sections$;
-                \STATE append\ $C_j$\ to\ $C$;
-                \IF{$i$\ mod\ $R$\ ==\ 0}
-                    \STATE $C_{j + 1} \leftarrow (L_{Codeword} - L_{CRC})$\ bits of HASH($salt//modulated\_sections//salt$);
-                    \STATE append\ $C_{j + 1}$\ to\ $C$;
-                    \STATE $modulated\_sections \leftarrow NULL$;
-                \ENDIF
-            \ENDFOR
-            \FOR{$C_j$ in $C$}
-                \STATE $C_j \leftarrow$\ append\ $L_{CRC}$\ bits of CRC32($salt//C_jsalt//$)\ to\ $C_j$;
-            \ENDFOR
-            \RETURN $C$
-        \end{algorithmic}
+        \renewcommand{\algorithmcfname}{算法}
+        \caption{码字生成}
+        \label{alg:5:codeword-generation}
+        \LinesNumbered
+        \KwIn{$message$,\ $BL$,\ $L_{HASH}$,\ $L_{CRC}$,\ $R$,\ $Salt$,\ $Seed$}
+        \KwOut{$C\ \leftarrow\ \{\}$}
+        $D\ \leftarrow$\ group into blocks$(message,\ BL)$ \\
+        $modulated\_sections\ \leftarrow\ NULL$ \\
+        $salt\ \leftarrow\ Salt\ \oplus\ Seed$ \\
+        \For {$D_i$\ in\ $D$} {
+            $j\ \leftarrow\ \left \lfloor{\frac{i}{R\ -\ 1}} \right \rfloor\ \times\ R\ +\ (i\ -\ 1)\ \%\ R\ +\ 1$ \\
+            append\ $D_i$\ to\ $modulated\_sections$ \\
+            $h_j\ \leftarrow\ L_{HASH}$\ bits\ of\ HASH\ ($salt\ //\ modulated\_sections\ //\ salt$) \\
+            $C_j\ \leftarrow$\ append\ $h_j$\ to\ $D_i$ \\
+            append\ $h_j$\ to\ $modulated\_sections$ \\
+            append\ $C_j$\ to\ $C$ \\
+            \If {$i$\ mod\ $R$\ ==\ 0} {
+                $C_{j\ +\ 1}\ \leftarrow\ (L_{Codeword} - L_{CRC})$\ bits of HASH\ ($salt\ //\ modulated\_sections\ //\ salt$) \\
+                append\ $C_{j\ +\ 1}$\ to\ $C$ \\
+                $modulated\_sections\ \leftarrow\ NULL$ \\
+            }
+        }
+        \For {$C_j$ in $C$} {
+            $C_j\ \leftarrow$\ append\ $L_{CRC}$\ bits of CRC32\ ($salt\ //\ C_j\ //\ salt$)\ to\ $C_j$
+        }
+        \Return $C$
     \end{algorithm}
 }
 
@@ -118,27 +116,25 @@
 
 \insertContents{
     \begin{algorithm}[t]
-    \renewcommand{\algorithmicrequire}{\textbf{Input:}}
-    \renewcommand{\algorithmicensure}{\textbf{Output:}}
-    \caption{有效码字鉴别}
-    \label{alg:5:codeword-identification}
-        \begin{algorithmic}[1]
-            \REQUIRE $S'$, $L_{CRC}$, $Salt$, $Seed$
-            \ENSURE $C' \leftarrow \{\}$
-            \STATE $salt \leftarrow Salt\ \oplus\ Seed$
-            \FOR{\{${S_j'}$\} in $S'$}
-                \STATE $\{C_j'\} \leftarrow \{\}$
-                \FOR{$S_j'$\ in\ \{$S_j'$\}}
-                    \STATE $v_j', h_j', D_j' \leftarrow$ extracted from $S_j'$
-                    \STATE $crc32\_result \leftarrow L_{CRC}$ bits of CRC32($salt//D_j'//h_j'//salt$)
-                    \IF{$v_i'$ == $crc32\_result$}
-                        \STATE append\ $S_j'$\ to\ \{$C_j'$\}
-                    \ENDIF
-                \ENDFOR
-                \STATE append\ \{$C_j'$\}\ to\ $C'$
-            \ENDFOR
-            \RETURN $C'$
-        \end{algorithmic}
+        \renewcommand{\algorithmcfname}{算法}
+        \caption{有效码字鉴别}
+        \label{alg:5:codeword-identification}
+        \LinesNumbered
+        \KwIn{$S'$,\ $L_{CRC}$,\ $Salt$,\ $Seed$}
+        \KwOut{$C'\ \leftarrow\ \{\}$}
+        $salt\ \leftarrow\ Salt\ \oplus\ Seed$ \\
+        \For {\{${S_j'}$\}\ in\ $S'$} {
+            $\{C_j'\}\ \leftarrow\ \{\}$ \\
+            \For {$S_j'$\ in\ \{$S_j'$\}} {
+                $v_j',\ h_j',\ D_j'\ \leftarrow$\ extracted from $S_j'$ \\
+                $crc32\_result\ \leftarrow\ L_{CRC}$ bits of CRC32\ ($salt\ //\ D_j'\ //\ h_j'\ //\ salt$) \\
+                \If {$v_j'$ == $crc32\_result$} {
+                    append\ $S_j'$\ to\ \{$C_j'$\}
+                }
+            }
+            append\ \{$C_j'$\}\ to\ $C'$
+        }
+        \Return $C'$
     \end{algorithm}
 }
 
@@ -167,45 +163,43 @@
 \insertEquation{
     \begin{equation}
         \label{equ:5:m-rows}
-        M_{rows} = 2^{L_{Codeword}}
+        M_{rows}\ =\ 2^{L_{Codeword}}
     \end{equation}
     \begin{equation}
         \label{equ:5:tau}
-        \tau  =  M_{cols} \times (m - 1) \times M_{rows}
+        \tau\ =\ M_{cols}\ \times\ (m\ -\ 1)\ \times\ M_{rows}
     \end{equation}
     \begin{equation}
         \label{equ:5:p_k}
-        P_k(k, S_k) = \left \lfloor{\frac{k - 1}{M_{cols}}}\right \rfloor \times (M_{rows} \times M_{cols}) + M_{cols} \times (S_k - 1) + (k - 1)\%M_{cols} + 1
+        P_k\ (k,\ S_k)\ =\ \left \lfloor{\frac{k\ -\ 1}{M_{cols}}}\right \rfloor \times (M_{rows} \times M_{cols})\ +\ M_{cols} \times (S_k\ -\ 1)\ +\ (k\ -\ 1)\ \%\ M_{cols}\ +\ 1
     \end{equation}
 }
 \insertContents{
     \begin{algorithm}[t]
-    \renewcommand{\algorithmicrequire}{\textbf{Input:}}
-    \renewcommand{\algorithmicensure}{\textbf{Output:}}
-    \caption{码字转换为序号}
-    \label{alg:5:codeword-to-sequence}
-        \begin{algorithmic}[1]
-            \REQUIRE $C$, $L_{Codeword}$, $M_{cols}$, $Salt$, $Seed$
-            \ENSURE $P \leftarrow \{\}$
-            \STATE $S \leftarrow \{\}$
-            \STATE $offset \leftarrow$ Random($Salt \oplus Seed$)
-            \FOR{$C_j$ in $C$}
-                \STATE $S_k \leftarrow$ Integer($C_j$) + 1
-                \STATE append\ $S_k$\ to\ $S$
-                \IF{$j$\ mod\ 2\ ==\ 0}
-                    \STATE append\ $S_k\oplus S_{k-1}$\ to $S$
-                \ENDIF
-            \ENDFOR
-            \FOR{$S_k$\ in\ $S$}
-                \STATE $offset \leftarrow$ Random($offset$)
-                \STATE $S_k \leftarrow (S_k + offset) mod (2^{L_{Codeword}}) + 1$
-            \ENDFOR
-            \FOR{$S_k$\ in\ $S$}
-                \STATE $P_k \leftarrow P_k(k, S_k)$
-                \STATE append\ $P_k$\ to\ $P$
-            \ENDFOR
-            \RETURN $P$
-        \end{algorithmic}
+        \renewcommand{\algorithmcfname}{算法}
+        \caption{码字转换为序号}
+        \label{alg:5:codeword-to-sequence}
+        \LinesNumbered
+        \KwIn{$C$,\ $L_{Codeword}$,\ $M_{cols}$,\ $Salt$,\ $Seed$}
+        \KwOut{$P\ \leftarrow\ \{\}$}
+        $S\ \leftarrow\ \{\}$ \\
+        $offset\ \leftarrow$\ Random\ ($Salt \oplus Seed$) \\
+        \For {$C_j$ in $C$} {
+            $S_k\ \leftarrow$\ Integer\ ($C_j$)\ +\ 1 \\
+            append\ $S_k$\ to\ $S$ \\
+            \If {$j$\ mod\ 2\ ==\ 0} {
+                append\ $S_k\oplus S_{k-1}$\ to $S$
+            }
+        }
+        \For {$S_k$\ in\ $S$} {
+            $offset\ \leftarrow$\ Random\ ($offset$) \\
+            $S_k\ \leftarrow\ (S_k\ +\ offset)\ mod\ (2^{L_{Codeword}})\ +\ 1$
+        }
+        \For {$S_k$\ in\ $S$} {
+            $P_k\ \leftarrow\ P_k\ (k,\ S_k)$ \\
+            append\ $P_k$\ to\ $P$
+        }
+        \Return $P$
     \end{algorithm}
 }
 
@@ -221,15 +215,15 @@
 \insertEquation{
     \begin{equation}
     \label{equ:5:get-k}
-        k = \left \lfloor{\frac{P'}{M_{rows} \times M_{cols}}}\right \rfloor \times M_{cols} + (P' - 1)\%M_{cols} + 1
+        k\ =\ \left \lfloor{\frac{P'}{M_{rows}\ \times\ M_{cols}}}\right \rfloor\ \times\ M_{cols}\ +\ (P'\ -\ 1)\ \%\ M_{cols}\ +\ 1
     \end{equation}
     \begin{equation}
     \label{equ:5:get-s}
-        S_j' = \left \lfloor{\frac{P_j' - M_{rows} \times M_{cols} \times \left \lfloor{\frac{P_j'}{M_{rows} \times M_{cols}}}\right \rfloor - 1}{M_{cols}}}\right \rfloor
+        S_j'\ =\ \left \lfloor{\frac{P_j'\ -\ M_{rows}\ \times\ M_{cols}\ \times\ \left \lfloor{\frac{P_j'}{M_{rows}\ \times\ M_{cols}}}\right \rfloor\ -\ 1}{M_{cols}}}\right \rfloor
     \end{equation}
     \begin{equation}
     \label{equ:5:remove-offset}
-        S_j' = ({S_j' - offset\%({2^{L_{Codeword}}}) + 2^{L_{Codeword}}})\%(2^{L_{Codeword}}) + 1
+        S_j'\ =\ ({S_j'\ -\ offset\%({2^{L_{Codeword}}})\ +\ 2^{L_{Codeword}}})\ \%\ (2^{L_{Codeword}})\ +\ 1
     \end{equation}
 }
 

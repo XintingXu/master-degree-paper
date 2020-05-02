@@ -9,7 +9,26 @@
 该时间隐通道的参数包括$L_{Codeword}$、$L_{HASH}$、$L_{CRC}$、$R$及$M_{cols}$，其中，$L_{Codeword}$代表了时间隐通道的主动丢包密度。参数$L_{HASH}$及$L_{CRC}$与鲁棒性密切相关，分别代表了码字中嵌入的HASH校验块的位数，以及码字中嵌入的CRC校验块的位数。参数$R$代表了基于HASH的码字间校验复位周期，复位周期过长会导致可行解数量过多，影响解调过程的执行效率。参数$M_{cols}$代表了映射矩阵的列数，列数越多则矩阵规模越大，数据包序号与符号的对应关系越复杂。
 
 \insertTable{
-	\begin{table}[]
+	\begin{table}
+      \centering
+      \caption{测试环境信息表}
+      \label{tab:5:result:environment}
+          \begin{tabular*}{0.9\textwidth}{@{\extracolsep{\fill}}cc}
+            \toprule
+            类型 & 详细信息 \\
+            \midrule
+            PC平台 & I5-9400，DDR4 16GB \\
+            软件版本 & Windows 7，QT 5.9.5，python 3.6；Ubuntu 16.04，mysql 5.7 \\
+            数据集 & VoLTE抓包结果，随机噪声 \\
+            \bottomrule
+          \end{tabular*}
+    \end{table}
+}
+
+评估实验的软硬件环境如表\nref{tab:5:result:environment}，测试数据集包括VoLTE抓包得到的结果，以及随机生成的网络噪声，隐蔽消息同样随机生成。所有的数据均存储到mysql数据库中，基于QT实现时间隐通道处理逻辑，最终对比调制与解调结果。基于python脚本，将抓包结果还原为视频数据，并评估调制前后的视频质量，得到隐通道构建代价测试结果。
+
+\insertTable{
+	\begin{table}
       \centering
       \caption{基于多重校验的时间隐通道参数范围}
       \label{tab:5:parameters}
@@ -86,15 +105,15 @@
 
 抗检测能力测试，包括对IPD分布、区间丢包数分布、突发丢包长度分布的一致性检测，在检测方法方面使用了CDF曲线检测、分布一致性检测、熵检测及相对距离检测几种不同的检测方式。按照表\nref{tab:3:detect-sum}中的检测方法汇总，汇总不同检测方法的检测结果，得到是否为时间隐通道的判定结论。由于该时间隐通道的丢包密度，主要由参数$L_{Codeword}$决定，因此对抗检测性的评估主要基于不同的$L_{Codeword}$参数配置进行。
 
-\subsubsection{IPD测试}
+\subsubsection{IPD检测}
 \label{chap:hash:result:undetectability:ipd}
 
 不同参数下IPD分布的CDF曲线如图\nref{fig:5:result:ipd:cdf}，时间隐通道对CDF分布无明显影响，该实验结果与\nref{chap:analyze:result:ipd:cdf}及\nref{chap:zigzag:results:undetectability:ipd}中得到的猜测是结果基本一致。当时间隐通道主动丢包的密度降低，对信道IPD分布的影响减小，通过CDF曲线已经无法检测到明显差异。
 
 \insertTable{
-	\begin{table}[]
+	\begin{table}
       \centering
-      \caption{IPD分布测试检出率汇总表}
+      \caption{IPD分布检测检出率汇总表}
       \label{tab:5:result:ipd}
           \begin{tabular*}{0.75\textwidth}{@{\extracolsep{\fill}}ccc}
             \toprule
@@ -113,15 +132,15 @@
 
 IPD分布一致性的量化评估结果如表\nref{tab:5:result:ipd}，通过IPD分布情况，无法检测出该时间隐通道。当前时间隐通道的检测方法，多基于IPD分布特征，该时间隐通道的主动丢包比例在1\%以内，因此面对其它检测方法具有足够隐蔽性。
 
-\subsubsection{突发丢包长度测试}
+\subsubsection{突发丢包长度检测}
 \label{chap:hash:result:undetectability:burst}
 
-突发丢包长度反映了信道中的丢包类型，根据图\nref{fig:3:capture-cdf-burst}，在两种场景中的区别主要为连续丢包所占的比例，以及连续丢包的长度。该时间隐通道构建方法，主动丢包造成的是长度为1的离散丢包，造成突发丢包长度分布出现偏离。如图\nref{fig:5:result:burst:cdf}，该时间隐通道的主动丢包长度分布对比原始分布，在Excellent场景中导致的偏离更加明显，Good场景下曲线的趋势及取值基本一致。由于Excellent场景中网络噪声强度较弱，平均丢包率小于1\%，因此时间隐通道对分布的影响更加明显；Excellent场景中网络噪声导致的平均丢包率，已经达到了10\%左右，时间隐通道小于1\%的主动丢包率不会导致明显偏离。
+突发丢包长度反映了信道中的丢包类型，根据图\nref{fig:3:capture:burst:cdf}，在两种场景中的区别主要为连续丢包所占的比例，以及连续丢包的长度。该时间隐通道构建方法，主动丢包造成的是长度为1的离散丢包，造成突发丢包长度分布出现偏离。如图\nref{fig:5:result:burst:cdf}，该时间隐通道的主动丢包长度分布对比原始分布，在Excellent场景中导致的偏离更加明显，Good场景下曲线的趋势及取值基本一致。由于Excellent场景中网络噪声强度较弱，平均丢包率小于1\%，因此时间隐通道对分布的影响更加明显；Excellent场景中网络噪声导致的平均丢包率，已经达到了10\%左右，时间隐通道小于1\%的主动丢包率不会导致明显偏离。
 
 \insertTable{
-	\begin{table}[]
+	\begin{table}
       \centering
-      \caption{突发丢包长度测试检出率汇总表}
+      \caption{突发丢包长度检测检出率汇总表}
       \label{tab:5:result:burst}
           \begin{tabular*}{0.75\textwidth}{@{\extracolsep{\fill}}cccc}
             \toprule
@@ -144,15 +163,15 @@ IPD分布一致性的量化评估结果如表\nref{tab:5:result:ipd}，通过IPD
 
 丢突发丢包长度分布的一致性量化检验，结果如表\nref{tab:5:result:burst}，其中Good场景下该时间隐通道具有非常好的隐蔽性，在$L_{Codeword}\ge 7$时通过了所有的检测。Excellent场景下，为保证较好的隐蔽性，参数$L_{Codeword}\ge 9$时，在所有的检测方法中才具有隐蔽性。因此，要保证该时间隐通道具备全场景的抗检测能力，参数$L_{Codeword}$应当满足$L_{Codeword}\ge 9$。
 
-\subsubsection{区间丢包数测试}
+\subsubsection{区间丢包数检测}
 \label{chap:hash:result:undetectability:plr}
 
-区间丢包数反映了区间内的传输质量，基于主动丢包的时间隐通道，存在固定区间内的丢包行为，通过分析区间丢包数在分布上的差异，判断是否为时间隐通道。两种场景下区间丢包数分布的CDF曲线，如图\nref{fig:5:result:win:cdf}，测试中窗口长度设定为100及200。Excellent场景中，如图\nref{fig:5:result:win100:cdf:excellent}及图\nref{fig:5:result:win200:cdf:excellent}，时间隐通道的CDF曲线较原始分布已经检测到偏离，并且随着$L_{Codeword}$的减小，相对偏离更加明显。Good场景中，如图\nref{fig:5:result:win100:cdf:good}及图\nref{fig:5:result:win200:cdf:good}，时间隐通道的相对偏离减小，该时间隐通道的隐蔽性更好。
+区间丢包数反映了区间内的传输质量，基于主动丢包的时间隐通道，存在固定区间内的丢包行为，通过分析区间丢包数在分布上的差异，判断是否为时间隐通道。两种场景下区间丢包数分布的CDF曲线，如图\nref{fig:5:result:win:cdf}，检测中窗口长度设定为100及200。Excellent场景中，如图\nref{fig:5:result:win100:cdf:excellent}及图\nref{fig:5:result:win200:cdf:excellent}，时间隐通道的CDF曲线较原始分布已经检测到偏离，并且随着$L_{Codeword}$的减小，相对偏离更加明显。Good场景中，如图\nref{fig:5:result:win100:cdf:good}及图\nref{fig:5:result:win200:cdf:good}，时间隐通道的相对偏离减小，该时间隐通道的隐蔽性更好。
 
 \insertTable{
-	\begin{table}[]
+	\begin{table}
       \centering
-      \caption{区间丢包数测试检出率汇总表}
+      \caption{区间丢包数检测检出率汇总表}
       \label{tab:5:result:win}
           \begin{tabular*}{0.75\textwidth}{@{\extracolsep{\fill}}cccc}
             \toprule
@@ -176,13 +195,13 @@ IPD分布一致性的量化评估结果如表\nref{tab:5:result:ipd}，通过IPD
     \end{table}
 }
 
-在区间丢包数测试方面，该时间隐通道的检出率如表\nref{tab:5:result:win}，检出结果与\nref{tab:4:results:win}类似。Excellent场景下，当$L_{Codeword}\ge 8$时，该时间隐通道可以通过区间丢包数的测试；Good场景下，当$L_{Codeword}\ge 9$时，该时间隐通道可以通过区间丢包数的所有测试；Good场景下，当$L_{Codeword}=8$时，该时间隐通道有较高几率通过区间丢包数测试。
+在区间丢包数检测方面，该时间隐通道的检出率如表\nref{tab:5:result:win}，检出结果与\nref{tab:4:results:win}类似。Excellent场景下，当$L_{Codeword}\ge 8$时，该时间隐通道可以通过区间丢包数的检测；Good场景下，当$L_{Codeword}\ge 9$时，该时间隐通道可以通过区间丢包数的所有检测；Good场景下，当$L_{Codeword}=8$时，该时间隐通道有较高几率通过区间丢包数检测。
 
 \subsubsection{抗检测能力测试汇总}
 \label{chap:hash:result:undetectability:sum}
 
 \insertTable{
-	\begin{table}[]
+	\begin{table}
       \centering
       \caption{基于多重校验的时间隐通道检出率汇总表}
       \label{tab:5:result:sum}
@@ -317,37 +336,36 @@ Excellent场景及Good场景下的平均误码率水平，如图\nref{fig:5:resu
 \subsection{传输性能测试}
 \label{chap:hash:result:throughput}
 
-根据该时间隐通道的设计方案，传输参数$L_{Codeword}$、$L_{HASH}$、$L_{CRC}$及$R$均影响传输性能。时间隐通道容量与参数的关系如公式（\nref{equ:5:capacity}），时间隐通道性能与参数的关系如公式（\nref{equ:5:throughput}）。
+根据该时间隐通道的设计方案，传输参数$L_{Codeword}$、$L_{HASH}$、$L_{CRC}$及$R$均影响传输性能。时间隐通道容量与参数的关系如公式（\nref{equ:5:capacity}），时间隐通道传输速率与参数的关系如公式（\nref{equ:5:throughput}）。
 
 \insertEquation{
     \begin{equation}
     \label{equ:5:capacity}
-		Capacity = \frac{BL\times R}{(R + 1)\times 2^{L_{Codeword}}}(bpp) = \frac{(L_{Codeword}-L_{HASH}-L_{CRC})\times R}{(R + 1)\times 2^{L_{Codeword}}}(bpp)
+		Capacity\ =\ \frac{BL\ \times\ R}{(R\ +\ 1)\ \times\ 2^{L_{Codeword}}}\ (bpp)\ =\ \frac{(L_{Codeword}\ -\ L_{HASH}\ -\ L_{CRC})\ \times\ R}{(R\ +\ 1)\ \times\ 2^{L_{Codeword}}}\ (bpp)
     \end{equation}
-
     \begin{equation}
     \label{equ:5:throughput}
-        Throughput = Capacity \times 100(packets/s) = \frac{(L_{Codeword}-L_{HASH}-L_{CRC})\times R}{(R + 1)\times 2^{L_{Codeword}}}(bps)
+        Throughput\ =\ Capacity\ \times\ 100\ (bps)\ =\ \frac{(L_{Codeword}\ -\ L_{HASH}\ -\ L_{CRC})\ \times\ R}{(R\ +\ 1)\ \times\ 2^{L_{Codeword}}}\ (bps)
     \end{equation}
 }
 
 \insertFigure{
 	\begin{figure}
         \centering
-        \subfigure[$L_{HASH}+L_{CRC}=4$时的传输性能]{
+        \subfigure[$L_{HASH}+L_{CRC}=4$时的传输速率]{
             \label{fig:5:result:bps-4}
             \includegraphics[width=0.48\textwidth]{chapters/chapter5/figures/bps-4.pdf}
         }
-        \subfigure[$L_{HASH}+L_{CRC}=6$时的传输性能]{
+        \subfigure[$L_{HASH}+L_{CRC}=6$时的传输速率]{
             \label{fig:5:result:bps-6}
             \includegraphics[width=0.48\textwidth]{chapters/chapter5/figures/bps-6.pdf}
         }
-        \caption{时间隐通道的传输性能与$L_{Codeword}$与$R$的关系曲线}
+        \caption{时间隐通道的传输速率与$L_{Codeword}$与$R$的关系曲线}
         \label{fig:5:result:bps}
     \end{figure}
 }
 
-在$L_{HASH}+L_{CRC}=4$的模式下，时间隐通道的传输性能与$L_{Codeword}$及$R$的关系如图\nref{fig:5:result:bps-4}。在$L_{HASH}+L_{CRC}=6$的模式下，时间隐通道的传输性能与$L_{Codeword}$及$R$的关系如图\nref{fig:5:result:bps-6}。在降低鲁棒性水平的情况下，该时间隐通道适用于Excellent场景，传输性能可以达到1.0\ bps左右。通过增大复位周期$R$，能够在一定水平上提升传输性能，但远小于降低$L_{HASH}+L_{CRC}$带来的性能提升。
+在$L_{HASH}+L_{CRC}=4$的模式下，时间隐通道的传输速率与$L_{Codeword}$及$R$的关系如图\nref{fig:5:result:bps-4}。在$L_{HASH}+L_{CRC}=6$的模式下，时间隐通道的传输速率与$L_{Codeword}$及$R$的关系如图\nref{fig:5:result:bps-6}。在Excellent场景中，传输性能可以达到{1.0\ bps}。通过增大复位周期$R$，在一定水平上提升传输速率，但远小于降低$L_{HASH}+L_{CRC}$带来的性能提升。
 
 \subsection{构建代价测试}
 \label{chap:hash:result:cost}
@@ -376,7 +394,7 @@ Excellent场景及Good场景下的平均误码率水平，如图\nref{fig:5:resu
 通过测试该时间隐通道的抗检测性、鲁棒性、传输性能及构建代价，该方法中的多种传输参数对各方面表现有显著影响。在实际应用中，时间隐通道应当在保证传输隐蔽性的基础上，具有较好的鲁棒性和传输性能，因此，该时间隐通道的传输参数需要合理配置。根据\nref{chap:hash:result:undetectability}抗检测能力的测试结果，当$L_{Codeword}\ge 9$时，即可满足抗检测性的要求。时间隐通道作为寄生信道，受噪声干扰不可避免，通常在数据本身中结合其它鲁棒性方案保证传输可靠性，因此，在综合评估中，设定Excellent场景下平均误码率限定在$0.1\%$以内；Good场景下平均误码率限定在$1\%$以内。
 
 \insertTable{
-	\begin{table}[]
+	\begin{table}
       \centering
       \caption{基于多重校验的时间隐通道参数组合评估表}
       \label{tab:5:result:results-sum}
@@ -384,12 +402,12 @@ Excellent场景及Good场景下的平均误码率水平，如图\nref{fig:5:resu
             \toprule
             场景 & $M_{cols}$ & $L_{Codeword}$ & $L_{HASH}$ & $L_{CRC}$ & $R$ & 传输性能 & 平均误码率 \\
             \midrule
-            \multirow{3}{*}{Excellent} \\
+            \multirow{3}{*}{Excellent} 
             & 36 & 9 & 3 & 2 & 2 & 0.52\ bps & $<0.001\ \%$ \\
             & 27 & 9 & 2 & 3 & 3 & 0.59\ bps & $<0.02\ \%$ \\
             & 27 & 9 & 2 & 2 & 3 & 0.73\ bps & $<0.08\ \%$ \\
             \\
-            \multirow{3}{*}{Good} \\
+            \multirow{3}{*}{Good} 
             & 45 & 9 & 5 & 2 & 1 & 0.20\ bps & $<0.85\ \%$ \\
             & 36 & 10 & 5 & 3 & 3 & 0.15\ bps & $<0.1\ \%$ \\
             & 45 & 10 & 5 & 4 & 2 & 0.07\ bps & $<0.01\ \%$ \\
@@ -401,13 +419,13 @@ Excellent场景及Good场景下的平均误码率水平，如图\nref{fig:5:resu
 该时间隐通道的综合评估表如表\nref{tab:5:result:results-sum}，通过比较试验结果，分别选择出了Excellent场景及Good场景中的部分配置，这些配置参数在测试结果中具有较好的综合表现。由表可见Excellent场景下添加适当的鲁棒性信息，即可取得非常好的传输效果，在牺牲一定的鲁棒性时，能够取得更好的性能表现。Good场景中需要保持较多的鲁棒性信息，从而才能抵御噪声干扰，因此需要牺牲性能保证传输可靠性。
 
 \insertTable{
-	\begin{table}[]
+	\begin{table}
       \centering
       \caption{基于多重校验的时间隐通道横向比较}
       \label{tab:5:result:compare}
           \begin{tabular*}{0.8\textwidth}{@{\extracolsep{\fill}}cccc}
             \toprule
-            时间隐通道方法 & 性能 & 容量 & 误码率 \\
+            时间隐通道方法 & 传输性能 & 信道容量 & 误码率 \\
             \midrule
             SCC\nupcite{10.1007/978-3-642-16435-4_15} & & 0.2$\sim$ 0.8 bpp & 2\% \\
             AFTC\nupcite{7347395} & & 0.5 bpp & 4\% \\
