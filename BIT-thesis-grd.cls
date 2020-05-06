@@ -438,7 +438,7 @@ footskip=0.7cm% 页脚 1.8cm %
 % \setdescription{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=5pt}
 
 %_  参考文献风格 added by wei.jianwen@gmail.com
-\bibliographystyle{GBT7714-2005NLang}
+\bibliographystyle{GBT7714-2015NLang}
 
 %_ BITspace
 %\newcommand\BITspace{\protect\CTEX@spaceChar\protect\CTEX@spaceChar}
