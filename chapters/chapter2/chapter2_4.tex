@@ -22,9 +22,9 @@
 }
 
 \insertFigure{
-	\begin{figure}
+	\begin{figure}[htbp]
 		\centering
-        \includegraphics[width=0.8\textwidth]{chapters/chapter2/figures/ks-cdf.pdf}
+        \includegraphics[width=0.7\textwidth]{chapters/chapter2/figures/ks-cdf.pdf}
         \caption{CDF曲线差异示意图}\label{fig:2:ks-cdf}
 	\end{figure}
 }
@@ -48,7 +48,7 @@
 }
 
 \insertTable{
-	\begin{table}
+	\begin{table}[htbp]
         \centering
         \caption{IPD的概率质量函数示意表}
         \label{tab:2:pmf-dis}
@@ -70,7 +70,7 @@
 如表\nref{tab:2:pmf-dis}所示，概率质量函数PMF（Probability Mass Function）对应的是不同IPD的统计概率，参照分布的概率函数为$g(x)$，样本分布的概率函数为$f(x)$。通过公式（\nref{equ:2:kld}）计算$D_{KL}$，得到结果$0.278$，高于检测阈值$0.1$\nupcite{ZHANG201866}，因此得出结论，样本与参照分布不一致，隐通道存在概率较高。
 
 \insertTable{
-	\begin{table}
+	\begin{table}[htbp]
         \centering
         \caption{经典时间隐通道的检验准确率}
         \label{tab:2:test-results}

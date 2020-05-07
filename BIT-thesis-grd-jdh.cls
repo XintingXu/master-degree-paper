@@ -336,6 +336,7 @@ footskip=0.7cm% 页脚 1.8cm %
 \RequirePackage{times}
 %% Set Old Fonts Encoding 
 \usepackage[T1]{fontenc}
+\setmonofont{Courier New}
 
 
 %% graphics packages
@@ -441,7 +442,7 @@ footskip=0.7cm% 页脚 1.8cm %
 \RequirePackage{hyperref}
 \hypersetup{
   bookmarksnumbered,%
-  colorlinks,%
+  hidelinks,%
   linkcolor=black,%
   citecolor=black,%
   plainpages=false,%

@@ -4,7 +4,7 @@
 %VoLTE实现概述
 
 \insertFigure{
-	\begin{figure}
+	\begin{figure}[htbp]
 		\centering
         \includegraphics[width=0.95\textwidth]{chapters/chapter2/figures/volte-model.pdf}
         \caption{VoLTE视频通话中的数据流}\label{fig:2:volte-model}
@@ -21,16 +21,16 @@
 如图\nref{fig:2:volte-model}，VoLTE视频通话过程中，需要三个数据信道，分别为信令信道、语音信道及视频信道，所有的信道均采用数据包进行传输。通过音视频分离方式，VoLTE实现了多场景兼容。通过信令信道，对通话模式及参数进行协商，决定语音信道及视频信道采用的编码方式。相对2G及3G网络，LTE支持的数据上行速率有了显著提升，能够支撑更多的终端进行高清晰度通话。\nupcite{ZHANG201929}
 
 \insertTable{
-    \begin{table}
+    \begin{table}[htbp]
         \centering
         \caption{LTE业务QCI分配表概述}
         \label{tab:2:qci-classification}
         \begin{threeparttable}
             \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}cccccc}
                 \toprule
-                QCI分类 & 资源类型 & 优先级 & 可接受延迟 & 可接受丢包率 & 服务类型 \\ 
+                QCI\tnote{1}分类 & 资源类型 & 优先级 & 可接受延迟 & 可接受丢包率 & 服务类型 \\ 
                 \midrule
-                1 & 保证QoS & 2 & 100 ms & $10^{-2}$ & VoLTE语音 \\ 
+                1 & 保证QoS\tnote{2} & 2 & 100 ms & $10^{-2}$ & VoLTE语音 \\ 
                 2 & 保证QoS & 4 & 150 ms & $10^{-3}$ & VoLTE视频 \\
                 5 & 不保证QoS & 1 & 100 ms & $10^{-6}$ & VoLTE信令 \\
                 7 & 不保证QoS & 7 & 100 ms & $10^{-6}$ & 交互式音视频应用 \\
@@ -38,8 +38,8 @@
             \end{tabular*}
             \begin{tablenotes}
                 \footnotesize
-                \item[] QoS指Quality of Service，服务质量
-                \item[] QCI指Quality of Service Class Identifiers，QoS分类标签
+                \item[1] QCI指Quality of Service Class Identifiers，QoS分类标签
+                \item[2] QoS指Quality of Service，服务质量
             \end{tablenotes}
         \end{threeparttable}
     \end{table}
@@ -55,7 +55,7 @@
 通过支持VoLTE的终端设备进行视频通话，参与数据处理的处理器通常由两部分组成。其中一个是AP（Application Processor）也就是应用处理器，另外一个是BP（Baseband Processor）也就是基带处理器。AP参与操作系统中通用数据的处理，BP负责的是无线通信数据的处理，二者相互补充，共同完成智能终端设备的数据处理任务。
 
 \insertFigure{
-	\begin{figure}
+	\begin{figure}[htbp]
 		\centering
         \includegraphics[width=0.55\textwidth]{chapters/chapter2/figures/ap-bp.pdf}
         \caption{VoLTE视频通话时AP与BP功能划分}\label{fig:2:ap-bp}
@@ -69,20 +69,10 @@
 \label{chap:backinfo:volte:packets:send}
 
 \insertFigure{
-    \begin{figure}
+    \begin{figure}[htbp]
         \centering
-        \includegraphics[width=0.8\textwidth]{chapters/chapter2/figures/length-audio-video.pdf}
+        \includegraphics[width=0.75\textwidth]{chapters/chapter2/figures/length-audio-video.pdf}
         \caption{VoLTE音视频数据包发送间隔示意}\label{fig:2:audio-video}
-    \end{figure}
-    \begin{figure}
-        \centering
-        \includegraphics[width=0.8\textwidth]{chapters/chapter2/figures/cdf-send-receive.pdf}
-        \caption{VoLTE视频数据包IPD的累积分布函数}\label{fig:2:cdf-ipd}
-    \end{figure}
-    \begin{figure}
-        \centering
-        \includegraphics[width=0.8\textwidth]{chapters/chapter2/figures/pmf-dropout.pdf}
-        \caption{连续丢包数量的概率质量函数}\label{fig:2:pmf-dropout}
     \end{figure}
 }
 
@@ -90,12 +80,29 @@
 
 \subsubsection{视频数据包发送与接收IPD分布特征}
 \label{chap:backinfo:volte:packets:ipd}
-如\nref{chap:backinfo:volte:packets:send}所述，VoLTE语音数据包的IPD规律性明显，对构建时间隐通道不利。研究VoLTE视频数据包的传输特征，对VoLTE下时间隐通道构造方法的研究具有重要意义，VoLTE视频数据流对噪声敏感度低，便于时间隐通道隐匿在网络噪声中。
+如本文\nref{chap:backinfo:volte:packets:send}所述，VoLTE语音数据包的IPD规律性明显，对构建时间隐通道不利。研究VoLTE视频数据包的传输特征，对VoLTE下时间隐通道构造方法的研究具有重要意义，VoLTE视频数据流对噪声敏感度低，便于时间隐通道隐匿在网络噪声中。
+
+\insertFigure{
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.7\textwidth]{chapters/chapter2/figures/cdf-send-receive.pdf}
+        \caption{VoLTE视频数据包IPD的累积分布函数}\label{fig:2:cdf-ipd}
+    \end{figure}
+}
 
 如图\nref{fig:2:cdf-ipd}，在发送阶段，IPD主要集中在{30\ ms}及{0\ ms}两部分，由于视频刷新率为{30\ fps}，每隔{33\ ms}产生一个新的视频帧，而视频帧又有多个数据包组成，造成发送阶段CDF曲线不平滑。在接收阶段，受网络噪声及传输延迟的影响，IPD在$[0,\ 30]$区间内集中分布，CDF曲线趋于平滑。因此，视频数据包在IPD方面，对时间隐通道的容忍性要优于语音数据包。
 
 \subsubsection{VoLTE视频数据包丢包特征}
 \label{chap:backinfo:volte:packets:dropout}
+
+\insertFigure{
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.7\textwidth]{chapters/chapter2/figures/pmf-dropout.pdf}
+        \caption{连续丢包数量的概率质量函数}\label{fig:2:pmf-dropout}
+    \end{figure}
+}
+
 对于VoLTE视频数据包，连续丢包数量的概率质量函数如图\nref{fig:2:pmf-dropout}。该统计结果，来自抓包得到的58万条VoLTE视频数据包，包含低噪声及高噪声在内的多种测试场景。PMF（Probability Mass Function）统计结果显示，VoLTE视频数据信道中的丢包事件，主要由单个离散丢包事件组成，连续大量的丢包事件占据的比例非常小。
 
 \subsection{基于主动丢包的时间隐通道构建基础}

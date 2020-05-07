@@ -13,7 +13,7 @@ RTP是VoLTE使用的应用层协议，通过主动丢包的方式构建时间隐
 RTP以UDP作为传输层协议，不需要类似TCP的握手及挥手过程，也不会受到传输窗口的限制。因此，RTP在传输延迟及响应速度方面具有极大的优势，在实时音视频通话、互联网实时应用中得到广泛应用。\nupcite{6923336}根据数据包的组成结构，IP数据包的负载是UDP数据包内容，UDP的负载是RTP数据包内容。由于当前以太网的最大传输单元（MTU）通常设定为{1500\ Bytes}，IPv6网络下IP包头长度通常为{40\ Bytes}，UDP包头通常为{8\ Bytes}，RTP包头通常为{12\ Bytes}，所以RTP的负载数据通常不超过{1440\ Bytes}。\nupcite{6269462}因此，待发送的视频帧必须分包传输，大大增加了视频数据包的数量。
 
 \insertFigure{
-	\begin{figure}
+	\begin{figure}[htbp]
 		\centering
         \includegraphics[width=0.9\textwidth]{chapters/chapter2/figures/rtp-header.pdf}
         \caption{RTP包头结构示意图}\label{fig:2:rtp-header}

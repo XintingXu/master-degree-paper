@@ -10,7 +10,7 @@
 \label{sec:intro:background:covert-channel}
 
 \insertFigure{
-	\begin{figure}
+	\begin{figure}[htbp]
         \centering
         \subfigure[基于单主机的隐通道示意图]{
             \label{fig:1:modes:host}
@@ -43,17 +43,17 @@
 
 %常用的构建方法
 \insertFigure{
-	\begin{figure}
+	\begin{figure}[htbp]
 		\centering
         \includegraphics[width=0.75\textwidth]{chapters/chapter1/figures/m-ipds.pdf}
         \caption{VoLTE场景中m-IPDs的累积分布函数}\label{fig:1:m-ipds-cdf}
 	\end{figure}
 }
 
-移动互联网环境中，已经有一些时间隐通道构建方法。Skype是一款应用广泛的社交软件，其支持基于VoIP的音视频通话，在国际市场中占有一定份额。借助Skype通话时端到端传输特征，基于IPD构建时间隐通道是可行的。但受限于Skype对通话质量的约束，数据包端到端延迟必须在{100\ ms}以内，因此对时间隐通道调制方法产生限制。另一方面，由于音视频通话中的数据量较大，产生的数据包较多，时间隐通道调制过程不能阻塞数据包传输，否则不利于隐蔽性。另外一点，受网络噪声的影响，传输抖动对隐通道的鲁棒性具有破坏性，时间隐通道需要足够的健壮性。\nupcite{7346833}通过改变隐蔽消息与IPD之间的对应关系，将{L\ bit}的数据对应到N个数据包，利用一组而不是单个IPD完成调制，是该问题的一种解决思路。如图\nref{fig:1:m-ipds-cdf}，通过扩充IPD数量，CDF统计分布出现显著离散化，具备了有效的传输符号。
+移动互联网环境中，已经有一些时间隐通道构建方法。Skype是一款应用广泛的社交软件，其支持基于VoIP的音视频通话，在国际市场中占有一定份额。借助Skype通话时端到端传输特征，基于IPD构建时间隐通道是可行的。但受限于Skype对通话质量的约束，数据包端到端延迟必须在{100\ ms}以内，因此对时间隐通道调制方法产生限制。另一方面，由于音视频通话中的数据量较大，产生的数据包较多，时间隐通道调制过程不能阻塞数据包传输，否则不利于隐蔽性。另外一点，受网络噪声的影响，传输抖动对隐通道的鲁棒性具有破坏性，时间隐通道需要足够的健壮性。\nupcite{7346833}通过改变隐蔽消息与IPD之间的对应关系，将{L\ bits}的数据对应到N个数据包，利用一组而不是单个IPD完成调制，是该问题的一种解决思路。如图\nref{fig:1:m-ipds-cdf}，通过扩充IPD数量，CDF统计分布出现显著离散化，具备了有效的传输符号。
 
 \insertTable{
-	\begin{table}
+	\begin{table}[htbp]
         \centering
         \caption{常见VoIP应用的数据包发送速率}
         \label{tab:1:voip-packet-speed}
@@ -61,9 +61,9 @@
         \toprule
         应用类型 & 数据包发送速率 \\ 
         \midrule
-        微信 & 125 packets/s \\ 
-        QQ & 157$\sim$189 packets/s \\
-        Skype & 150 packets/s \\
+        微信 & 125 pkts/s \\ 
+        QQ & 157$\sim$189 pkts/s \\
+        Skype & 150 pkts/s \\
         \bottomrule
         \end{tabular*}
     \end{table}
@@ -88,7 +88,7 @@
 喷泉码是抹除码的一种，类似喷泉由下而上的喷涌过程，不断传输有效数据信息。当接收方获取足够的符号后，即可根据数据间关系还原隐蔽消息。喷泉码适用于能够确保码字正确性的场景，通过所有的正确码字恢复遗失码字。喷泉码的编码过程需要结合编码矩阵，利用矩阵对应关系实现码字与符号的线性映射。接收方每次还原的符号，都是多个码字的组合结果。最终，通过喷泉码解码器，逐步还原所有码字。\nupcite{6296078}
 
 \insertFigure{
-	\begin{figure}
+	\begin{figure}[htbp]
 		\centering
         \includegraphics[width=0.75\textwidth]{chapters/chapter1/figures/frame-struct.pdf}
         \caption{常用的数据帧格式}\label{fig:1:frame-struct}

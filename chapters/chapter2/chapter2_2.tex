@@ -15,7 +15,7 @@
 基于以太网的时间隐通道，通常调整时间间隔或数据包序号，实现隐蔽消息的传输。此外，时间隐通道与检测方法是一一对应的，如果时间隐通道利用了未公开的传输特征，则检测方法识别的概率较低。
 
 \insertFigure{
-	\begin{figure}
+	\begin{figure}[htbp]
 		\centering
         \includegraphics[width=0.99\textwidth]{chapters/chapter2/figures/ipd-ctc.pdf}
         \caption{基于IPD的时间隐通道示意图}\label{fig:2:ipd-ctc}
@@ -26,7 +26,7 @@
 
 %on-off CTC
 \insertFigure{
-	\begin{figure}
+	\begin{figure}[htbp]
 		\centering
         \includegraphics[width=0.9\textwidth]{chapters/chapter2/figures/onoff-ctc.pdf}
         \caption{基于On/Off模式的时间隐通道示意图}\label{fig:2:onoff-ctc}
@@ -36,7 +36,7 @@
 
 %Model-based CTC
 \insertFigure{
-	\begin{figure}
+	\begin{figure}[htbp]
 		\centering
         \includegraphics[width=0.85\textwidth]{chapters/chapter2/figures/mb-ctc.pdf}
         \caption{基于模型的时间隐通道示意图}\label{fig:2:mb-ctc}
@@ -50,7 +50,7 @@
 移动互联网环境下的时间隐通道构建方法，与以太网环境下时间隐通道的构建原理存在相似点。但在移动互联网环境中，数据包传输特征发生了变化，基于以太网的时间隐通道构建方法不完全适用，尤其是隐蔽性方面难以满足需求。
 
 \insertFigure{
-	\begin{figure}
+	\begin{figure}[htbp]
 		\centering
         \includegraphics[width=0.95\textwidth]{chapters/chapter2/figures/pl-ctc.pdf}
         \caption{基于数据包长度的时间隐通道示意图}\label{fig:2:pl-ctc}
@@ -67,7 +67,7 @@
 对于VoLTE，由于采用了基于RTP的传输方案，同时需要RTCP数据包完成传输反馈。这两种同时存在的数据包，在发送序列中形成了可观测的传输特征。由于RTCP数据包数量较少，并且发送过程比较离散，具有传输定位的功能。通过调整RTCP数据包之间的RTP数据包的数量，隐蔽消息被嵌入到RTP数据包数量中，接收方统计数据包数量即可还原隐蔽消息。\nupcite{ZHANG201866}
 
 \insertFigure{
-	\begin{figure}
+	\begin{figure}[htbp]
 		\centering
         \includegraphics[width=0.9\textwidth]{chapters/chapter2/figures/av-ctc.pdf}
         \caption{基于数据包计数的时间隐通道示意图}\label{fig:2:av-ctc}
@@ -84,13 +84,13 @@
 %介绍各个方案中，为保证鲁棒性，采用的检错、纠错编码，重传策略等
 %Gray码
 \insertTable{
-	\begin{table}
+	\begin{table}[htbp]
         \centering
         \caption{格雷码编码表}
         \label{tab:2:gray-code}
         \begin{tabular*}{0.6\textwidth}{@{\extracolsep{\fill}}cccc}
         \toprule
-        数据 & 1 bit格雷码 & 2 bit格雷码 & 3 bit格雷码\\ 
+        数据 & 1 bits格雷码 & 2 bits格雷码 & 3 bits格雷码\\ 
         \midrule
         0 & 0 & 00 & 000 \\ 
         1 & 1 & 01 & 001 \\ 
@@ -106,7 +106,7 @@
 }
 
 \insertFigure{
-	\begin{figure}
+	\begin{figure}[htbp]
 		\centering
         \includegraphics[width=0.9\textwidth]{chapters/chapter2/figures/gray-ctc.pdf}
         \caption{基于格雷码的时间隐通道鲁棒性示意图}\label{fig:2:gray-ctc}
