@@ -1,125 +1,112 @@
-\section{现有时间隐通道构建方案}
-\label{chap:backinfo:ctc}
+\section{VoLTE音视频传输方案}
+\label{chap:backinfo:volte}
 
-%概述，在以太网中进行时间隐通道的研究已经有成果
-基于以太网的时间隐通道，是隐通道研究中一个非常重要的基本点。随着计算机网络的发展，基于单主机的时间隐通道，已经难以满足隐蔽传输的需求。借助计算机网络高带宽、大流量的优势，以太网中的时间隐通道在传输性能、隐蔽性方面有了进一步的提升。
-%在移动互联网下的方案，也已经存在
-当前移动互联网已经成为主流，面向移动终端的流媒体应用及实时通信应用兴起，为时间隐通道提供了新的平台。
-%这些方案中有一些通用的方法及保证鲁棒性的策略
-时间隐通道需要面对一个共同难题，是如何在噪声干扰下保证传输鲁棒性，提高时间隐通道可用性。作为寄生信道，时间隐通道与宿主信道在信噪比方面有很大差距，在方法设计和优化过程中需要针对性改进。
-
-\subsection{基于以太网的时间隐通道构建方案}
-\label{chap:backinfo:ctc:ethernet}
-%经典时间隐通道
-%IPD-CTC
-基于以太网的时间隐通道，通常调整时间间隔或数据包序号，实现隐蔽消息的传输。此外，时间隐通道与检测方法是一一对应的，如果时间隐通道利用了未公开的传输特征，则检测方法识别的概率较低。
+%VoLTE实现概述
 
 \insertFigure{
 	\begin{figure}[htbp]
 		\centering
-        \includegraphics[width=0.99\textwidth]{chapters/chapter2/figures/ipd-ctc.pdf}
-        \caption{基于IPD的时间隐通道示意图}\label{fig:2:ipd-ctc}
+        \includegraphics[width=0.95\textwidth]{chapters/chapter2/figures/volte-model.pdf}
+        \caption{VoLTE视频通话中的数据流}\label{fig:2:volte-model}
 	\end{figure}
 }
 
-数据包的传输过程，存在传输时间间隔特征，利用该特征构建的时间隐通道，即为基于IPD的时间隐通道。\nupcite{4317620,8600755,WALLS20111217}如图\nref{fig:2:ipd-ctc}，已知宿主信道的平均IPD为{35\ ms}，待发送的二进制数据序列为$\{0,\ 1,\ 0,\ 1,\ \cdots\}$。对于发送方，当需要传输1时，将当前的IPD设定为{35\ ms}以上；当需要传输0时，将当前的IPD设定为{35\ ms}以内。图中根据数据包分布及消息内容，调整数据包发送时刻，实现隐通道调制。当数据包经网络传输后，噪声及传输调度导致IPD出现畸变。如果噪声太强，接收方使用相同的规则进行解调后，接收的隐蔽消息中将出现误码。
+语音通信是移动通信技术的基本需求，随着智能终端的发展，移动数据需求超过了语音通信需求。为满足用户移动宽带业务需求，基于LTE的第四代移动通信技术采用了全IP网络，实现了语音主导到数据主导的转换。新的传输模式下，LTE对数据传输进行了优化，同时提升了音视频通话业务能力。
 
-%on-off CTC
-\insertFigure{
-	\begin{figure}[htbp]
-		\centering
-        \includegraphics[width=0.9\textwidth]{chapters/chapter2/figures/onoff-ctc.pdf}
-        \caption{基于On/Off模式的时间隐通道示意图}\label{fig:2:onoff-ctc}
-	\end{figure}
-}
-另一种典型的时间隐通道为On/Off模式的时间隐通道，类似于开关的开关状态，通过控制是否传输数据包，调整任意时间段内的对应发送状态，完成时间隐通道构建。\nupcite{Cabuk:2004:ICT:1030083.1030108,5062145,6406084}如图\nref{fig:2:onoff-ctc}，发送方与接收方设定{10\ ms}的时间窗口，控制在窗口内是否发送数据包，发送则代表传输1，不发送则代表传输0。在这类时间隐通道中，隐蔽消息编码适用不归零编码，双方利用时钟作为同步信号。
+\subsection{VoLTE数据处理流程}
+\label{chap:backinfo:volte:datastream}
 
-%Model-based CTC
-\insertFigure{
-	\begin{figure}[htbp]
-		\centering
-        \includegraphics[width=0.85\textwidth]{chapters/chapter2/figures/mb-ctc.pdf}
-        \caption{基于模型的时间隐通道示意图}\label{fig:2:mb-ctc}
-	\end{figure}
-}
-基于模型的时间隐通道（MB-CTC），通过建模信道的传输特征，通过分布拟合的方式避免被监听者察觉。构建基于模型的时间隐通道，首先需要对拟合目标进行建模，创建拟合目标。\nupcite{5062145,ahsan2002practical}基于模型的时间隐通道调制器部分，通常包含滤波器、分析器、编码器及传输器几个部分，实现对传输特征的调整，完成隐通道构建。如图\nref{fig:2:mb-ctc}，滤波器分析宿主信道中的IPD特征，并将分析结果传送给分析器。分析器根据已知的模型特征，分析当前适配的模型类型。编码器利用该模型，借助分布函数及累积分布函数，将隐蔽消息编码进IPD中。传输器根据目标IPD，调整数据包发送间隔，完成调制过程。
+2G及3G时代，基于电路交换的音频通话技术，是支撑语音业务的核心解决方案。进入4G时代，核心网络已经转变为全数据包交换，基于电路交换的音频通话已经无法完全兼容，需要全新的解决方案。于是，类似VoIP音视频通话，基于LTE的VoLTE成为4G时代的音视频通话解决方案。实际应用中，支持VoLTE的终端能够快速建立呼叫，并且支持回落到3G或2G网络，从而兼容多种设备及场景。\nupcite{poikselka2012voice}
 
-\subsection{基于移动互联网的时间隐通道构建方案}
-\label{chap:backinfo:ctc:mobile}
-%介绍Skype、VoIP等构建方案
-移动互联网环境下的时间隐通道构建方法，与以太网环境下时间隐通道的构建原理存在相似点。但在移动互联网环境中，数据包传输特征发生了变化，基于以太网的时间隐通道构建方法不完全适用，尤其是隐蔽性方面难以满足需求。
+如图\nref{fig:2:volte-model}，VoLTE视频通话中，存在三个数据信道，分别为信令信道、语音信道及视频信道，所有的信道均通过数据包传输。采用音视频分离设计，VoLTE兼容了多种通话场景。通过信令信道协商通话模式及参数，决定语音信道及视频信道采用的编码方式。相较2G及3G网络，LTE数据上行速率得到提升，能够支撑更多的终端进行高清晰度通话。\nupcite{ZHANG201929}
 
-\insertFigure{
-	\begin{figure}[htbp]
-		\centering
-        \includegraphics[width=0.95\textwidth]{chapters/chapter2/figures/pl-ctc.pdf}
-        \caption{基于数据包长度的时间隐通道示意图}\label{fig:2:pl-ctc}
-	\end{figure}
-}
-
-%Packet-Length CTC。 Liang
-对于VoIP等实时交互应用，数据包长度并不是完全随机的，数据包长度根据传输需求不断变化，数据包长度是时间隐通道的有效载体。构建基于数据包长度的时间隐通道，首先统计数据包长度分布，划分长度区间并对应到编码符号。在发送过程中，根据待发送数据包的长度，以及当前的消息发送内容，通过调整数据包顺序完成隐蔽消息嵌入。\nupcite{LIANG2018144,8277839}如图\nref{fig:2:pl-ctc}，通过调整数据包发送顺序，根据隐蔽消息内容构建数据包序列，即可构建基于数据包长度的时间隐通道。
-
-%Packet-content CTC
-移动互联网中的数据包，尤其是RTP数据包，在一次通话过程中的数据包内容唯一。因此，数据包自身也构成了连续不断的特征流，并且数据包内容出现HASH冲突的概率非常低。基于数据包内容的时间隐通道借助信息摘要算法，计算负载的摘要作为数据包标记。通过调整不数据包的位置，构建数据包标记序列，完成消息嵌入实现隐通道构建。\nupcite{LIANG2018162,6670985}
-
-%VoLTE RTP、RTCP CTC
-对于VoLTE，由于采用了基于RTP的传输方案，同时需要RTCP数据包完成传输反馈。这两种同时存在的数据包，在发送序列中形成了可观测的传输特征。由于RTCP数据包数量较少，并且发送过程比较离散，具有传输定位的功能。通过调整RTCP数据包之间的RTP数据包的数量，隐蔽消息被嵌入到RTP数据包数量中，接收方统计数据包数量即可还原隐蔽消息。\nupcite{ZHANG201866}
-
-\insertFigure{
-	\begin{figure}[htbp]
-		\centering
-        \includegraphics[width=0.9\textwidth]{chapters/chapter2/figures/av-ctc.pdf}
-        \caption{基于数据包计数的时间隐通道示意图}\label{fig:2:av-ctc}
-	\end{figure}
-}
-
-%VoLTE Video、Audio CTC
-类似基于RTP及RTCP的时间隐通道\nupcite{ZHANG201866}，基于语音数据包及视频数据包计数构建时间隐通道也是可行的。参考图\nref{fig:2:ap-bp}，语音数据包及视频数据包最终都由BP进行处理。在BP侧，语音数据包具有明显的传输规律，具备参照时钟的功能。语音数据包之间的视频数据包数量，随时间段变化，采用{AMR-WB}语音编码时，语音数据包每{20\ ms}发送一次。另一方面，视频帧率为{30\ fps}时的采样周期大约为{33\ ms}，导致视频数据包与语音数据包发送周期不同步。因此，调整语音数据包之间视频数据包数量的方法，符合传输隐蔽性的要求。该模式的示意图如图\nref{fig:2:av-ctc}，由于调整的数据包数量少，具有良好的传输隐蔽性。
-
-\subsection{时间隐通道的鲁棒性策略}
-\label{chap:backinfo:ctc:robustness}
-正如\nref{sec:intro:background:robustness}所述，时间隐通道在鲁棒性方面需要格外重视。隐通道中常用的鲁棒性方法，包括鲁棒性编码、附加校验及纠错信息等。不同的方法各有优势，在应用中通常结合噪声类型，根据去噪需求确定鲁棒性策略。
-
-%介绍各个方案中，为保证鲁棒性，采用的检错、纠错编码，重传策略等
-%Gray码
 \insertTable{
-	\begin{table}[htbp]
+    \begin{table}[htbp]
         \centering
-        \caption{格雷码编码表}
-        \label{tab:2:gray-code}
-        \begin{tabular*}{0.6\textwidth}{@{\extracolsep{\fill}}cccc}
-        \toprule
-        数据 & 1 bits格雷码 & 2 bits格雷码 & 3 bits格雷码\\ 
-        \midrule
-        0 & 0 & 00 & 000 \\ 
-        1 & 1 & 01 & 001 \\ 
-        2 &   & 11 & 011 \\ 
-        3 &   & 10 & 010 \\ 
-        4 &   &    & 110 \\ 
-        5 &   &    & 111 \\ 
-        6 &   &    & 101 \\ 
-        7 &   &    & 100 \\ 
-        \bottomrule
-        \end{tabular*}
+        \caption{LTE业务QCI分配表概述}
+        \label{tab:2:qci-classification}
+        \begin{threeparttable}
+            \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}cccccc}
+                \toprule
+                QCI\tnote{1}分类 & 承载要求 & 优先级 & 可接受延迟 & 可接受丢包率 & 服务对象 \\
+                \midrule
+                1 & 保证QoS\tnote{2} & 2 & 100 ms & $10^{-2}$ & VoLTE语音 \\
+                2 & 保证QoS & 4 & 150 ms & $10^{-3}$ & VoLTE视频 \\
+                5 & 不保证QoS & 1 & 100 ms & $10^{-6}$ & VoLTE信令 \\
+                7 & 不保证QoS & 7 & 100 ms & $10^{-6}$ & 交互式音视频应用 \\
+                \bottomrule
+            \end{tabular*}
+            \begin{tablenotes}
+                \footnotesize
+                \item[1] QCI指Quality of Service Class Identifiers，QoS分类标签
+                \item[2] QoS指Quality of Service，服务质量
+            \end{tablenotes}
+        \end{threeparttable}
     \end{table}
 }
 
+相较于固网，移动无线网络的噪声干扰不可忽视，用户通话体验与噪声强度相关。如表\nref{tab:2:qci-classification}，根据LTE业务分类，VoLTE信令数据包具有1级最高优先级，可接受时延为{100\ ms}，可接受丢包率为$10^{-6}$；VoLTE语音数据包具有2级优先级，可接受时延为{100\ ms}，可接受丢包率为$10^{-2}$；VoLTE视频数据包优先级降为4级，可接受时延为{150\ ms}，可接受丢包率为$10^{-3}$。另一方面，即使VoIP应用的数据包经LTE网络传输，其服务质量也低于VoLTE，运营商网络只保证尽力传输。VoIP应用的音视频数据对应的优先级为7，可接受时延为{100\ ms}，可接受丢包率为$10^{-6}$。\nupcite{7154042,6996582,Li:2015:IVS:2810103.2813618}
+
+因此，VoLTE较其它VoIP应用，受网络调度产生抖动的几率要小，传输更加稳定。因此时间隐通道的操作空间较小，对构建方法提出了新的挑战。
+
+\subsection{VoLTE数据包传输特征}
+\label{chap:backinfo:volte:packets}
+%VoLTE音视频分流处理的模式（分清楚执行组件）,结合传输的逻辑设计
+支持VoLTE的终端设备进行视频通话，参与通话的处理器通常由两部分组成。其中一个是AP（Application Processor）也就是应用处理器，另一个是BP（Baseband Processor）也就是基带处理器。AP执行操作系统的通用数据处理，BP负责无线通信数据处理，二者相互补充，共同完成智能终端的数据处理任务。
+
 \insertFigure{
-	\begin{figure}[htbp]
+	\begin{figure}[htb]
 		\centering
-        \includegraphics[width=0.9\textwidth]{chapters/chapter2/figures/gray-ctc.pdf}
-        \caption{基于格雷码的时间隐通道鲁棒性示意图}\label{fig:2:gray-ctc}
+        \includegraphics[width=0.55\textwidth]{chapters/chapter2/figures/ap-bp.pdf}
+        \caption{VoLTE视频通话时AP与BP的功能划分}\label{fig:2:ap-bp}
 	\end{figure}
 }
 
-格雷码又称循环二进制单位距离码，任意两个相邻数值的编码只有一个二进制位不同，与奇偶校验码同属于可靠性编码。\nupcite{7329924}不同位数的格雷码如表\nref{tab:2:gray-code}所示，利用相邻数据编码差异小的优势，当统计误差只有$\pm1$时，错误只影响一个二进制位，减少了误码的位数。格雷码的应用优势如图\nref{fig:2:gray-ctc}，发送方使用数据包计数进行调制，接收过程中出现不可预期的乱序时，格雷码能够防止噪声扩散。\nupcite{8600755,8817935}
+如图\nref{fig:2:ap-bp}，AP与BP对应不同的媒体类型。对于VoLTE语音数据，由基带处理器按照设定的时间间隔，完成模拟信号的采样、编码，并将打包好的语音数据包通过射频系统传输。对于VoLTE视频数据，由于图像处理模块集成在应用处理器中，视频数据包需要应用处理器参与处理。应用处理器调用摄像系统驱动，获取视频数据编码，以视频帧为单位进行打包，得到RTP视频数据包。视频数据包由系统内核中的协议栈发送，最终由BP通过射频系统传输。类似的，在接收阶段，VoLTE语音数据由基带处理器完成接收、解包、解码，并交由扬声器播放。VoLTE视频数据包则交付系统中的网络组件，完成解包、解码后，由通话软件显示在屏幕上。\nupcite{ZHANG201929,guo2019volte}
 
-%Guard Band
-受网络噪声的影响，编码符号之间的区分难度增大，需要在符号之间设定一定长度的隔离区，从而减弱噪声的干扰强度。当监测到的符号落入隔离区时，则视为噪声丢弃，否则处理后将产生显著的误码。根据符号的类型，隔离区设定为单个\nupcite{6567004,6296078}，或设定为多个\nupcite{LIANG2018162}，与符号的对应范围密切相关。
+%抓包结果，分析传输特征，时间间隔、发送密度
+\subsubsection{音视频数据包发送特征}
+\label{chap:backinfo:volte:packets:send}
 
-%喷泉码等
-除了以上方法，一些特殊的编码算法，也应用在了时间隐通道中。基于喷泉码的时间隐通道，使用随机生成的关系矩阵，建立原始数据符号的线性编码。该方法保证了每个符号中有足够的冗余信息，结合抹除码的特征，在正确接收符号的前提下，具有较好的保密性和鲁棒性。\nupcite{6296078}除了喷泉码，低密度奇偶校验码、里所码、卷积码、Turbo码均在一定程度上提升了鲁棒性。\nupcite{10.1007/978-3-642-24178-9_22}
+\insertFigure{
+    \begin{figure}[htb]
+        \centering
+        \includegraphics[width=0.75\textwidth]{chapters/chapter2/figures/length-audio-video.pdf}
+        \caption{VoLTE音视频数据包发送间隔示意}\label{fig:2:audio-video}
+    \end{figure}
+}
 
-\subsection{基于主动丢包的时间隐通道研究要点}
-在VoLTE场景中，存在的噪声只有丢包和乱序两种。基于主动丢包的时间隐通道，隐匿在丢包噪声中，构建方法的基本原理与现有方法存在区别。当前的时间隐通道鲁棒性策略，主要是抵御网络噪声的少量干扰。对于本文的时间隐通道构建方法，更重要的是将微弱的信号与背景噪声进行区分。由于解调过程无法确保正确性，可靠性编码不能完全解决该问题，需要设计一种内部交叉校验的鲁棒性方法。
+对于音频数据包，采用AMR-WB（Adaptive Multi-Rate Wideband）格式编码时，非静音期每{20\ ms}发送一次数据包，静音期不发送数据包。\nupcite{8288828}对于视频数据包，数据包发送间隔取决于视频刷新率及编码结果，具有不确定性。\nupcite{zhang2019timestamp}如图\nref{fig:2:audio-video}，VoLTE视频数据包的长度虽然多数在{1300\ 字节}左右，但仍有部分数据包长度随机变化；另一方面，VoLTE语音数据包的发送间隔具有规律性，而视频数据包多为密集发送。
+
+\subsubsection{视频数据包IPD分布特征}
+\label{chap:backinfo:volte:packets:ipd}
+如本文\nref{chap:backinfo:volte:packets:send}所述，VoLTE语音数据包的IPD存在规律，因此不利于构建时间隐通道。研究VoLTE视频数据包的传输特征，对VoLTE时间隐通道构建方法具有重要意义。
+
+\insertFigure{
+    \begin{figure}[htb]
+        \centering
+        \includegraphics[width=0.7\textwidth]{chapters/chapter2/figures/cdf-send-receive.pdf}
+        \caption{VoLTE视频数据包IPD的累积分布函数}\label{fig:2:cdf-ipd}
+    \end{figure}
+}
+
+如图\nref{fig:2:cdf-ipd}，发送阶段IPD主要集中在{30\ ms}及{0\ ms}。由于视频刷新率为{30\ fps}，每隔{33\ ms}产生一个新的视频帧，而视频帧又由多个数据包组成，导致发送阶段CDF曲线不平滑。接收阶段，受网络噪声及传输延迟的影响，IPD集中在$[0,\ 30]$区间内，CDF曲线趋于平滑。因此在IPD方面，视频数据包对时间隐通道的容忍度高于语音数据包。
+
+\subsubsection{VoLTE视频数据包丢包特征}
+\label{chap:backinfo:volte:packets:dropout}
+
+\insertFigure{
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.7\textwidth]{chapters/chapter2/figures/pmf-dropout.pdf}
+        \caption{连续丢包数的概率质量函数}\label{fig:2:pmf-dropout}
+    \end{figure}
+}
+
+对于VoLTE视频数据包，连续丢包数的概率质量函数如图\nref{fig:2:pmf-dropout}。该统计结果，来自抓包得到的58万条VoLTE视频数据包，包含低噪声及高噪声在内的多种测试场景。PMF（Probability Mass Function）统计结果显示，VoLTE视频数据信道中的丢包事件，主要由单个离散丢包事件组成，连续丢包事件占据的比例较小。
+
+\subsection{基于主动丢包的时间隐通道构建}
+\label{chap:backinfo:volte:scheme}
+VoLTE出现丢包的原因，主要是终端与基站空口传输过程的干扰。复杂的无线网络环境中，发送端与接收端均存在丢包可能性。对于监听者，只有监听了隐通道发送方的终端设备，才有一定几率发现基于主动丢包的时间隐通道。然而，在隐通道威胁模型及实际应用中，监听者主要监听中间媒介，因此基于主动丢包的时间隐通道，只需要保证统计特征方面的一致性即可。
+
+通过对VoLTE通话的理论及数据分析，在VoLTE场景中构建时间隐通道，尤其是通过主动丢包的方式构建时间隐通道，应当选择VoLTE视频信道作为宿主信道。与此同时，主动丢包的结果应当模拟离散丢包模式，并且在统计特征方面拟合已知结果。另一方面，VoLTE视频信道的丢包率，已经超过了QCI的预期丢包率，表明当前LTE网络不能完全保证服务质量，通过主动丢包构建时间隐通道可行。所以，本文选择VoLTE视频信道，作为主动丢包时间隐通道的宿主信道。

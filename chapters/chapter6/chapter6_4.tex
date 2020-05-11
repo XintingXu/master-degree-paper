@@ -1,7 +1,7 @@
-\section{时间隐通道验证结果}
+\section{测试结果}
 \label{chap:linphone:result}
 
-Linphone中进行时间隐通道验证，主要测试RTP环境下主动丢包方式构造隐通道的可行性，重点在于隐蔽消息能否顺利通过丢包序号进行传输。通过在Linphone源码中附加基于主动丢包的时间隐通道，并生成Android端应用，以实际传输测试证明构造方法是否有效。在传输参数方面，参照本文\nref{chap:zigzag:results:undetectability}及本文\nref{chap:hash:result:undetectability}的实验结果，设定$L_{Codeword}$为8，即每256个数据包就主动丢弃一个数据包。
+基于Linphone的时间隐通道原型系统，主要测试RTP环境下主动丢包方式构建隐通道的可行性，重点在于隐蔽消息能否顺利通过丢包序号进行传输。通过在Linphone源码中附加基于主动丢包的时间隐通道，并生成Android端应用，以实际传输测试证明构建方法是否有效。在传输参数方面，参照本文\nref{chap:zigzag:results:undetectability}及本文\nref{chap:hash:result:undetectability}的实验结果，设定$L_{Codeword}$为8，即每256个数据包就主动丢弃一个数据包。
 
 \insertTable{
 	  \begin{table}[htbp]
@@ -29,16 +29,16 @@ Linphone中进行时间隐通道验证，主要测试RTP环境下主动丢包方
 \insertTable{
 	  \begin{table}[htbp]
         \centering
-        \caption{Linphone中时间隐通道测试成功率}
+        \caption{原型系统传输成功率}
         \label{tab:6:result:availablity}
         \begin{threeparttable}
             \begin{tabular*}{0.7\textwidth}{@{\extracolsep{\fill}}ccccc}
                 \toprule
                 网络环境 & 测试次数 & 成功次数\tnote{1} & 成功率 & 平均丢包率 \\
                 \midrule
-                WiFi-WiFi & 50 & 47 & 94\% & 0.2\%\\
-                WiFi-4G & 50 & 42 & 84\% & 2.4\%\\
-                4G-4G & 50 & 40 & 80\% & 0.9\%\\
+                WiFi-WiFi & 50 & 47 & 94\% & 0.2\% \\
+                WiFi-4G & 50 & 42 & 84\% & 2.4\% \\
+                4G-4G & 50 & 40 & 80\% & 0.9\% \\
                 \bottomrule
             \end{tabular*}
             \begin{tablenotes}
@@ -49,17 +49,17 @@ Linphone中进行时间隐通道验证，主要测试RTP环境下主动丢包方
     \end{table}
 }
 
-可用性测试的判断标准，是隐通道接收方能否完整接收到隐蔽消息。通过多种网络场景下的传输测试，模拟不同的通话场景，当各场景下均具有较高成功率，即可证明基于主动丢包的时间隐通道具有可行性。不同场景下的测试结果如表\nref{tab:6:result:availablity}，在各场景中成功率均超过了{80\ \%}。在WiFi-WiFi场景中，Linphone通过NAT穿透，建立了基于LAN的P2P链接，因此平均丢包率较低，时间隐通道具有较高的成功率。当接入4G网络时，网络复杂度增加，链接稳定性较差，导致丢包率增加、时间隐通道成功率下降。
+可用性测试的判断标准，是隐通道接收方能否完整接收到隐蔽消息。通过多种网络场景下的传输测试，模拟不同的通话场景，当各场景下均具有较高成功率，即可证明基于主动丢包的时间隐通道具有可行性。不同场景下的测试结果如表\nref{tab:6:result:availablity}，在各场景中成功率均超过了{80\ \%}。在WiFi-WiFi场景中，Linphone通过NAT穿透，建立了基于LAN的P2P链接，因此平均丢包率较低，具有较高的成功率。当接入4G网络时，网络复杂度增加，链接稳定性较差，导致丢包率增加、成功率下降。
 
-通过实际传输测试，证明了基于主动丢包的时间隐通道具有可行性。测试中虽未采用复杂的鲁棒性策略，但实验结果表明，无误码的成功率已经很高。对于VoLTE视频信道来说，虽然平均丢包率高于Linphone语音信道，但VoLTE双方能够建立直接的P2P链接，网络环境与Linphone在WiFi-WiFi模式下近似。另一方面，本章测试重点为主动丢包模式是否符合SIP+RTP网络要求，因此采用的鲁棒性方法较简单，在成功率方面有一定损失。对于VoLTE视频信道来说，采用本文\nref{chap:zigzag:model}及本文\nref{chap:hash:robustness}中提出的鲁棒性方案，能够取得更高的成功率。
+通过实际传输测试，证明了基于主动丢包的时间隐通道原型系统具有可行性。测试中虽未采用复杂的鲁棒性策略，但实验结果表明，无误码成功率已经较高。对于VoLTE视频信道来说，虽然平均丢包率高于Linphone语音信道，但VoLTE双方能够建立直接的P2P链接，网络环境与原型系统在WiFi-WiFi模式下近似。另一方面，本章测试重点为主动丢包模式是否符合SIP+RTP网络要求，因此采用的鲁棒性方法较简单，导致成功率低于误码率。对于VoLTE视频信道来说，采用本文\nref{chap:zigzag:model}及本文\nref{chap:hash:robustness}中提出的鲁棒性方案，能够取得更高的成功率。
 
-\subsection{传输性能}
+\subsection{传输性能测试}
 \label{chap:linphone:result:throughput}
 
 \insertTable{
 	  \begin{table}[htbp]
         \centering
-        \caption{基于Linphone的时间隐通道性能验证对比}
+        \caption{基于Linphone的时间隐通道原型系统性能对比}
         \label{tab:6:result:compare}
             \begin{tabular*}{0.6\textwidth}{@{\extracolsep{\fill}}ccc}
                 \toprule
@@ -73,4 +73,4 @@ Linphone中进行时间隐通道验证，主要测试RTP环境下主动丢包方
     \end{table}
 }
 
-由于调制解调方案的区别，以及Linphone语音数据包发送速率的影响，Linphone中测试得到的时间隐通道传输速率如表\nref{tab:6:result:compare}。Linphone语音数据包的发送速率为{50\ pkts/s}，小于VoLTE视频数据包的发送速率{100\ pkts/s}，因此，在相同的容量下传输速率减半。表\nref{tab:6:result:compare}中，Zigzag-CTC为本文\nref{chap:zigzag:model}中提出的基于Zigzag映射矩阵的时间隐通道构建方法，MSV-CTC为本文\nref{chap:hash:designation}中提出的基于多重校验的时间隐通道构建方法，两种方法均面向VoLTE视频信道。Linphone-CTC即为本章实际测试得到的数据，面向Linphone语音信道。实际测试验证，基于主动丢包的时间隐通道具备有效数据传输能力，尤其适用于秘钥等关键消息传输。
+由于调制解调方案的区别，以及Linphone语音数据包发送速率的影响，原型系统与本文其它方法传输性能对比如表\nref{tab:6:result:compare}。由于Linphone语音数据包发送速率为{50\ pkts/s}，小于VoLTE视频数据包的发送速率{100\ pkts/s}，因此，在相同的容量下传输速率减半。表\nref{tab:6:result:compare}中，Zigzag-CTC为本文\nref{chap:zigzag:model}中提出的基于Zigzag映射矩阵的时间隐通道构建方法，MSV-CTC为本文\nref{chap:hash:designation}中提出的基于多重校验纠错的时间隐通道构建方法，两种方法均面向VoLTE视频信道。Linphone-CTC即为本章实际测试得到的数据，面向Linphone语音信道。实际测试验证，基于主动丢包的时间隐通道原型系统具备有效数据传输能力，尤其适用于秘钥等关键消息传输。
