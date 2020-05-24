@@ -3,17 +3,17 @@
 \item[VoLTE] Voice over LTE，基于LTE的音视频通话技术
 \item[CTC] Covert Timing Channel，时间隐通道
 \item[RTP] Real-time Transport Protocol，实时传输协议
-\item[UDP] User Datagram Protocol，用户数据包协议
+\item[UDP] User Datagram Protocol，用户数据报协议
 \item[HASH] HASH信息摘要算法
 \item[CRC] Cyclic Redundancy Check，循环冗余校验码
-\item[IPD] Inter-Packet Delay，数据包时间间隔
+\item[IPD] Inter-Packet Delay，数据包传输间隔
 \item[] 
 \item[$C_{i}$] 第i个码字，消息及校验信息组成的二进制数据
-\item[$S_{j}$] 第j个符号，可观测的丢包相对位置
-\item[$BL$] Block Length的缩写，消息块的二进制位数
-\item[$L_{Codeword}$] 码字Codeword的二进制位数
-\item[$L_{HASH}$] 嵌入在Codeword中的HASH校验块位数
-\item[$L_{CRC}$] 嵌入在Codeword中的CRC校验块位数
+\item[$S_{j}$] 第j个符号，可观测的相对丢包位置
+\item[$BL$] Block Length，消息块的二进制位数
+\item[$L_{Codeword}$] 码字$C_{i}$的二进制位数
+\item[$L_{HASH}$] 嵌入在$C_{i}$中的HASH校验块位数
+\item[$L_{CRC}$] 嵌入在$C_{i}$中的CRC校验块位数
 \item[$R$] 码字组间校验关系的复位周期
 \item[$M_{cols}$] 码字与符号映射矩阵的列数
 \item[$M_{rows}$] 码字与符号映射矩阵的行数
