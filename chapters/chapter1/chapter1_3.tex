@@ -4,14 +4,24 @@
 \subsection{主要内容}
 \label{sec:intro:work:mainwork}
 
-随着VoLTE商用范围的扩大，研究VoLTE环境中时间隐通道构建方法，既扩充了时间隐通道构建方法，也扩展了对VoLTE音视频通话特征的研究。本文主要研究在VoLTE视频通话场景下，通过主动丢包的方式，构建鲁棒的时间隐通道。本文主要包括四个研究点，分别为VoLTE主动丢包时间隐通道的检测方法、基于Zigzag映射矩阵的时间隐通道构建方法、基于多重校验纠错的时间隐通道构建方法，以及基于Linphone的时间隐通道原型系统。各研究点与研究指标的关联关系如图\ \nref{fig:1:contents}。
+随着VoLTE商用范围的扩大，研究VoLTE环境中时间隐通道构建方法，既扩充了时间隐通道构建方法，也扩展了对VoLTE音视频通话特征的研究。本文主要研究在VoLTE视频通话场景下，通过主动丢包的方式，构建鲁棒的时间隐通道。本文主要包括四个研究点，分别为VoLTE主动丢包时间隐通道的检测方法、基于Zigzag映射矩阵的时间隐通道构建方法、基于多重校验纠错的时间隐通道构建方法，以及基于Linphone的时间隐通道原型系统。本文研究内容的分析对比如表\ \nref{tab:1:contents}。
 
 \insertFigure{
-	\begin{figure}[htbp]
-		\centering
-        \includegraphics[width=0.95\textwidth]{chapters/chapter1/figures/struct.pdf}
-        \caption{本文研究点与时间隐通道指标的对应关系}\label{fig:1:contents}
-	\end{figure}
+	\begin{table}[htbp]
+        \centering
+        \caption{本文研究内容的对比表}
+        \label{tab:1:contents}
+            \begin{tabular*}{0.99\textwidth}{@{\extracolsep{\fill}}cccc}
+                \toprule
+                研究内容 & 研究要点 & 适用场景 & 有益效果 \\
+                \midrule
+                \makecell*[c]{VoLTE主动丢包\\ 时间隐通道的\\ 检测方法} & \makecell*[c]{检测丢包特征\\ 综合多种工具} & \makecell*[c]{VoLTE通话\\ 检测主动丢包隐通道} & \makecell*[c]{提升了检测能力\\ 评估抗检测能力} \\
+                \makecell*[c]{基于Zigzag映射矩阵的\\ 时间隐通道\\ 构建方法} & \makecell*[c]{Zigzag映射矩阵\\ CRC码字校验\\ 映射矩阵随机化} & \makecell*[c]{噪声强度较低\\ 隐蔽性要求较高\\ 鲁棒性与性能均衡} & \makecell*[c]{性能0.88\ bps\\ 误码率1.5\ \%} \\
+                \makecell*[c]{基于多重校验纠错的\\ 时间隐通道\\ 构建方法} & \makecell*[c]{码字间校验\\ 码字自校验\\ 符号校验\\ 多重校验纠错} & \makecell*[c]{噪声强度中等\\ 隐蔽性要求较高\\ 鲁棒性要求较高} & \makecell*[c]{性能0.49\ bps\\ 误码率0.08\ \%} \\
+                \makecell*[c]{基于Linphone的\\ 时间隐通道\\ 原型系统} & \makecell*[c]{原型系统\\ 设计与实现} & \makecell*[c]{噪声强度较低\\ 隐蔽性与性能均衡} & \makecell*[c]{可行性验证\\ 性能0.52\ bps} \\
+                \bottomrule
+            \end{tabular*}
+      \end{table}
 }
 
 %背景介绍了什么
