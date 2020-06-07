@@ -1,7 +1,7 @@
 \section{测试结果}
 \label{chap:linphone:result}
 
-基于Linphone的时间隐通道原型系统，主要测试RTP环境下主动丢包方式构建隐通道的可行性，重点在于隐蔽消息能否顺利通过丢包序号进行传输。通过在Linphone源码中附加基于主动丢包的时间隐通道，并生成Android端应用，以实际传输测试证明构建方法是否有效。在传输参数方面，参照本文\ \nref{chap:zigzag:results:undetectability}及本文\ \nref{chap:hash:result:undetectability}的实验结果，设定$L_{Codeword}$为8，即每256个数据包就主动丢弃一个数据包。
+基于Linphone的时间隐通道原型系统，重点测试隐蔽消息能否顺利通过丢包序号进行传输。在传输参数方面，参照本文\ \nref{chap:zigzag:results:undetectability}及本文\ \nref{chap:hash:result:undetectability}的实验结果，设定$L_{Codeword}$为8，即每256个数据包主动丢弃一个数据包。
 
 \insertTable{
 	  \begin{table}[htbp]

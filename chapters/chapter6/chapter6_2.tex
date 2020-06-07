@@ -3,6 +3,25 @@
 
 本章主要介绍Linphone的基本特性，对应的平台为Android端，采用的Linphone Android端版本为4.2.3，Linphone SDK版本为4.3.0。
 
+\insertFigure{
+	\begin{table}[htb]
+        \centering
+        \caption{原型系统与构建方法对比表}
+        \label{tab:6:compare}
+            \begin{tabular*}{0.99\textwidth}{@{\extracolsep{\fill}}cccc}
+                \toprule
+                研究内容 & 适用场景 & 主动丢包率 & 鲁棒性策略 \\
+                \midrule
+                \makecell*[c]{基于Zigzag映射矩阵的\\ 时间隐通道\\ 构建方法} & \multirow{4.5}{*}{VoLTE视频信道} & & CRC校验 \\
+                \makecell*[c]{基于多重校验纠错的\\ 时间隐通道\\ 构建方法} & & $\dfrac{1}{L_{Codeword}}$ & 多重校验纠错 \\
+                \makecell*[c]{基于Linphone的\\ 时间隐通道\\ 原型系统} & Linphone语音信道 & & 重复传输 \\
+                \bottomrule
+            \end{tabular*}
+      \end{table}
+}
+
+如表\ \nref{tab:6:compare}，本章中的原型系统与本文中的构建方法，在适用场景及鲁棒性策略方面存在差异，但主动丢包率方面具有相似性。
+
 \subsection{Linphone软件架构}
 \label{chap:linphone:motivation:struct}
 

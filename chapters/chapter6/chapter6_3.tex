@@ -21,9 +21,9 @@
 \label{chap:linphone:designation:ui}
 
 \insertFigure{
-	\begin{figure}[htbp]
+	\begin{figure}[htb]
 		\centering
-        \includegraphics[width=0.85\textwidth]{chapters/chapter6/figures/ui-flow.pdf}
+        \includegraphics[width=0.75\textwidth]{chapters/chapter6/figures/ui-flow.pdf}
         \caption{原型系统用户界面的控制接口设计}
         \label{fig:6:ui-flow}
     \end{figure}
@@ -35,7 +35,7 @@
 \label{chap:linphone:designation:ortp}
 
 \insertFigure{
-	\begin{figure}[htbp]
+	\begin{figure}[htb]
 		\centering
         \includegraphics[width=0.9\textwidth]{chapters/chapter6/figures/ortp-flow.pdf}
         \caption{oRTP中时间隐通道的数据流}
@@ -51,7 +51,7 @@ oRTP层添加的功能主要包含三部分，分别为数据流识别、丢包�
 \insertFigure{
 	\begin{figure}[htbp]
 		\centering
-        \includegraphics[width=0.5\textwidth]{chapters/chapter6/figures/data-flow.pdf}
+        \includegraphics[width=0.4\textwidth]{chapters/chapter6/figures/data-flow.pdf}
         \caption{原型系统消息传输接口的构成结构}
         \label{fig:6:data-flow}
     \end{figure}
@@ -65,7 +65,7 @@ oRTP层添加的功能主要包含三部分，分别为数据流识别、丢包�
 本文中提出了两种时间隐通道构建方法，二者均通过参数$L_{Codeword}$控制主动丢包密度。Linphone与VoLTE在网络环境方面存在差异，因此原型系统采用了简化的调制解调方法。由于Linphone支持NAT转换，完成NAT转换前存在链接切换，此时传输可靠性较差。因此，时间隐通道跳过前200个数据包以获取稳定的传输，按照语音数据包{50\ pkts/s}的发送速率，200个数据包对应{4\ s}左右的通话时间。
 
 \insertFigure{
-	\begin{figure}[htbp]
+	\begin{figure}[htb]
 		\centering
         \includegraphics[width=0.95\textwidth]{chapters/chapter6/figures/codeword-cycle.pdf}
         \caption{原型系统中码字发送轮次及顺序}
@@ -79,7 +79,7 @@ oRTP层添加的功能主要包含三部分，分别为数据流识别、丢包�
 \label{chap:linphone:designation:workflow}
 
 \insertFigure{
-	\begin{figure}[htbp]
+	\begin{figure}[htb]
 		\centering
         \includegraphics[width=0.7\textwidth]{chapters/chapter6/figures/call-ctc.pdf}
         \caption{Linphone通话与时间隐通道工作流程}
