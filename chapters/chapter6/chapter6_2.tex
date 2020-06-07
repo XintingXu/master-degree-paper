@@ -77,7 +77,7 @@ Linphone SDK中，主要包括基于RTP的Mediastreamer2工具集，以及基于
 
 基于Linphone的VoIP通话，需要面临复杂的用户接入网络。在当前IPv4网络环境中，用户设备所获取的IP通常经过了NAT（Network Address Translation）转换，因此无法直接建立P2P（Peer to Peer）会话。为解决该问题，常用的方法包括基于隧道的P2P链接，以及基于公网服务器的数据转发。对于VoIP应用来说，通过中间服务器进行转发，产生的传输延迟不可忽略，影响用户体验。因此，Linphone支持STUN（Session Traversal Utilities for NAT）及TURN（Traversal Using Relay NAT）创建端到端链接，并且支持自定义隧道服务器进行数据转发\nupcite{5673073}。
 
-Linphone与VoLTE在网络传输机制方面，存在固有差异。Linphone为建立端到端链接，需要与公网服务器进行交互，从而确定客户端在公网中对应的IP地址及端口。然而在实际测试中，Linphone创建P2P链接的成功率较低，常见的NAT场景中成功率不超过30\%，并且在更加复杂的网络环境中难以运作\nupcite{5673073}。而VoLTE是运营商通信业务的一部分，直接接入运营商网络，并且当前VoLTE多运行在IPv6网络中，具备直接点对点传输能力，无需考虑NAT环境。
+Linphone与VoLTE在网络传输机制方面，存在固有差异。Linphone为建立端到端链接，需要与公网服务器进行交互，从而确定客户端在公网中对应的IP地址及端口。然而在实际测试中，Linphone创建P2P链接的成功率较低，常见的NAT场景中成功率不超过30\ \%，并且在更加复杂的网络环境中难以运作\nupcite{5673073}。而VoLTE是运营商通信业务的一部分，直接接入运营商网络，并且当前VoLTE多运行在IPv6网络中，具备直接点对点传输能力，无需考虑NAT环境。
 
 对于VoIP等高实时性应用来说，网络延迟影响通话质量\nupcite{8698715}。即使在编码方面进行了优化，网络对通话质量的影响仍然是决定性因素\nupcite{7478066,8698715}。根据本文\ \nref{chap:linphone:motivation:coding}中对编码方式的分析，Linphone视频数据流具有较高的数据包发送速率，在创建P2P链接失败的情况下，无法有效保证视频通话的流畅性和实时性。因此，基于Linphone的时间隐通道原型系统，选择Linphone语音流作为传输载体，并在不同的网络环境中进行测试。
 

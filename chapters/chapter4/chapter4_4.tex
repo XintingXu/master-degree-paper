@@ -23,7 +23,7 @@
     \end{table}
 }
 
-评估实验的软硬件环境如表\ \nref{tab:4:result:environment}，所有的数据均存储到mysql数据库中，通过基于QT的时间隐通道处理逻辑，得到调制与解调结果。根据调制解调结果，评估抗检测能力等指标。基于python脚本，将抓包结果还原为视频数据，并评估调制前后的视频质量，得到隐通道构建代价测试结果。此外，为有效评估鲁棒性、比较不同丢包率下的误码率水平，生成了丢包率为0.5\%、1\%、2\%、5\%及10\%的五种随机噪声。
+评估实验的软硬件环境如表\ \nref{tab:4:result:environment}，所有的数据均存储到mysql数据库中，通过基于QT的时间隐通道处理逻辑，得到调制与解调结果。根据调制解调结果，评估抗检测能力等指标。基于python脚本，将抓包结果还原为视频数据，并评估调制前后的视频质量，得到隐通道构建代价测试结果。此外，为有效评估鲁棒性、比较不同丢包率下的误码率水平，生成了丢包率为0.5\ \%、1\ \%、2\ \%、5\ \%及10\ \%的五种随机噪声。
 
 \insertTable{
 	\begin{table}[htbp]
@@ -34,11 +34,11 @@
             \toprule
             $L_{Codeword}$\ (bits) & $2^{L_{Codeword}}$ & 主动丢包率 \\
             \midrule
-            7 & 128 & 0.781\% \\ 
-            8 & 256 & 0.391\% \\ 
-            9 & 512 & 0.195\% \\ 
-            10 & 1024 & 0.098\% \\ 
-            11 & 2048 & 0.049\% \\ 
+            7 & 128 & 0.781\ \% \\ 
+            8 & 256 & 0.391\ \% \\ 
+            9 & 512 & 0.195\ \% \\ 
+            10 & 1024 & 0.098\ \% \\ 
+            11 & 2048 & 0.049\ \% \\ 
             \bottomrule
           \end{tabular*}
     \end{table}
@@ -79,11 +79,11 @@
                 $L_{Codeword}$ & 方法 & 检出率\\ 
                 \midrule
                 \multirow{5}{*}{7,8,9,10,11} 
-                & K-S检验 & 0\% \\
-                & Welch's t检验, Mann–Whitney rank检验\tnote{1} & 0\% \\
-                & K-L散度 & 0\% \\
-                & Wasserstein距离 & 0\% \\
-                & 能量距离 & 0\% \\
+                & K-S检验 & 0\ \% \\
+                & Welch's t检验, Mann–Whitney rank检验\tnote{1} & 0\ \% \\
+                & K-L散度 & 0\ \% \\
+                & Wasserstein距离 & 0\ \% \\
+                & 能量距离 & 0\ \% \\
                 \bottomrule
             \end{tabular*}
             \begin{tablenotes}
@@ -127,15 +127,15 @@ IPD分布的量化检测结果如表\ \nref{tab:4:results:ipd}，所有的测试
             场景 & $L_{Codeword}$ & 方法 & 检出率 \\ 
             \midrule
             \multirow{4}{*}{Excellent} 
-            & 7,8 & K-L散度 & 100\% \\
-            & 9,10,11 & K-L散度 & 0\% \\
-            & 7,8,9,10,11 & Wasserstein距离 & 0\% \\
-            & 7,8,9,10,11 & 能量距离 & 0\% \\
+            & 7,8 & K-L散度 & 100\ \% \\
+            & 9,10,11 & K-L散度 & 0\ \% \\
+            & 7,8,9,10,11 & Wasserstein距离 & 0\ \% \\
+            & 7,8,9,10,11 & 能量距离 & 0\ \% \\
             \\
             \multirow{3}{*}{Good}
-            & 7,8,9,10,11 & K-L散度 & 0\% \\
-            & 7,8,9,10,11 & Wasserstein距离 & 0\% \\
-            & 7,8,9,10,11 & 能量距离 & 0\% \\
+            & 7,8,9,10,11 & K-L散度 & 0\ \% \\
+            & 7,8,9,10,11 & Wasserstein距离 & 0\ \% \\
+            & 7,8,9,10,11 & 能量距离 & 0\ \% \\
             \bottomrule
           \end{tabular*}
     \end{table}
@@ -182,18 +182,18 @@ IPD分布的量化检测结果如表\ \nref{tab:4:results:ipd}，所有的测试
             场景 & $L_{Codeword}$ & 方法 & 检出率 \\ 
             \midrule
             \multirow{4}{*}{Excellent} 
-            & 7 & Wasserstein距离 & 100\% \\
-            & 8,9,10,11 & Wasserstein距离 & 0\% \\
-            & 7 & 能量距离 & 100\% \\
-            & 8,9,10,11 & 能量距离 & 0\% \\
+            & 7 & Wasserstein距离 & 100\ \% \\
+            & 8,9,10,11 & Wasserstein距离 & 0\ \% \\
+            & 7 & 能量距离 & 100\ \% \\
+            & 8,9,10,11 & 能量距离 & 0\ \% \\
             \\
             \multirow{6}{*}{Good}
-            & 7 & Wasserstein距离 & 100\% \\
-            & 8 & Wasserstein距离 & 30\% \\
-            & 9,10,11 & Wasserstein距离 & 0\% \\
-            & 7 & 能量距离 & 100\% \\
-            & 8 & 能量距离 & 30\% \\
-            & 9,10,11 & 能量距离 & 0\% \\
+            & 7 & Wasserstein距离 & 100\ \% \\
+            & 8 & Wasserstein距离 & 30\ \% \\
+            & 9,10,11 & Wasserstein距离 & 0\ \% \\
+            & 7 & 能量距离 & 100\ \% \\
+            & 8 & 能量距离 & 30\ \% \\
+            & 9,10,11 & 能量距离 & 0\ \% \\
             \bottomrule
           \end{tabular*}
     \end{table}
@@ -218,8 +218,8 @@ IPD分布的量化检测结果如表\ \nref{tab:4:results:ipd}，所有的测试
             \cmidrule(l){2-6}
             & 7 & 8 & 9 & 10 & 11 \\
             \midrule
-            Excellent & 100\% & 100\% & 0\% & 0\% & 0\% \\
-            Good & 100\% & 30\% & 0\% & 0\% & 0\% \\
+            Excellent & 100\ \% & 100\ \% & 0\ \% & 0\ \% & 0\ \% \\
+            Good & 100\ \% & 30\ \% & 0\ \% & 0\ \% & 0\ \% \\
             \bottomrule
           \end{tabular*}
     \end{table}
@@ -301,7 +301,7 @@ IPD分布的量化检测结果如表\ \nref{tab:4:results:ipd}，所有的测试
     \end{figure}
 }
 
-基于Zigzag映射矩阵的时间隐通道，建立在VoLTE视频信道中，因此接收方视频质量是评估构建代价的重要方面。根据表\ \nref{tab:4:parameters}，当$L_{Codeword}\ge 9$时，构建时间隐通道导致的丢包率低于$0.2\%$，远小于网络噪声产生的丢包比例，因此视频质量的变化有限。
+基于Zigzag映射矩阵的时间隐通道，建立在VoLTE视频信道中，因此接收方视频质量是评估构建代价的重要方面。根据表\ \nref{tab:4:parameters}，当$L_{Codeword}\ge 9$时，构建时间隐通道导致的丢包率低于$0.2\ \%$，远小于网络噪声产生的丢包比例，因此视频质量的变化有限。
 
 为评估视频质量，采用NIQE（Natural Image Quality Evaluator）无参照客观评价指标\nupcite{7094273}，对视频的所有帧进行评估，并判断视频整体的质量是否发生变化\nupcite{7122356}。NIQE反映了图像的失真程度，计算结果与图像质量呈反比\nupcite{CoDLaCDAfMI,10.1145/3210424.3210434,6353522}。视频质量评估结果如图\ \nref{fig:4:results:vq}，Good场景下平均NIQE值高于Excellent场景，而时间隐通道导致的变化幅度较小。
 
@@ -337,11 +337,11 @@ IPD分布的量化检测结果如表\ \nref{tab:4:results:ipd}，所有的测试
             \toprule
             时间隐通道构建方法 & 传输性能 & 信道容量 & 误码率 \\
             \midrule
-            SCC\nupcite{10.1007/978-3-642-16435-4_15} & & 0.2$\sim$ 0.8 bpp & 2\% \\
-            AFTC\nupcite{7347395} & & 0.5 bpp & 4\% \\
-            CoCo\nupcite{10.1007/978-3-642-24178-9_22} & & 0.1$\sim$ 0.5 bpp & 4\% \\
-            SPCC\nupcite{8288828} & 0.7$\sim$ 3 bps & & 0.9\% \\
-            Zigzag-CTC & 0.88 bps & 0.009 bpp & 1.5\% \\
+            SCC\nupcite{10.1007/978-3-642-16435-4_15} & & 0.2$\sim$ 0.8 bpp & 2\ \% \\
+            AFTC\nupcite{7347395} & & 0.5 bpp & 4\ \% \\
+            CoCo\nupcite{10.1007/978-3-642-24178-9_22} & & 0.1$\sim$ 0.5 bpp & 4\ \% \\
+            SPCC\nupcite{8288828} & 0.7$\sim$ 3 bps & & 0.9\ \% \\
+            Zigzag-CTC & 0.88 bps & 0.009 bpp & 1.5\ \% \\
             \bottomrule
           \end{tabular*}
     \end{table}
