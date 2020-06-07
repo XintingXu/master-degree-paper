@@ -164,7 +164,7 @@ Wasserstein距离又称为空间传输距离，作为无参数检测方法，其
 	\end{equation}
 }
 
-能量距离的计算方式如公式（\nref{equ:3:energy-distance}），其中$F(x)$及$G(x)$对应CDF函数值，$D_{e}(F(x),G(x))$代表了能量距离计算结果。
+能量距离的计算方式如公式（\nref{equ:3:energy-distance}），其中$F(x)$及$G(x)$对应CDF函数值，$D_{e}(F(x),\ G(x))$代表了能量距离计算结果。
 
 %相对距离的一致性判定
 \insertTable{
@@ -176,11 +176,11 @@ Wasserstein距离又称为空间传输距离，作为无参数检测方法，其
             \toprule
             检验方法 & 检测对象 & 通过条件 \\ 
             \midrule
-            \multirow{3}{*}{Wasserstein距离} & IPD分布 & \multirow{3}{*}{$D_{w}(F(x),G(x))\times n\ <\ 1.5$} \\ 
+            \multirow{3}{*}{Wasserstein距离} & IPD分布 & \multirow{3}{*}{$D_{w}(F(x),\ G(x))\times n\ <\ 1.5$} \\
             & 连续丢包数分布 \\
             & 区间丢包数分布 \\
             \\
-            \multirow{3}{*}{能量距离} & IPD分布 & \multirow{3}{*}{$D_{e}(F(x),G(x))\ <\ 1.5$} \\ 
+            \multirow{3}{*}{能量距离} & IPD分布 & \multirow{3}{*}{$D_{e}(F(x),\ G(x))\ <\ 1.5$} \\
             & 连续丢包数分布 \\
             & 区间丢包数分布 \\
             \bottomrule
@@ -202,21 +202,21 @@ Wasserstein距离又称为空间传输距离，作为无参数检测方法，其
         \begin{threeparttable}
             \begin{tabular*}{0.98\textwidth}{@{\extracolsep{\fill}}ccccc}
                 \toprule
-                编号 & 检测对象 & 检验方法 & 通过条件 & 准确性\\ 
+                编号 & 检测对象 & 检验方法 & 通过条件 & 准确性 \\
                 \midrule
-                1 & \multirow{6}{*}{IPD分布} & CDF检测 & 趋势基本一致 & 低 \\
+                1 & \multirow{7.5}{*}{IPD分布} & CDF检测 & 趋势基本一致 & 低 \\
                 2 & & K-S检验 & $p\ >\ 0.05$ & 中 \\
                 3 & & \makecell*[c]{Welch's t检验, \\ Mann–Whitney rank检验\tnote{1}} & 存在$p\ >\ 0.05$ & 中 \\
-                4 & & K-L散度 & $K-L散度\ <\ 0.1$ & 中 \\
+                4 & & K-L散度 & K-L散度$\ <\ 0.1$ & 中 \\
                 5 & & Wasserstein距离 & $d\ <\ 1.5$ & 中 \\
                 6 & & 能量距离 & $d\ <\ 1.5$ & 中 \\
                 \\
-                7 & \multirow{3}{*}{连续丢包数分布} & CDF检测 & 趋势基本一致 & 中 \\
-                8 & & K-L散度 & $K-L散度\ <\ 0.1$ & 高 \\
+                7 & \multirow{4}{*}{连续丢包数分布} & CDF检测 & 趋势基本一致 & 中 \\
+                8 & & K-L散度 & K-L散度$\ <\ 0.1$ & 高 \\
                 9 & & Wasserstein距离 & $d\ <\ 1.5$ & 高 \\
                 10 & & 能量距离 & $\ d\ <1.5$ & 高 \\
                 \\
-                11 & \multirow{2}{*}{区间丢包数分布} & CDF检测 & 趋势基本一致 & 中 \\
+                11 & \multirow{3}{*}{区间丢包数分布} & CDF检测 & 趋势基本一致 & 中 \\
                 12 & & Wasserstein距离 & $\ d\ <1.5$ & 高 \\
                 13 & & 能量距离 & $\ d\ <1.5$ & 高 \\
                 \bottomrule
