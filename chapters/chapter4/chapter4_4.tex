@@ -78,7 +78,7 @@
                 \toprule
                 $L_{Codeword}$ & 方法 & 检出率\\ 
                 \midrule
-                \multirow{5}{*}{7,8,9,10,11} 
+                \multirow{5}{*}{7,\ 8,\ 9,\ 10,\ 11} 
                 & K-S检验 & 0\ \% \\
                 & Welch's t检验, Mann–Whitney rank检验\tnote{1} & 0\ \% \\
                 & K-L散度 & 0\ \% \\
@@ -127,15 +127,15 @@ IPD分布的量化检测结果如表\ \nref{tab:4:results:ipd}，所有的测试
             场景 & $L_{Codeword}$ & 方法 & 检出率 \\ 
             \midrule
             \multirow{4}{*}{Excellent} 
-            & 7,8 & K-L散度 & 100\ \% \\
-            & 9,10,11 & K-L散度 & 0\ \% \\
-            & 7,8,9,10,11 & Wasserstein距离 & 0\ \% \\
-            & 7,8,9,10,11 & 能量距离 & 0\ \% \\
+            & 7,\ 8 & K-L散度 & 100\ \% \\
+            & 9,\ 10,\ 11 & K-L散度 & 0\ \% \\
+            & 7,\ 8,\ 9,\ 10,\ 11 & Wasserstein距离 & 0\ \% \\
+            & 7,\ 8,\ 9,\ 10,\ 11 & 能量距离 & 0\ \% \\
             \\
             \multirow{3}{*}{Good}
-            & 7,8,9,10,11 & K-L散度 & 0\ \% \\
-            & 7,8,9,10,11 & Wasserstein距离 & 0\ \% \\
-            & 7,8,9,10,11 & 能量距离 & 0\ \% \\
+            & 7,\ 8,\ 9,\ 10,\ 11 & K-L散度 & 0\ \% \\
+            & 7,\ 8,\ 9,\ 10,\ 11 & Wasserstein距离 & 0\ \% \\
+            & 7,\ 8,\ 9,\ 10,\ 11 & 能量距离 & 0\ \% \\
             \bottomrule
           \end{tabular*}
     \end{table}
@@ -183,17 +183,17 @@ IPD分布的量化检测结果如表\ \nref{tab:4:results:ipd}，所有的测试
             \midrule
             \multirow{4}{*}{Excellent} 
             & 7 & Wasserstein距离 & 100\ \% \\
-            & 8,9,10,11 & Wasserstein距离 & 0\ \% \\
+            & 8,\ 9,\ 10,\ 11 & Wasserstein距离 & 0\ \% \\
             & 7 & 能量距离 & 100\ \% \\
-            & 8,9,10,11 & 能量距离 & 0\ \% \\
+            & 8,\ 9,\ 10,\ 11 & 能量距离 & 0\ \% \\
             \\
             \multirow{6}{*}{Good}
             & 7 & Wasserstein距离 & 100\ \% \\
             & 8 & Wasserstein距离 & 30\ \% \\
-            & 9,10,11 & Wasserstein距离 & 0\ \% \\
+            & 9,\ 10,\ 11 & Wasserstein距离 & 0\ \% \\
             & 7 & 能量距离 & 100\ \% \\
             & 8 & 能量距离 & 30\ \% \\
-            & 9,10,11 & 能量距离 & 0\ \% \\
+            & 9,\ 10,\ 11 & 能量距离 & 0\ \% \\
             \bottomrule
           \end{tabular*}
     \end{table}
@@ -213,7 +213,7 @@ IPD分布的量化检测结果如表\ \nref{tab:4:results:ipd}，所有的测试
       \label{tab:4:results:sum}
           \begin{tabular*}{0.8\textwidth}{@{\extracolsep{\fill}}cccccc}
             \toprule
-            \multirow{2}{*}{场景} 
+            \multirow{2.5}{*}{场景} 
             & \multicolumn{5}{c}{$L_{Codeword}$} \\
             \cmidrule(l){2-6}
             & 7 & 8 & 9 & 10 & 11 \\
@@ -266,7 +266,7 @@ IPD分布的量化检测结果如表\ \nref{tab:4:results:ipd}，所有的测试
       \label{tab:4:results:throughput}
           \begin{tabular*}{0.8\textwidth}{@{\extracolsep{\fill}}cccccc}
             \toprule
-            \multirow{2}{*}{指标} 
+            \multirow{2.5}{*}{指标} 
             & \multicolumn{5}{c}{$L_{Codeword}$} \\
             \cmidrule(l){2-6}
             & 7 & 8 & 9 & 10 & 11 \\
