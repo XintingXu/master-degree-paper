@@ -11,7 +11,7 @@
 \RequirePackage{upgreek}
 
 \NeedsTeXFormat{LaTeX2e}[2005/12/01]
-\ProvidesClass{BIT-thesis-grd}
+\ProvidesClass{BIT-thesis-grd-jdh}
   [2018/03/25 v1.2 BIT-thesis-grd document class]
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
@@ -146,6 +146,9 @@
 \def\BIT@label@conclusion{结论}
 \def\BIT@label@appendix{附录}
 \def\BIT@label@publications{攻读学位期间发表论文与研究成果清单}
+\def\BIT@label@publicationsarticle{发表论文}
+\def\BIT@label@publicationspatent{申请专利}
+\def\BIT@label@publicationsproject{参与项目}
 \def\BIT@label@projects{攻读学位期间参与的项目}
 \def\BIT@label@resume{作者简介}
 \def\BIT@label@reference{参考文献！！！！}
@@ -336,6 +339,7 @@ footskip=0.7cm% 页脚 1.8cm %
 \RequirePackage{times}
 %% Set Old Fonts Encoding 
 \usepackage[T1]{fontenc}
+\setmonofont{Courier New}
 
 
 %% graphics packages
@@ -441,7 +445,7 @@ footskip=0.7cm% 页脚 1.8cm %
 \RequirePackage{hyperref}
 \hypersetup{
   bookmarksnumbered,%
-  colorlinks,%
+  hidelinks,%
   linkcolor=black,%
   citecolor=black,%
   plainpages=false,%
@@ -791,7 +795,22 @@ footskip=0.7cm% 页脚 1.8cm %
        {\@latex@warning{Empty `thebibliography' environment}}%
       \endlist}
 
-\newcommand{\pubitem}[5]{\ifBIT@isblindcheck \item{第#1作者 + #3 + #5.} \else \item{#2. #3[#4]. #5.} \fi}
+%% 导师一作适用
+\newcommand{\pubitem}[6]{
+\ifBIT@isblindcheck
+    \item{第#1作者，导师第#2作者 + #4 + #6.}
+\else
+    \item{第#1作者，导师第#2作者. #3. #4[#5]. #6.}
+\fi}
+
+%% 本人一作或其它适用
+\newcommand{\pubitemOthers}[5]{
+\ifBIT@isblindcheck
+    \item{第#1作者 + #3 + #5.}
+\else
+    \item{第#1作者. #2. #3[#4]. #5.}
+\fi}
+
 \newenvironment{publications}[1]
      {\chapter{\BIT@label@publications}%
       \@mkboth{\MakeUppercase\BIT@label@publications}
@@ -818,6 +837,96 @@ footskip=0.7cm% 页脚 1.8cm %
      {\def\@noitemerr
        {\@latex@warning{Empty `publications' environment}}%
       \endlist}
+
+\newenvironment{researchsummary}[1] {
+    \chapter{\BIT@label@publications}%
+    \@mkboth{\MakeUppercase\BIT@label@publications}
+            {\MakeUppercase\BIT@label@publications}%
+    \begin{flushleft}
+        {\bfseries \sffamily \raggedright \zihao{4} \BIT@label@publicationsarticle}
+    \end{flushleft}
+    \list{\@biblabel{\@arabic\c@enumiv}} {
+        \settowidth\labelwidth{\@biblabel{#1}}%
+        \leftmargin\labelwidth
+        \advance\leftmargin\labelsep
+        \setlength{\parsep}{1mm}
+        \setlength{\labelsep}{0.5em}
+        \setlength{\itemsep}{0.05pc}
+        \setlength{\listparindent}{0in}
+        \setlength{\itemindent}{0in}
+        \setlength{\rightmargin}{0in}
+        \@openbib@code
+        \usecounter{enumiv}%
+        \let\p@enumiv\@empty
+        \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+       \sloppy
+       \clubpenalty4000
+       \@clubpenalty \clubpenalty
+       \widowpenalty4000%
+       \sfcode`\.\@m
+} {\def\@noitemerr{\@latex@warning{Empty `researchsummary' environment}}\endlist}
+
+\newcommand{\projectitem}[3]{
+    \item{#1，#2，#3。}
+}
+\newenvironment{researchprojects}[1] {
+    \begin{flushleft}
+        {\bfseries \sffamily \raggedright \zihao{4} \BIT@label@publicationsproject}
+    \end{flushleft}
+    \list{\@biblabel{\@arabic\c@enumiv}} {
+        \settowidth\labelwidth{\@biblabel{#1}}%
+        \leftmargin\labelwidth
+        \advance\leftmargin\labelsep
+        \setlength{\parsep}{1mm}
+        \setlength{\labelsep}{0.5em}
+        \setlength{\itemsep}{0.05pc}
+        \setlength{\listparindent}{0in}
+        \setlength{\itemindent}{0in}
+        \setlength{\rightmargin}{0in}
+        \@openbib@code
+        \usecounter{enumiv}%
+        \let\p@enumiv\@empty
+        \renewcommand\theenumiv{\@arabic\c@enumiv}
+    }
+    \sloppy
+    \clubpenalty4000
+    \@clubpenalty \clubpenalty
+    \widowpenalty4000%
+    \sfcode`\.\@m
+} {\def\@noitemerr{\@latex@warning{Empty `researchprojects' environment}}\endlist}
+
+\newcommand{\patentitem}[6]{
+    \ifBIT@isblindcheck
+        \item{第#1发明人，导师第#2发明人 + #4 + 专利号：#5. #6}
+    \else
+        \item{第#1发明人，导师第#2发明人. #3. #4. 专利号：#5. #6}
+    \fi
+}
+\newenvironment{researchpatents}[1] {
+    \begin{flushleft}
+        {\bfseries \sffamily \raggedright \zihao{4} \BIT@label@publicationspatent}
+    \end{flushleft}
+    \list{\@biblabel{\@arabic\c@enumiv}} {
+        \settowidth\labelwidth{\@biblabel{#1}}%
+        \leftmargin\labelwidth
+        \advance\leftmargin\labelsep
+        \setlength{\parsep}{1mm}
+        \setlength{\labelsep}{0.5em}
+        \setlength{\itemsep}{0.05pc}
+        \setlength{\listparindent}{0in}
+        \setlength{\itemindent}{0in}
+        \setlength{\rightmargin}{0in}
+        \@openbib@code
+        \usecounter{enumiv}%
+        \let\p@enumiv\@empty
+        \renewcommand\theenumiv{\@arabic\c@enumiv}
+    }
+    \sloppy
+    \clubpenalty4000
+    \@clubpenalty \clubpenalty
+    \widowpenalty4000%
+    \sfcode`\.\@m
+} {\def\@noitemerr{\@latex@warning{Empty `researchpatents' environment}}\endlist}
 
 \newenvironment{projects}[1]
      {\chapter{\BIT@label@projects}%

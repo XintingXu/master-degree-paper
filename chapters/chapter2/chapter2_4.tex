@@ -1,0 +1,94 @@
+\section{时间隐通道检测方法}
+\label{chap:backinfo:detect}
+
+%本节主要介绍，现有的时间隐通道检测方法，主要包括哪些
+时间隐通道的发展，催生了新的时间隐通道检测技术。基于统计及分布一致性的时间隐通道检测方法，是常用的检测方法。某些场景中，基于标准差的检测方法，以及基于机器学习的检测方法也是有效的\nupcite{ARCHIBALD2014284}。
+
+\subsection{基于分布曲线的检测}
+\label{chap:backinfo:detect:statistical}
+
+%统计看CDF差异，主要评估了哪些参数
+传输过程中的时间特征，是时间隐通道检测方法的检测目标，基本的检测对象为IPD。当传输延迟恒定时，发送方观测到的IPD分布与接收方观测到的IPD分布是一致的。然而，存在网络噪声或者时间隐通道时，IPD分布出现偏离。时间隐通道检测方法，通过对比分布之间的最大偏离程度，从而判断是否存在隐通道。
+\insertEquation{
+    \begin{equation}
+    \label{equ:2:ks}
+		D_{KS}\ =\ sup_{x}\ |F_{1,\ n}(x)\ -\ G_{1,\ m}(x)|
+    \end{equation}
+    \begin{equation}
+    \label{equ:2:ks-p}
+        D_{KS,\ 0.05}\ =\ 1.358\ \times\ \sqrt{\frac{n\ +\ m}{n\ \times\ m}}
+    \end{equation}
+}
+\insertFigure{
+	\begin{figure}[htbp]
+		\centering
+        \includegraphics[width=0.7\textwidth]{chapters/chapter2/figures/ks-cdf.pdf}
+        \caption{CDF曲线差异示意图}\label{fig:2:ks-cdf}
+	\end{figure}
+}
+
+%如何根据差异，判断一致性
+如图\ \nref{fig:2:ks-cdf}，不同的CDF曲线代表不同的IPD分布。通过公式（\nref{equ:2:ks}），计算CDF曲线差异绝对值的最大值，得到分布曲线之间的直接差异。根据一致性假设理论，进行K-S检验的两个样本，在{95\ \%}几率一致的假设前提下，通过公式（\nref{equ:2:ks-p}）计算置信值$D_{KS,\ 0.05}$。当$D_{KS,\ 0.05}\ >\ D_{KS}$时，即可判定$F_{1,\ n}$与$G_{1,\ m}$属于相同分布。
+
+除了K-S检验外，常用的双样本检验方法还包括{Welch's\ \ t检验}、Epps-Singleton检验、Mann-Whitney rank检验及Wilcoxon rank检验等。检验方法与适用的分布类型对应，应用中要考虑检测对象的分布情况。当检测样本通过了检验，则证明二者在分布方面没有差异，存在隐通道的概率较小。
+
+\subsection{基于熵的检测}
+\label{chap:backinfo:detect:entropy}
+
+%计算熵，判断的对象是什么
+统计学中，Kullback–Leibler散度又称相对熵，是一种判断概率质量函数差异的方法。实际应用中，通过计算样本之间相对熵值大小，判断分布之间的一致性\nupcite{5590253,Gianvecchio:2007:DCT:1315245.1315284,Cabuk:2004:ICT:1030083.1030108,6296078}。
+\insertEquation{
+    \begin{equation}
+    \label{equ:2:kld}
+		D_{KL}(F(x)\ ||\ G(x))\ =\ \sum_{x=i}\ f(x)\ \times\ \log \frac{f(x)}{g(x)}
+	\end{equation}
+}
+\insertTable{
+	\begin{table}[htbp]
+        \centering
+        \caption{IPD的概率质量函数示意表}
+        \label{tab:2:pmf-dis}
+        \begin{tabular*}{0.5\textwidth}{@{\extracolsep{\fill}}ccc}
+        \toprule
+        IPD\ (ms) & $f(x)$ & $g(x)$ \\
+        \midrule
+        0 & 0.52921 & 0.22650 \\ 
+        1 & 0.16155 & 0.04827 \\ 
+        2 & 0.00075 & 0.04231 \\ 
+        3 & 0.00011 & 0.03467 \\ 
+        4 & 0.00002 & 0.03603 \\ 
+        5 & 0.00002 & 0.05287 \\ 
+        \bottomrule
+        \end{tabular*}
+    \end{table}
+}
+
+如表\ \nref{tab:2:pmf-dis}所示，概率质量函数PMF（Probability Mass Function）对应的是IPD值的概率，参照分布的概率函数为$g(x)$，样本分布的概率函数为$f(x)$。通过公式（\nref{equ:2:kld}）计算$D_{KL}$，得到结果$0.278$，高于检测阈值$0.1$\nupcite{ZHANG201866}，因此得出结论，样本与参照分布不一致，存在隐通道的概率较高。
+
+\insertTable{
+	\begin{table}[htbp]
+        \centering
+        \caption{经典时间隐通道的检测准确率}
+        \label{tab:2:test-results}
+        \begin{tabular*}{0.6\textwidth}{@{\extracolsep{\fill}}cccc}
+            \toprule
+            \multirow{2}{*}{检验方法} & \multicolumn{3}{c}{隐通道方法} \\
+            \cmidrule(l){2-4}
+            & JitterBug\nupcite{shah2006keyboards} & TR-CTC\nupcite{Cabuk:2004:ICT:1030083.1030108} & MB-CTC\nupcite{10.1007/978-3-642-16435-4_15} \\ 
+            \midrule
+            K-S检验 & 0.66 & - & 0.56 \\
+            T检验 & 0.86 & 0.56 & 0.95 \\
+            K-L散度 & 0.62 & 0.56 & 0.65 \\
+            \bottomrule
+        \end{tabular*}
+    \end{table}
+}
+
+如表\ \nref{tab:2:test-results}，对于SSH场景中的几种经典时间隐通道，不同检验方法的准确率存在差异\nupcite{ARCHIBALD2014284}。由于TR-CTC不改变分布特征，因此通过K-S检验及T检验检测准确率较低。K-L散度对概率变化更敏感，计算过程不仅考虑了概率本身，概率所占的比重也同时纳入计算，因此具有较均衡的检测能力。对比结果可见，结合不同的检测方法的优势，能够在检测原理上互补，具有更好的检测效果。
+
+\subsection{基于机器学习的检测}
+\label{chap:backinfo:detect:machine}
+%判定结果如何认定是否通过
+基于SVM（Support Vector Machines）的检测方法，通过提取样本中的特征向量，根据训练的SVM分类器进行检测。在已知时间隐通道的基础上，生成各种隐通道的传输特征，计算其K-S结果、K-L散度及统计规律等特征，得到数据集并训练SVM分类器\nupcite{7087364}。检测过程中，提取样本的指纹特征，通过训练过的SVM进行分类判断。基于SVM检测方法，在盲测情况下具有较好的效果，对于传输特征稳定的信道来说，具备良好的检测结果。基于机器学习的时间隐通道检测方法，在完成模型训练后，具备实时检测能力，并且不受隐通道类型的限制\nupcite{8875875,7087364}。
+
+VoLTE视频通话中，语音信道具有明确的规律性，现有的检测方法均可进行判别。然而视频信道中，无法提取出明确的传输特征。因此，VoLTE视频信道中的时间隐通道检测，无法以局部特征代替全局特征，需要在一定规模统计数据的基础上进行分布检验。

@@ -1,15 +1,45 @@
-%%==================================================
-%% pub.tex for BIT Master Thesis
-%% modified by yang yating
-%% version: 0.1
-%% last update: Dec 25th, 2016
-%%==================================================
 
-\begin{publications}{99}
+%% 如果只有论文成果，采用默认模式
+%\begin{publications}{99}
+   %\pubitem{二}{一}{Yu-an Tan, Xinting Xu, Chen Liang, Xiaosong Zhang, Quanxin Zhang and Yuanzhang Li}{An end-to-end covert channel via packet dropout for mobile networks}{J}{International Journal of Distributed Sensor Networks, 2018, 14(5), 1-14.（SCI期刊）}
+   %% 盲审状态下显示：第二作者，导师第一作者+ An end-to-end covert channel via packet dropout formobile networks + International Journal of Distributed Sensor Networks, 2018, 14(5),1-14.（SCI期刊）.
+   %% 正常状态下显示：第二作者，导师第一作者. Yu-an Tan, Xinting Xu, Chen Liang, Xiaosong Zhang,Quanxin Zhang and Yuanzhang Li. An end-to-end covert channel via packet dropoutfor mobile networks[J]. International Journal of Distributed Sensor Networks, 2018,14(5), 1-14.（SCI期刊）.
+%\end{publications}
+%% 默认论文成果结束
 
-%    \item\textsc{高凌}. {交联型与线形水性聚氨酯的形状记忆性能比较}[J].
-%      化工进展, 2006, 532－535.（核心期刊）
-	\pubitem{一}{高凌}{交联型与线形水性聚氨酯的形状记忆性能比较}{J}{化工进展, 2006, 532－535.（核心期刊）}
-   %非盲审模式下显示为： 高凌. 交联型与线形水性聚氨酯的形状记忆性能比较 [J]. 化工进展, 2006, 532 －535.（核心期刊）
-   %盲审模式下显示为：第一作者 + 交联型与线形水性聚氨酯的形状记忆性能比较 + 化工进展, 2006, 532－ 535.（核心期刊）.
-\end{publications}
+%% pubitem参数类型
+%% {学生作者顺序}{老师作者顺序}{作者列表}{论文题目}{论文类型}{期刊或会议信息}
+%% end
+
+%% pubitemOthers参数类型
+%% {学生作者顺序}{作者列表}{论文题目}{论文类型}{期刊或会议信息}
+%% end
+
+%% patentitem参数类型
+%% {学生发明人顺序}{导师发明人顺序}{专利申请人}{专利名称}{专利申请号}{专利公开号}{专利公开时间}
+%% end
+
+%% projectitem参数类型
+%% {项目类型}{项目名称}{起止时间}
+%% end
+
+%% XuXinting 添加的学术成果模式，包含三个部分：发表论文、申请专利和参与项目
+%% 章标题只在researchsummary部分出现，每部分添加小标题
+
+%% 发表论文列表
+\begin{researchsummary}{99}
+    \pubitem{二}{一}{Yu-an Tan, Xinting Xu, Chen Liang, Xiaosong Zhang, Quanxin Zhang and Yuanzhang Li}{An end-to-end covert channel via packet dropout for mobile networks}{J}{International Journal of Distributed Sensor Networks, 2018, 14(5), 1-14. (SCI期刊)}
+
+    \pubitemOthers{三}{Yuanzhang Li, Xiaosong Zhang, Xinting Xu, Yu-an Tan}{A Robust Packet-Dropout Covert Channel over Wireless Networks}{J}{IEEE Wireless Communications, 2020, 27(3), 60-65. (SCI期刊)}
+
+\end{researchsummary}
+
+%% 申请专利列表，不需要可删
+\begin{researchpatents}{99}
+    \patentitem{二}{一}{北京理工大学}{一种基于主动丢包的时间隐通道鲁棒构建方法（发明专利）}{ZL201910648138.5}{（已授权）}
+\end{researchpatents}
+
+%% 参与项目列表，不需要可删
+\begin{researchprojects}{99}
+    \projectitem{国家自然科学基金联合基金重点项目}{面向移动互联网实时交互应用的时间隐通道（U1636213）}{2017.01-2020.12}
+\end{researchprojects}
