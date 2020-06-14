@@ -11,6 +11,10 @@
 %% {学生作者顺序}{老师作者顺序}{作者列表}{论文题目}{论文类型}{期刊或会议信息}
 %% end
 
+%% pubitemOthers参数类型
+%% {学生作者顺序}{作者列表}{论文题目}{论文类型}{期刊或会议信息}
+%% end
+
 %% patentitem参数类型
 %% {学生发明人顺序}{导师发明人顺序}{专利申请人}{专利名称}{专利申请号}{专利公开号}{专利公开时间}
 %% end
@@ -21,15 +25,21 @@
 
 %% XuXinting 添加的学术成果模式，包含三个部分：发表论文、申请专利和参与项目
 %% 章标题只在researchsummary部分出现，每部分添加小标题
+
+%% 发表论文列表
 \begin{researchsummary}{99}
-	\pubitem{二}{一}{Yu-an Tan, Xinting Xu, Chen Liang, Xiaosong Zhang, Quanxin Zhang and Yuanzhang Li}{An end-to-end covert channel via packet dropout for mobile networks}{J}{International Journal of Distributed Sensor Networks, 2018, 14(5), 1-14. (SCI期刊)}
+    \pubitem{二}{一}{Yu-an Tan, Xinting Xu, Chen Liang, Xiaosong Zhang, Quanxin Zhang and Yuanzhang Li}{An end-to-end covert channel via packet dropout for mobile networks}{J}{International Journal of Distributed Sensor Networks, 2018, 14(5), 1-14. (SCI期刊)}
+
+    \pubitemOthers{三}{Yuanzhang Li, Xiaosong Zhang, Xinting Xu, Yu-an Tan}{A Robust Packet-Dropout Covert Channel over Wireless Networks}{J}{IEEE Wireless Communications, 2020, 27(3), 60-65. (SCI期刊)}
+
 \end{researchsummary}
 
+%% 申请专利列表，不需要可删
 \begin{researchpatents}{99}
-   \patentitem{二}{一}{北京理工大学}{一种基于主动丢包的时间隐通道鲁棒构建方法（发明专利）}{ZL201910648138.5}{（已授权）}
+    \patentitem{二}{一}{北京理工大学}{一种基于主动丢包的时间隐通道鲁棒构建方法（发明专利）}{ZL201910648138.5}{（已授权）}
 \end{researchpatents}
 
+%% 参与项目列表，不需要可删
 \begin{researchprojects}{99}
-   % 科研项目：项目类型，项目名称，起始时间
-   \projectitem{国家自然科学基金联合基金重点项目}{面向移动互联网实时交互应用的时间隐通道（U1636213）}{2017.01-2020.12}
+    \projectitem{国家自然科学基金联合基金重点项目}{面向移动互联网实时交互应用的时间隐通道（U1636213）}{2017.01-2020.12}
 \end{researchprojects}

@@ -795,12 +795,22 @@ footskip=0.7cm% 页脚 1.8cm %
        {\@latex@warning{Empty `thebibliography' environment}}%
       \endlist}
 
+%% 导师一作适用
 \newcommand{\pubitem}[6]{
 \ifBIT@isblindcheck
     \item{第#1作者，导师第#2作者 + #4 + #6.}
 \else
     \item{第#1作者，导师第#2作者. #3. #4[#5]. #6.}
 \fi}
+
+%% 本人一作或其它适用
+\newcommand{\pubitemOthers}[5]{
+\ifBIT@isblindcheck
+    \item{第#1作者 + #3 + #5.}
+\else
+    \item{第#1作者. #2. #3[#4]. #5.}
+\fi}
+
 \newenvironment{publications}[1]
      {\chapter{\BIT@label@publications}%
       \@mkboth{\MakeUppercase\BIT@label@publications}
