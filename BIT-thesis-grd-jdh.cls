@@ -511,12 +511,16 @@ footskip=0.7cm% 页脚 1.8cm %
 \newcommand\institute[1]{\def\BIT@value@institute{#1}}
 \newcommand\chairman[1]{\def\BIT@value@chairman{#1}}
 
+\newcommand\security[1]{\def\BIT@value@security{#1}}
 
 %% 第一页和第二页
 %_ “绘制”BIT中文标题页
 \renewcommand\maketitle[1]{%
   \cleardoublepage
   \thispagestyle{empty}
+  \begin{flushright}
+    {\heiti\zihao{-2} \BIT@value@security}
+  \end{flushright}
   \begin{center}
     \vspace*{60mm}
     {\heiti\zihao{-2} \BIT@value@title}
